@@ -14,9 +14,9 @@ read -p "Pilih [1]: " PILIHOS
 
 case "$PILIHOS" in
 	1|"") PILIHOS="https://files.sowan.my.id/windows2019.gz"  IFACE="Ethernet Instance 0 2";;
-	2) PILIHOS="https://pb.projectblackshot.com"  IFACE="Ethernet Instance 0 2";;
-	3) PILIHOS="https://download1077.mediafire.com/b2tg1n0kkshg_90DGQrKD2fmqjeO2Tv8oCOSTlR2dBDTHSH4wS4RxO8-8hiValHceFGnz0b8GE4VXxooh3j2EAVTounHxUbS_SXOgJhNvYd-uoRAhXpHJsLBMab2IArM0ey4naLKiVLeNUWA30LKAgcN3CIjT4P4C-Tqt8oUJ1g0og/h6xwpnupf6zz4ta/windows12.gz"  IFACE="Ethernet";;
-	4) PILIHOS="https://archive.org/download/10.ENT.x64.EVAL.USEnglish_201902/10.ENT.x64.EVAL.US-English.gz"  IFACE="Ethernet Instance 0 2";;
+	2) PILIHOS="https://www.mediafire.com/file/ou6ufn1iub8bdgj/windows2016,gz"  IFACE="Ethernet Instance 0 2";;
+	3) PILIHOS="https://files.sowan.my.id/windows2012.gz"  IFACE="Ethernet";;
+	4) PILIHOS="https://files.sowan.my.id/windows10.gz"  IFACE="Ethernet Instance 0 2";;
 	5) PILIHOS="https://files.sowan.my.id/windows2022.gz"  IFACE="Ethernet Instance 0 2";;
 	6) read -p "Masukkan Link GZ mu : " PILIHOS;;
 	*) echo "pilihan salah"; exit;;
