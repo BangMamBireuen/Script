@@ -14,7 +14,7 @@ read -p "Pilih [1]: " PILIHOS
 
 case "$PILIHOS" in
 	1|"") PILIHOS="https://files.sowan.my.id/windows2019.gz"  IFACE="Ethernet Instance 0 2";;
-	2) PILIHOS="https://www.mediafire.com/file/ou6ufn1iub8bdgj/windows2016,gz"  IFACE="Ethernet Instance 0 2";;
+	2) PILIHOS="https://download1503.mediafire.com/antx5issbphgz1igNJf15RK_vePsnEMNZdEyth9bKV873qcC94FahuGQuH_Wh4VEhr5wixgNVZ_U-ZNAD1hFNq5KlV8PF_AMaidaFeBNzpJN7RX88P3gK94JW97B2YJzs5PV9269yXogv8adi0psQjuqUo-MgDKaP_vkuVRUOoAEjA/ou6ufn1iub8bdgj/windows2016.gz"  IFACE="Ethernet Instance 0 2";;
 	3) PILIHOS="https://files.sowan.my.id/windows2012.gz"  IFACE="Ethernet";;
 	4) PILIHOS="https://files.sowan.my.id/windows10.gz"  IFACE="Ethernet Instance 0 2";;
 	5) PILIHOS="https://files.sowan.my.id/windows2022.gz"  IFACE="Ethernet Instance 0 2";;
