@@ -1,2 +1,2 @@
 # Project1
-Hello all
+Gunakan dengan bijak
