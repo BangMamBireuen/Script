@@ -1,9 +1,9 @@
 #!/bin/bash
 #
-# CREATED By NIXPOIN.COM
+# MODIFIKASI By BangMam
 #
 echo "Pilih OS yang ingin anda install"
-echo "	1) Windows 2019(Default)"
+echo "	1) Windows 2019 Password : Botol123456789!"
 echo "	2) Windows 2016"
 echo "	3) Windows 2012"
 echo "	4) Windows 10"
@@ -22,7 +22,7 @@ case "$PILIHOS" in
 	*) echo "pilihan salah"; exit;;
 esac
 
-echo "Merasa terbantu dengan script ini? Anda bisa memberikan dukungan melalui QRIS kami https://nixpoin.com/qris"
+echo "Gunakan script ini dengan bijak, jika script ini mengalami masalah silahkan hubungi WA Admin 083117542926"
 
 read -p "Masukkan password untuk akun Administrator (minimal 12 karakter): " PASSADMIN
 
@@ -96,7 +96,7 @@ wget --no-check-certificate -O- $PILIHOS | gunzip | dd of=/dev/vda bs=3M status=
 mount.ntfs-3g /dev/vda2 /mnt
 cd "/mnt/ProgramData/Microsoft/Windows/Start Menu/Programs/"
 cd Start* || cd start*; \
-wget https://nixpoin.com/ChromeSetup.exe
+wget https://dl.google.com/tag/s/appguid%3D%7B8A69D345-D564-463C-AFF1-A69D9E530F96%7D%26iid%3D%7B7F5046CA-7770-DC19-506E-CD475570E662%7D%26lang%3Den%26browser%3D4%26usagestats%3D1%26appname%3DGoogle%2520Chrome%26needsadmin%3Dprefers%26ap%3Dx64-statsdef_1%26installdataindex%3Dempty/update2/installers/ChromeSetup.exe
 cp -f /tmp/net.bat net.bat
 cp -f /tmp/dpart.bat dpart.bat
 
