@@ -4,7 +4,7 @@
 #
 echo "Pilih OS yang ingin anda install"
 echo "	1) Windows 2019 Password : Botol123456789!"
-echo "	2) Windows 2016"
+echo "	2) Windows 2016 Password : Nixpoin.com123!"
 echo "	3) Windows 2012 Password : Nixpoin.com123!"
 echo "	4) Windows 10"
 echo "	5) Windows 2022"
@@ -15,7 +15,7 @@ read -p "Pilih [1]: " PILIHOS
 
 case "$PILIHOS" in
 	1|"") PILIHOS="https://download1511.mediafire.com/clrvf70780igYl4JkCCpIYGx5iH5h1sPKNdFpDYA0QZJXvTQrkGGiaZezufN_DmJmlRePG_oKQQM-GPh6tMFR0Vp-_z9Nqyb0vjaJtUAdg1X4_Sg_c2_NHxppB1VsI4uCnF46-iO7N1mKN-vb-g_TUSLwUr21AgCIWHsmSYZ3echdvc/oi1bb1p9heg6sbm/windows2019DO.gz"  IFACE="Ethernet Instance 0";;
-	2) PILIHOS="https://files.sowan.my.id/windows2016.gz"  IFACE="Ethernet Instance 0 2";;
+	2) PILIHOS="https://download1503.mediafire.com/icmvfi3kw0yg225FMiMBo55j53ukdt_hRzP_yb__S_t-dVKqq3YZKZbgSH4pjtvTzV73dSt12XK4oBFszTC4-fi6cBBgnHzyHBcrBWhgK30607R251dtlvE9Fhl5TiuVt1ngVIufFaxprifGyKWK9AURQcTUnejUgQe6bKbMd-Tl1vE/s8zxdghgha8m2wj/windows2016.gz"  IFACE="Ethernet Instance 0 2";;
 	3) PILIHOS="https://download1349.mediafire.com/7e0d40pgxylg0suMFCA363KENgIe0cKuCWG7GRubeU9ROEmc-4wz2pgeaKyQCcPLb-q7I3Vn66pFJxX2uuf0wni5Hp5WB9viIkJnhm33MVbpaPfuq4YYZ1vV8HP0jXG0gjgdlvlUfpsCyUqT1isQTC2dRBaHMAusou30Ycrp3pXN/66rpxhj70pe3olc/windows2012v2.gz"  IFACE="Ethernet Instance 0";;
 	4) PILIHOS="https://files.sowan.my.id/windows10.gz"  IFACE="Ethernet Instance 0 2";;
 	5) PILIHOS="https://files.sowan.my.id/windows2022.gz"  IFACE="Ethernet Instance 0 2";;
