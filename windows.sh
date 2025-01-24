@@ -26,7 +26,7 @@ esac
 
 echo "Gunakan script ini dengan bijak, jika script ini mengalami masalah silahkan hubungi WA Admin 083117542926"
 
-read -p "Masukkan password untuk akun Administrator (minimal 12 karakter): " PASSADMIN
+read -p "Masukkan password untuk akun Administrator: " PASSADMIN
 
 IP4=$(curl -4 -s icanhazip.com)
 GW=$(ip route | awk '/default/ { print $3 }')
