@@ -50,16 +50,35 @@ esac
 
 echo "Gunakan script ini dengan bijak, jika script ini mengalami masalah silahkan hubungi WA Admin 083117542926"
 
-IP4=$(curl -4 -s icanhazip.com)
-GW=$(ip route | awk '/default/ { print $3 }')
-
-# **Mendeteksi Interface yang Aktif**
+# **Mendeteksi interface jaringan yang benar-benar aktif**
 IFACE=$(ip -o link show | awk -F': ' '{print $2}' | grep -E "eth|ens|eno" | head -n 1)
 
 if [ -z "$IFACE" ]; then
     echo "Tidak ada interface jaringan yang aktif! Periksa konfigurasi jaringan."
     exit 1
 fi
+
+IP4=$(curl -4 -s icanhazip.com)
+GW=$(ip route | awk '/default/ { print $3 }')
+
+# **Pastikan mendapatkan IP dan gateway yang benar**
+if [ -z "$IP4" ] || [ -z "$GW" ]; then
+    echo "Gagal mendapatkan IP atau Gateway, mencoba DHCP..."
+    dhclient -r $IFACE
+    dhclient $IFACE
+    IP4=$(curl -4 -s icanhazip.com)
+    GW=$(ip route | awk '/default/ { print $3 }')
+fi
+
+# **Periksa kembali apakah IP sudah ada**
+if [ -z "$IP4" ] || [ -z "$GW" ]; then
+    echo "DHCP juga gagal mendapatkan IP. Periksa jaringan!"
+    exit 1
+fi
+
+echo "Interface: $IFACE"
+echo "IP Address: $IP4"
+echo "Gateway: $GW"
 
 cat >/tmp/net.bat<<EOF
 @ECHO OFF
