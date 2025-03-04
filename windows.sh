@@ -14,7 +14,7 @@ echo "	7) Pakai link gz mu sendiri"
 read -p "Pilih [1]: " PILIHOS
 
 case "$PILIHOS" in
-	1|"") PILIHOS="https://download1511.mediafire.com/w3qxhvst0hagzzCX8SQtNf_0UcPzp7unpfhJVu3_wtsV2pMiiEzJizjrJhb8EOYWkD1gO49Gfu9Vbx7Xplr8Mx1oAOUiV-NE3rrXV80YVB9imjT0NKXVFyJBR-hN00_lpFAzEkQTAwerg7ejmtwc7WCL5pVceuZswczjYWWbFrUA/oi1bb1p9heg6sbm/windows2019DO.gz"  IFACE="Ethernet Instance 0";;
+	1|"") PILIHOS="https://download1511.mediafire.com/p40hq7fmq3pgqzWPVa4VGZRKx2fiOsFPXBE0Xs2FLR61HqBuASIeMF41uWmOah0CJ1VgOfjyGuJ7ubUTPvJ2pNQKQoy8MUa9Y0VGVWPpy4oydS-RmULpy6OBqDuLF6x0vPLTd8pDoi5vtmowzJg3UHlk9uxO_eX0qUWq3TA3qud3RaU/oi1bb1p9heg6sbm/windows2019DO.gz"  IFACE="Ethernet Instance 0";;
 	2) PILIHOS="https://download1503.mediafire.com/bjw20nilx12gnBHQa6BjyoDX4yzvm6AmlpGIlL5zSzWLMXTscYTOFwXbW-Dpq-Pra4sMbk-TBSUic3Ipw2C2pwrZgacolxEHLqRuieh9fO2_DLBQ0RFn8A1DIlgN9ehkW4ZcuayA6XIxbZhfQoCFgYecejPgrdxM0ssHwLml4ySI_Q/s8zxdghgha8m2wj/windows2016.gz"  IFACE="Ethernet Instance 0 2";;
 	3) PILIHOS="https://download1349.mediafire.com/7e0d40pgxylg0suMFCA363KENgIe0cKuCWG7GRubeU9ROEmc-4wz2pgeaKyQCcPLb-q7I3Vn66pFJxX2uuf0wni5Hp5WB9viIkJnhm33MVbpaPfuq4YYZ1vV8HP0jXG0gjgdlvlUfpsCyUqT1isQTC2dRBaHMAusou30Ycrp3pXN/66rpxhj70pe3olc/windows2012v2.gz"  IFACE="Ethernet Instance 0";;
 	4) PILIHOS="https://files.sowan.my.id/windows10.gz"  IFACE="Ethernet Instance 0 2";;
