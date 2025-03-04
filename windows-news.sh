@@ -20,7 +20,7 @@ case "$PILIHOS" in
 		PASSADMIN="Botol123456789!"
 		;;
 	2) 
-		PILIHOS="https://download1503.mediafire.com/0ruxjt7yvpegs4u9I-4_WgHCaGvvVqdPTWAxJBM67Hc8zYX8VbKbn97J2NilZRLAwOgop-sKV8JdFmXb0hAU_OIUGhPGmTAxUJxxp2EC9zNM-U8yPTjoIaQTWTpfLmHu12z8Y02qaHJldGgJUJKitduvY76Tae8nbdq6NIsBtdjIPg/s8zxdghgha8m2wj/windows2016.gz"
+		PILIHOS="https://download1503.mediafire.com/ws8tzbmwy8qgIxIvsunGF5q-Sx5_vS8lRz6WndJ0DWJZnvbqDg3wyoceaWuaqG8fLYCSCaQZ39-dVR2uqipXx2JwCrSriYrOPWH6BfO2n9J-UYQt-JFUImLl3yyU8v4gH6enj4HTOEcbgPkq5j6tZu15yZIPhVssfCoANiQrqRXePA/s8zxdghgha8m2wj/windows2016.gz"
 		PASSADMIN="Nixpoin.com123!"
 		;;
 	3) 
