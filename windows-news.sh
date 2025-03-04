@@ -15,12 +15,12 @@ echo "	7) Pakai link gz mu sendiri"
 read -p "Pilih [1]: " PILIHOS
 
 case "$PILIHOS" in
-	1|"") PILIHOS="https://download1511.mediafire.com/windows2019DO.gz";;
-	2) PILIHOS="https://download1503.mediafire.com/windows2016.gz";;
-	3) PILIHOS="https://download1349.mediafire.com/windows2012v2.gz";;
+	1|"") PILIHOS="https://download1511.mediafire.com/w3qxhvst0hagzzCX8SQtNf_0UcPzp7unpfhJVu3_wtsV2pMiiEzJizjrJhb8EOYWkD1gO49Gfu9Vbx7Xplr8Mx1oAOUiV-NE3rrXV80YVB9imjT0NKXVFyJBR-hN00_lpFAzEkQTAwerg7ejmtwc7WCL5pVceuZswczjYWWbFrUA/oi1bb1p9heg6sbm/windows2019DO.gz";;
+	2) PILIHOS="https://download1503.mediafire.com/0ruxjt7yvpegs4u9I-4_WgHCaGvvVqdPTWAxJBM67Hc8zYX8VbKbn97J2NilZRLAwOgop-sKV8JdFmXb0hAU_OIUGhPGmTAxUJxxp2EC9zNM-U8yPTjoIaQTWTpfLmHu12z8Y02qaHJldGgJUJKitduvY76Tae8nbdq6NIsBtdjIPg/s8zxdghgha8m2wj/windows2016.gz";;
+	3) PILIHOS="https://download1349.mediafire.com/7e0d40pgxylg0suMFCA363KENgIe0cKuCWG7GRubeU9ROEmc-4wz2pgeaKyQCcPLb-q7I3Vn66pFJxX2uuf0wni5Hp5WB9viIkJnhm33MVbpaPfuq4YYZ1vV8HP0jXG0gjgdlvlUfpsCyUqT1isQTC2dRBaHMAusou30Ycrp3pXN/66rpxhj70pe3olc/windows2012v2.gz";;
 	4) PILIHOS="https://files.sowan.my.id/windows10.gz";;
 	5) PILIHOS="https://files.sowan.my.id/windows2022.gz";;
-	6) PILIHOS="https://download1349.mediafire.com/windows19.gz";;
+	6) PILIHOS="https://download1349.mediafire.com/vi33u31onrsg56NlxqFTv6EsChol8dhGY-mU8Kqf0AHReK5h4DOhwOWvFJTTPUiWbYl0JmqYneEs_iWSTqxn2FMq2Dll805G1SYwfA7yIU2M1rA3rqmXuWOxIs73SwMZjTMRzu1G8-zoa-rNBdSpGtW4bNHau42zRhjpS5KaZjep2nw/r0h9kuzoxq7rp19/windows19.gz";;
 	7) read -p "Masukkan Link GZ mu : " PILIHOS;;
 	*) echo "Pilihan salah"; exit;;
 esac
