@@ -90,11 +90,23 @@ echo "Interface yang digunakan: $IFACE"
 cat >/tmp/net.bat<<EOF
 @ECHO OFF
 net user Administrator $PASSADMIN
+
+REM **Coba IP Statis Dulu**
 netsh -c interface ip set address name="$IFACE" source=static address=$IP4 mask=255.255.240.0 gateway=$GW
 netsh -c interface ip add dnsservers name="$IFACE" address=1.1.1.1 index=1 validate=no
 netsh -c interface ip add dnsservers name="$IFACE" address=8.8.4.4 index=2 validate=no
+
+REM **Cek apakah IP terhubung**
+ping -n 3 8.8.8.8 >nul
+IF %ERRORLEVEL% NEQ 0 (
+    echo "IP statis gagal, mencoba DHCP..."
+    netsh -c interface ip set address name="$IFACE" source=dhcp
+    netsh -c interface ip set dns name="$IFACE" source=dhcp
+)
+
 exit
 EOF
+
 
 cat >/tmp/dpart.bat<<EOF
 @ECHO OFF
