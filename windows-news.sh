@@ -16,31 +16,27 @@ read -p "Pilih [1]: " PILIHOS
 
 case "$PILIHOS" in
 	1|"") 
-		PILIHOS="https://download1511.mediafire.com/w3qxhvst0hagzzCX8SQtNf_0UcPzp7unpfhJVu3_wtsV2pMiiEzJizjrJhb8EOYWkD1gO49Gfu9Vbx7Xplr8Mx1oAOUiV-NE3rrXV80YVB9imjT0NKXVFyJBR-hN00_lpFAzEkQTAwerg7ejmtwc7WCL5pVceuZswczjYWWbFrUA/oi1bb1p9heg6sbm/windows2019DO.gz"
-		IFACE="Ethernet"
+		PILIHOS="https://download1511.mediafire.com/windows2019.gz"
 		PASSADMIN="Botol123456789!"
 		;;
 	2) 
 		PILIHOS="https://download1503.mediafire.com/0ruxjt7yvpegs4u9I-4_WgHCaGvvVqdPTWAxJBM67Hc8zYX8VbKbn97J2NilZRLAwOgop-sKV8JdFmXb0hAU_OIUGhPGmTAxUJxxp2EC9zNM-U8yPTjoIaQTWTpfLmHu12z8Y02qaHJldGgJUJKitduvY76Tae8nbdq6NIsBtdjIPg/s8zxdghgha8m2wj/windows2016.gz"
-		IFACE="Ethernet Instance 0"
 		PASSADMIN="Nixpoin.com123!"
 		;;
 	3) 
-		PILIHOS="https://download1349.mediafire.com/7e0d40pgxylg0suMFCA363KENgIe0cKuCWG7GRubeU9ROEmc-4wz2pgeaKyQCcPLb-q7I3Vn66pFJxX2uuf0wni5Hp5WB9viIkJnhm33MVbpaPfuq4YYZ1vV8HP0jXG0gjgdlvlUfpsCyUqT1isQTC2dRBaHMAusou30Ycrp3pXN/66rpxhj70pe3olc/windows2012v2.gz"
-		IFACE="Ethernet Instance 0 2"
+		PILIHOS="https://download1349.mediafire.com/windows2012v2.gz"
 		PASSADMIN="Nixpoin.com123!"
 		;;
 	4) 
 		PILIHOS="https://files.sowan.my.id/windows10.gz"
-		IFACE="Ethernet"
+		PASSADMIN=""
 		;;
 	5) 
 		PILIHOS="https://files.sowan.my.id/windows2022.gz"
-		IFACE="Ethernet"
+		PASSADMIN=""
 		;;
 	6) 
-		PILIHOS="https://download1349.mediafire.com/vi33u31onrsg56NlxqFTv6EsChol8dhGY-mU8Kqf0AHReK5h4DOhwOWvFJTTPUiWbYl0JmqYneEs_iWSTqxn2FMq2Dll805G1SYwfA7yIU2M1rA3rqmXuWOxIs73SwMZjTMRzu1G8-zoa-rNBdSpGtW4bNHau42zRhjpS5KaZjep2nw/r0h9kuzoxq7rp19/windows19.gz"
-		IFACE="Ethernet Instance 0 2"
+		PILIHOS="https://download1349.mediafire.com/windows19.gz"
 		PASSADMIN="P@ssword64"
 		;;
 	7) 
@@ -57,10 +53,19 @@ echo "Gunakan script ini dengan bijak, jika script ini mengalami masalah silahka
 IP4=$(curl -4 -s icanhazip.com)
 GW=$(ip route | awk '/default/ { print $3 }')
 
+# **Mendeteksi Interface yang Aktif**
+IFACE=$(ip -o link show | awk -F': ' '{print $2}' | grep -E "eth|ens|eno" | head -n 1)
+
+if [ -z "$IFACE" ]; then
+    echo "Tidak ada interface jaringan yang aktif! Periksa konfigurasi jaringan."
+    exit 1
+fi
+
 cat >/tmp/net.bat<<EOF
 @ECHO OFF
 net user Administrator $PASSADMIN
 
+echo Mencari interface jaringan...
 SET INTERFACES="Ethernet" "Ethernet Instance 0" "Ethernet Instance 0 2" "Local Area Connection"
 FOR %%I IN (%INTERFACES%) DO (
     netsh interface show interface | findstr /C:"%%I" >nul
@@ -74,6 +79,7 @@ ECHO Tidak ada interface yang ditemukan! Periksa konfigurasi jaringan.
 exit /b 1
 
 :CONFIGURE_NETWORK
+echo Menggunakan interface: %IFACE%
 netsh -c interface ip set address name="%IFACE%" source=static address=$IP4 mask=255.255.240.0 gateway=$GW
 netsh -c interface ip add dnsservers name="%IFACE%" address=1.1.1.1 index=1 validate=no
 netsh -c interface ip add dnsservers name="%IFACE%" address=8.8.4.4 index=2 validate=no
@@ -88,13 +94,14 @@ IF %ERRORLEVEL% NEQ 0 (
 exit
 EOF
 
+# **Mulai Instalasi Windows**
 wget --no-check-certificate -O- $PILIHOS | gunzip | dd of=/dev/vda bs=3M status=progress
 
 mount.ntfs-3g /dev/vda2 /mnt
 cd "/mnt/ProgramData/Microsoft/Windows/Start Menu/Programs/Startup"
-wget https://raw.githubusercontent.com/BangMamBireuen/Project1/refs/heads/main/ChromeSetup.exe
+wget https://raw.githubusercontent.com/BangMamBireuen/Project1/main/ChromeSetup.exe
 cp -f /tmp/net.bat net.bat
 
-echo 'Your server will turning off in 3 second'
+echo 'Server akan mati dalam 3 detik...'
 sleep 3
 poweroff
