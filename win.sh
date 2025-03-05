@@ -15,7 +15,7 @@ esac
 echo "Merasa terbantu dengan script ini? Anda bisa memberikan dukungan melalui QRIS kami https://nixpoin.com/qris"
 
 # Mengatur password Administrator secara otomatis
-PASSADMIN="Datnguyentv.com"
+PASSADMIN="P@ssword64"
 
 echo "Password Administrator telah diatur secara otomatis."
 
