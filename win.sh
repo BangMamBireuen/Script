@@ -3,7 +3,7 @@
 # CREATED By NIXPOIN.COM
 #
 echo "Pilih OS yang ingin anda install"
-echo "	1) Windows 10 Pass: Datnguyentv.com"
+echo "	1) Windows 10 Pass: P@ssword64"
 
 read -p "Pilih [1]: " PILIHOS
 
