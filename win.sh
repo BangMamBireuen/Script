@@ -8,7 +8,7 @@ echo "	1) Windows 10 Pass: Datnguyentv.com"
 read -p "Pilih [1]: " PILIHOS
 
 case "$PILIHOS" in
-	1|"") PILIHOS="http://drive.muavps.net/windows/windows10ProFull.gz"  IFACE="Ethernet Instance 0 2";;
+	1|"") PILIHOS="https://tfl9zw.dm.files.1drv.com/y4m42HBNZePL3cOk-zPT3rANQ8DF5fe0IuwA4lVJgvTl84hPWOeOi7nY7Q3kmEk2rukuTBz05D7SUOoh8OMEMCdLGRetofPyhHWkHOHDIMJBGYZ_4C_IxiR3YGmKciDL2I_eccluqFOlM4gk95gzUXjwCevHFpncb-G1aCEqlhtKmWkfhmP65KpaSPTp4SpU_YPUxOHPW5MPisnZqbpytxfOcrCgIQxMiIeRSxC0jVcVHU?AVOverride=1"  IFACE="Ethernet Instance 0 2";;
 	*) echo "Pilihan salah"; exit;;
 esac
 
