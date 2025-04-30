@@ -13,7 +13,7 @@ echo "	6) Pakai link gz mu sendiri"
 read -p "Pilih [1]: " PILIHOS
 
 case "$PILIHOS" in
-	1|"") PILIHOS="https://download1511.mediafire.com/on3f7r6sflkgYbvm5pfyugP6WCqZtkKDOGyZiVFV3H292NR2mkFN-AGf_GsWQZ7SrA4EcKvewcM8tqr1Mo_oFo0irOibdSaM4nU49q_-GD-5rHY7E1foTDl09nWbT5w7K9tlyW1tpBA5wxOha4yHwr6vyZYGfVt5DsQFHsmJTPXj/oi1bb1p9heg6sbm/windows2019DO.gz"  IFACE="Ethernet Instance 0 2";;
+	1|"") PILIHOS="https://download1511.mediafire.com/on3f7r6sflkgYbvm5pfyugP6WCqZtkKDOGyZiVFV3H292NR2mkFN-AGf_GsWQZ7SrA4EcKvewcM8tqr1Mo_oFo0irOibdSaM4nU49q_-GD-5rHY7E1foTDl09nWbT5w7K9tlyW1tpBA5wxOha4yHwr6vyZYGfVt5DsQFHsmJTPXj/oi1bb1p9heg6sbm/windows2019DO.gz"  IFACE="Ethernet Instance 0";;
 	2) PILIHOS="https://files.sowan.my.id/windows2016.gz"  IFACE="Ethernet Instance 0 2";;
 	3) PILIHOS="https://files.sowan.my.id/windows2012.gz"  IFACE="Ethernet";;
 	4) PILIHOS="https://files.sowan.my.id/windows10.gz"  IFACE="Ethernet Instance 0 2";;
