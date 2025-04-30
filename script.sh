@@ -1,34 +1,16 @@
 #!/bin/bash
 #
 # CREATED By NIXPOIN.COM
+# EDITION By BANGMAM
 #
-echo "Pilih OS yang ingin anda install"
-echo "	1) Windows 2019(Default)"
-echo "	2) Windows 2016"
-echo "	3) Windows 2012"
-echo "	4) Windows 10"
-echo "	5) Windows 2022"
-echo "	6) Pakai link gz mu sendiri"
+echo "Windows 2019 akan diinstall"
 
-read -p "Pilih [1]: " PILIHOS
-
-case "$PILIHOS" in
-	1|"") PILIHOS="https://download1511.mediafire.com/on3f7r6sflkgYbvm5pfyugP6WCqZtkKDOGyZiVFV3H292NR2mkFN-AGf_GsWQZ7SrA4EcKvewcM8tqr1Mo_oFo0irOibdSaM4nU49q_-GD-5rHY7E1foTDl09nWbT5w7K9tlyW1tpBA5wxOha4yHwr6vyZYGfVt5DsQFHsmJTPXj/oi1bb1p9heg6sbm/windows2019DO.gz"  IFACE="Ethernet Instance 0";;
-	2) PILIHOS="https://files.sowan.my.id/windows2016.gz"  IFACE="Ethernet Instance 0 2";;
-	3) PILIHOS="https://files.sowan.my.id/windows2012.gz"  IFACE="Ethernet";;
-	4) PILIHOS="https://files.sowan.my.id/windows10.gz"  IFACE="Ethernet Instance 0 2";;
-	5) PILIHOS="https://files.sowan.my.id/windows2022.gz"  IFACE="Ethernet Instance 0 2";;
-	6) read -p "Masukkan Link GZ mu : " PILIHOS;;
-	*) echo "pilihan salah"; exit;;
-esac
-
-echo "Merasa terbantu dengan script ini? Anda bisa memberikan dukungan melalui QRIS kami https://nixpoin.com/qris"
-
-read -p "Masukkan password untuk akun Administrator (minimal 12 karakter): " PASSADMIN
+PILIHOS="https://download1503.mediafire.com/113q2f1xhmkgO3xZHo27tUd8fPJPFK_aTP1N0b1BXPsQ7fpQON8YN15cS6letvieSiXdctli4QnjzDaMkbRgi5U58cRRqbwRwwFCtBEOCramzNfEOHtiMhlxQn0Zmq6vYpQdmTwlXRlmI36ZPQqP8maZi4e1lD_x8X28WrigBtEQ/s8zxdghgha8m2wj/windows2016.gz"
+IFACE="Ethernet Instance 0"
+PASSADMIN="Botol123456789!"
 
 IP4=$(curl -4 -s icanhazip.com)
 GW=$(ip route | awk '/default/ { print $3 }')
-
 
 cat >/tmp/net.bat<<EOF
 @ECHO OFF
@@ -40,7 +22,6 @@ del /f /q "%temp%\Admin.vbs"
 exit /b 2)
 net user Administrator $PASSADMIN
 
-
 netsh -c interface ip set address name="$IFACE" source=static address=$IP4 mask=255.255.240.0 gateway=$GW
 netsh -c interface ip add dnsservers name="$IFACE" address=1.1.1.1 index=1 validate=no
 netsh -c interface ip add dnsservers name="$IFACE" address=8.8.4.4 index=2 validate=no
@@ -49,7 +30,6 @@ cd /d "%ProgramData%/Microsoft/Windows/Start Menu/Programs/Startup"
 del /f /q net.bat
 exit
 EOF
-
 
 cat >/tmp/dpart.bat<<EOF
 @ECHO OFF
@@ -96,7 +76,7 @@ wget --no-check-certificate -O- $PILIHOS | gunzip | dd of=/dev/vda bs=3M status=
 mount.ntfs-3g /dev/vda2 /mnt
 cd "/mnt/ProgramData/Microsoft/Windows/Start Menu/Programs/"
 cd Start* || cd start*; \
-wget https://nixpoin.com/ChromeSetup.exe
+wget https://raw.githubusercontent.com/BangMamBireuen/Project1/refs/heads/main/ChromeSetup.exe
 cp -f /tmp/net.bat net.bat
 cp -f /tmp/dpart.bat dpart.bat
 
