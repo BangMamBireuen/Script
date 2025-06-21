@@ -5,7 +5,7 @@
 # Ubuntu 22.04 (LTS) x64
 #
 echo "Pilih OS yang ingin anda install"
-echo "1) Windows 2019( Default)"
+echo "1) Windows 2019 (Default)"
 echo "2) Windows 2019 (MediaFire)"
 echo "3) Windows 10 Super Lite SF"
 echo "4) Windows 10 Super Lite MF"
