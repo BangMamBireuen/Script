@@ -5,22 +5,22 @@
 # Ubuntu 22.04 (LTS) x64
 #
 echo "Pilih OS yang ingin anda install"
-echo "	1) Windows 2019(Default)"
-echo "	2) Windows 2019(MediaFire)"
-echo "	3) Windows 10 Super Lite SF"
-echo "	4) Windows 10 Super Lite MF"
-echo "	5) Windows 10 Super Lite CF"
-echo "	6) Pakai link gz mu sendiri"
+echo "1) Windows 2019( Default)"
+echo "2) Windows 2019 (MediaFire)"
+echo "3) Windows 10 Super Lite SF"
+echo "4) Windows 10 Super Lite MF"
+echo "5) Windows 10 Super Lite CF"
+echo "6) Pakai link gz mu sendiri"
 
 read -p "Pilih [1]: " PILIHOS
 
 case "$PILIHOS" in
 	1|"") PILIHOS="https://pub-96a3141a1f5b4b3ca15bbd7b03ad1f25.r2.dev/windows2019.gz";;
-    2) PILIHOS="https://download1638.mediafire.com/a0mif0wkgssg7-SZEZ7lGaNAQwtFXPDxy32dwK6ndowTze56RQT_8qARmByv3NdoFDABl5Qj_2JkDrjcHAJtIKCqFvnMImeHH3qby7pxM4stVqwOwLdzf2USCJSxQxG200b7CJ48ItqDdQzEaPkMVRTJk7NMzCP7iUzWee9UTpI0/rc16x2q38v9exy2/windows2019.gz";;
+	2) PILIHOS="https://download1638.mediafire.com/a0mif0wkgssg7-SZEZ7lGaNAQwtFXPDxy32dwK6ndowTze56RQT_8qARmByv3NdoFDABl5Qj_2JkDrjcHAJtIKCqFvnMImeHH3qby7pxM4stVqwOwLdzf2USCJSxQxG200b7CJ48ItqDdQzEaPkMVRTJk7NMzCP7iUzWee9UTpI0/rc16x2q38v9exy2/windows2019.gz";;
 	3) PILIHOS="https://master.dl.sourceforge.net/project/manyod/wedus10lite.gz?viasf=1";;
 	4) PILIHOS="https://download1582.mediafire.com/lemxvneeredgyBT5P6YtAU5Dq-mikaH29djd8VnlyMcV1iM_vHJzYCiTc8V3PQkUslqgQSG0ftRJ0X2w3t1D7T4a-616-phGqQ2xKCn8894r0fdV9jKMhVYKH8N1dXMvtsZdK6e4t9F4Hg66wCzpXvuD_jcRu9_-i65_Kbr-HeW8Bw/gcxlheshfpbyigg/wedus10lite.gz";;
 	5) PILIHOS="https://umbel.my.id/wedus10lite.gz";;
- 	6) read -p "Masukkan Link GZ mu : " PILIHOS;;
+	6) read -p "Masukkan Link GZ mu : " PILIHOS;;
 	*) echo "pilihan salah"; exit;;
 esac
 
