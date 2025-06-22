@@ -2,7 +2,7 @@
 #
 # CREATED By NIXPOIN.COM
 # EDITION By BANGMAM & aurielly
-# Ubuntu 22.04 (LTS) x64
+# Ubuntu 24.04 (LTS) x64 atau Ke Atas
 #
 echo "Pilih OS yang ingin anda install"
 echo "1) Windows 2019 (Default)"
