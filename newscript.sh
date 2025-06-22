@@ -3,6 +3,7 @@
 # CREATED By NIXPOIN.COM
 # EDITION By BANGMAM & aurielly
 # Ubuntu 24.04 (LTS) x64 atau Ke Atas
+# Rekomendasi: Ubuntu 24.10 x64
 #
 echo "Pilih OS yang ingin anda install"
 echo "1) Windows 2019 (Default)"
