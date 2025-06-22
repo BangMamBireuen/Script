@@ -6,7 +6,7 @@
 #
 echo "Pilih OS yang ingin anda install"
 echo "1) Windows 2019 (Default)"
-echo "2) Pakai link gz mu sendiri"
+echo "6) Pakai link gz mu sendiri"
 
 read -p "Pilih [1]: " PILIHOS
 
@@ -36,8 +36,8 @@ net user Administrator $PASSADMIN
 
 for /f "tokens=3*" %%i in ('netsh interface show interface ^|findstr /I /R "Local.* Ethernet Ins*"') do (set InterfaceName=%%j)
 netsh -c interface ip set address name="Ethernet Instance 0 2" source=static address=$IP4 mask=255.255.240.0 gateway=$GW
-netsh -c interface ip add dnsservers name="Ethernet Instance 0" address=8.8.8.8 index=1 validate=no
-netsh -c interface ip add dnsservers name="Ethernet Instance 0" address=8.8.4.4 index=2 validate=no
+netsh -c interface ip add dnsservers name="Ethernet Instance 0 2" address=8.8.8.8 index=1 validate=no
+netsh -c interface ip add dnsservers name="Ethernet Instance 0 2" address=8.8.4.4 index=2 validate=no
 
 cd /d "%ProgramData%/Microsoft/Windows/Start Menu/Programs/Startup"
 del /f /q net.bat
