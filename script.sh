@@ -2,6 +2,8 @@
 #
 # CREATED By NIXPOIN.COM
 # EDITION By BANGMAM
+# Ubuntu 24.04 (LTS) x64 atau Ke Atas
+# Rekomendasi: Ubuntu 24.10 x64
 #
 echo "Windows 2019 akan diinstall"
 
