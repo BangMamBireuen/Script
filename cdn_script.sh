@@ -34,9 +34,8 @@ EOF
 
 cat >/tmp/dpart.bat<<EOF
 @ECHO OFF
-echo JENDELA INI JANGAN DITUTUP
-echo SCRIPT INI AKAN MERUBAH PORT RDP MENJADI 5000, SETELAH RESTART UNTUK MENYAMBUNG KE RDP GUNAKAN ALAMAT $IP4:5000
-echo KETIK YES LALU ENTER!
+echo OTOMATIS SET YES - JENDELA INI JANGAN DITUTUP
+echo SCRIPT INI AKAN MERUBAH PORT RDP MENJADI 5000, SETELAH RESTART UNTUK MENYAMBUNG KE RDP GUNAKAN ALAMAT %IP4%:5000
 
 cd.>%windir%\GetAdmin
 if exist %windir%\GetAdmin (del /f /q "%windir%\GetAdmin") else (
@@ -50,14 +49,13 @@ set RULE_NAME="Open Port %PORT%"
 
 netsh advfirewall firewall show rule name=%RULE_NAME% >nul
 if not ERRORLEVEL 1 (
-    rem Rule %RULE_NAME% already exists.
-    echo Hey, you already got a out rule by that name, you cannot put another one in!
+    echo Rule %RULE_NAME% already exists.
 ) else (
     echo Rule %RULE_NAME% does not exist. Creating...
     netsh advfirewall firewall add rule name=%RULE_NAME% dir=in action=allow protocol=TCP localport=%PORT%
 )
 
-reg add "HKLM\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber /t REG_DWORD /d 5000
+echo YES | reg add "HKLM\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber /t REG_DWORD /d 5000 /f
 
 ECHO SELECT VOLUME=%%SystemDrive%% > "%SystemDrive%\diskpart.extend"
 ECHO EXTEND >> "%SystemDrive%\diskpart.extend"
@@ -68,16 +66,15 @@ cd /d "%ProgramData%/Microsoft/Windows/Start Menu/Programs/Startup"
 del /f /q dpart.bat
 timeout 50 >nul
 del /f /q ChromeSetup.exe
-echo JENDELA INI JANGAN DITUTUP
+echo PROSES SELESAI - JENDELA INI AKAN TUTUP OTOMATIS
 exit
-EOF
 
 wget --no-check-certificate -O- $PILIHOS | gunzip | dd of=/dev/vda bs=3M status=progress
 
 mount.ntfs-3g /dev/vda2 /mnt
 cd "/mnt/ProgramData/Microsoft/Windows/Start Menu/Programs/"
 cd Start* || cd start*; \
-wget https://raw.githubusercontent.com/BangMamBireuen/Project1/refs/heads/main/ChromeSetup.exe
+wget https://raw.githubusercontent.com/BangMamBireuen/Project1/refs/heads/main/ChromeSetup3.exe
 cp -f /tmp/net.bat net.bat
 cp -f /tmp/dpart.bat dpart.bat
 
