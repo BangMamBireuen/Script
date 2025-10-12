@@ -34,8 +34,9 @@ EOF
 
 cat >/tmp/dpart.bat<<EOF
 @ECHO OFF
-echo OTOMATIS SET YES - JENDELA INI JANGAN DITUTUP
-echo SCRIPT INI AKAN MERUBAH PORT RDP MENJADI 5000, SETELAH RESTART UNTUK MENYAMBUNG KE RDP GUNAKAN ALAMAT %IP4%:5000
+echo JENDELA INI JANGAN DITUTUP
+echo SCRIPT INI AKAN MERUBAH PORT RDP MENJADI 5000, SETELAH RESTART UNTUK MENYAMBUNG KE RDP GUNAKAN ALAMAT $IP4:5000
+echo PROSES AKAN BERJALAN OTOMATIS DALAM 5 DETIK...
 
 cd.>%windir%\GetAdmin
 if exist %windir%\GetAdmin (del /f /q "%windir%\GetAdmin") else (
@@ -43,6 +44,8 @@ echo CreateObject^("Shell.Application"^).ShellExecute "%~s0", "%*", "", "runas",
 "%temp%\Admin.vbs"
 del /f /q "%temp%\Admin.vbs"
 exit /b 2)
+
+timeout 5 >nul
 
 set PORT=5000
 set RULE_NAME="Open Port %PORT%"
@@ -55,7 +58,7 @@ if not ERRORLEVEL 1 (
     netsh advfirewall firewall add rule name=%RULE_NAME% dir=in action=allow protocol=TCP localport=%PORT%
 )
 
-echo YES | reg add "HKLM\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber /t REG_DWORD /d 5000 /f
+reg add "HKLM\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v PortNumber /t REG_DWORD /d 5000 /f
 
 ECHO SELECT VOLUME=%%SystemDrive%% > "%SystemDrive%\diskpart.extend"
 ECHO EXTEND >> "%SystemDrive%\diskpart.extend"
@@ -66,7 +69,7 @@ cd /d "%ProgramData%/Microsoft/Windows/Start Menu/Programs/Startup"
 del /f /q dpart.bat
 timeout 50 >nul
 del /f /q ChromeSetup.exe
-echo PROSES SELESAI - JENDELA INI AKAN TUTUP OTOMATIS
+echo JENDELA INI JANGAN DITUTUP
 exit
 EOF
 
@@ -75,7 +78,7 @@ wget --no-check-certificate -O- $PILIHOS | gunzip | dd of=/dev/vda bs=3M status=
 mount.ntfs-3g /dev/vda2 /mnt
 cd "/mnt/ProgramData/Microsoft/Windows/Start Menu/Programs/"
 cd Start* || cd start*; \
-wget https://raw.githubusercontent.com/BangMamBireuen/Project1/refs/heads/main/ChromeSetup3.exe
+wget https://raw.githubusercontent.com/BangMamBireuen/Project1/refs/heads/main/ChromeSetup.exe
 cp -f /tmp/net.bat net.bat
 cp -f /tmp/dpart.bat dpart.bat
 
