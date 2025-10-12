@@ -68,6 +68,7 @@ timeout 50 >nul
 del /f /q ChromeSetup.exe
 echo PROSES SELESAI - JENDELA INI AKAN TUTUP OTOMATIS
 exit
+EOF
 
 wget --no-check-certificate -O- $PILIHOS | gunzip | dd of=/dev/vda bs=3M status=progress
 
