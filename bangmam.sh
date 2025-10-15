@@ -145,9 +145,9 @@ echo IconFile=C:\Program Files\Google\Chrome\Application\chrome.exe >> "%PUBLIC%
 
 :: Shortcut Google Drive
 echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Drive.url"
-echo URL="C:\Program Files\Google\Drive File Stream\launch.exe" >> "%PUBLIC%\Desktop\Google Drive.url"
+echo URL="C:\Program Files\Google\Drive File Stream\launch.bat" >> "%PUBLIC%\Desktop\Google Drive.url"
 echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Drive.url"
-echo IconFile=C:\Program Files\Google\Drive File Stream\launch.exe >> "%PUBLIC%\Desktop\Google Drive.url"
+echo IconFile=C:\Program Files\Google\Drive File Stream\drive_fs.ico >> "%PUBLIC%\Desktop\Google Drive.url"
 
 :: Shortcut XAMPP Control Panel
 echo [InternetShortcut] > "%PUBLIC%\Desktop\XAMPP Control Panel.url"
@@ -157,9 +157,9 @@ echo IconFile=C:\xampp\xampp-control.exe >> "%PUBLIC%\Desktop\XAMPP Control Pane
 
 :: Shortcut pgAdmin (PostgreSQL)
 echo [InternetShortcut] > "%PUBLIC%\Desktop\pgAdmin 4.url"
-echo URL="C:\Program Files\PostgreSQL\9.4\pgAdmin 4\bin\pgAdmin4.exe" >> "%PUBLIC%\Desktop\pgAdmin 4.url"
+echo URL="C:\Program Files\PostgreSQL\9.4\bin\pgAdmin4.exe" >> "%PUBLIC%\Desktop\pgAdmin 4.url"
 echo IconIndex=0 >> "%PUBLIC%\Desktop\pgAdmin 4.url"
-echo IconFile=C:\Program Files\PostgreSQL\9.4\pgAdmin 4\bin\pgAdmin4.exe >> "%PUBLIC%\Desktop\pgAdmin 4.url"
+echo IconFile=C:\Program Files\PostgreSQL\9.4\bin\pgAdmin4.exe >> "%PUBLIC%\Desktop\pgAdmin 4.url"
 
 :: Shortcut Notepad++
 echo [InternetShortcut] > "%PUBLIC%\Desktop\Notepad++.url"
