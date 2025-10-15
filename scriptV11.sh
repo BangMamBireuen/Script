@@ -108,16 +108,12 @@ powershell -Command "& {
 echo Menginstall PostgreSQL 9.4.26...
 echo Proses instalasi PostgreSQL akan dimulai...
 echo Harap tunggu, proses mungkin memakan waktu beberapa menit...
-
-:: Install PostgreSQL dengan parameter yang benar
-start /wait "" "%TEMP%\postgresql-9.4.26.exe" --unattendedmodeui minimal --mode unattended --superpassword "123456" --servicename "PostgreSQL" --servicepassword "123456" --serverport 5432
-
+%TEMP%\postgresql-9.4.26.exe --unattendedmodeui none --superpassword "123456" --servicename "PostgreSQL" --servicepassword "123456" --serverport 5432
 if %ERRORLEVEL% EQU 0 (
     echo PostgreSQL berhasil diinstall!
 ) else (
-    echo Terjadi error saat install PostgreSQL. Error Code: %ERRORLEVEL%
+    echo Terjadi error saat install PostgreSQL
 )
-
 echo Menghapus installer PostgreSQL...
 del /f /q "%TEMP%\postgresql-9.4.26.exe"
 
