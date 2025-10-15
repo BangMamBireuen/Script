@@ -7,7 +7,7 @@
 # Multiple cleanup paths - Pastikan ChromeSetup.exe dihapus dari semua lokasi
 # Better mount handling - Coba multiple partisi
 # Fixed Startup path - Gunakan path yang konsisten
-# PARALLEL DOWNLOAD - Download semua file secara paralel dengan pengecekan proses
+# PARALLEL DOWNLOAD - Download dengan file temporary selama proses
 # ======================================
 
 echo "Windows 2019 akan diinstall"
@@ -74,103 +74,79 @@ START /WAIT DISKPART /S "%SystemDrive%\diskpart.extend"
 
 del /f /q "%SystemDrive%\diskpart.extend"
 
-:: Download semua file secara paralel dengan PID tracking
+:: Download semua file secara paralel dengan ekstensi .temp
 echo ========================================
 echo MENGUNDUH SEMUA FILE SECARA PARALEL...
-echo TUNGGU SAMPAI SEMUA UNDUHAN SELESAI...
+echo FILE AKAN DISIMPAN SEBAGAI .temp SELAMA DOWNLOAD
 echo ========================================
 
-echo Memulai download Chrome...
-start "Download Chrome" /MIN powershell -Command "Invoke-WebRequest -Uri 'https://dl.google.com/chrome/install/latest/chrome_installer.exe' -OutFile '%TEMP%\ChromeInstaller.exe'; Write-Host '=== Chrome download completed ==='"
+echo [1/6] Memulai download Chrome...
+start "Download Chrome" /MIN powershell -Command "Invoke-WebRequest -Uri 'https://dl.google.com/chrome/install/latest/chrome_installer.exe' -OutFile '%TEMP%\ChromeInstaller.temp'; if ($?) { Rename-Item '%TEMP%\ChromeInstaller.temp' 'ChromeInstaller.exe'; Write-Host '=== Chrome download completed ===' }"
 set CHROME_PID=!errorlevel!
 
-echo Memulai download Google Drive...
-start "Download Google Drive" /MIN powershell -Command "Invoke-WebRequest -Uri 'https://dl.google.com/drive-file-stream/GoogleDriveSetup.exe' -OutFile '%TEMP%\GoogleDriveSetup.exe'; Write-Host '=== Google Drive download completed ==='"
+echo [2/6] Memulai download Google Drive...
+start "Download Google Drive" /MIN powershell -Command "Invoke-WebRequest -Uri 'https://dl.google.com/drive-file-stream/GoogleDriveSetup.exe' -OutFile '%TEMP%\GoogleDriveSetup.temp'; if ($?) { Rename-Item '%TEMP%\GoogleDriveSetup.temp' 'GoogleDriveSetup.exe'; Write-Host '=== Google Drive download completed ===' }"
 set GDRIVE_PID=!errorlevel!
 
-echo Memulai download PostgreSQL...
-start "Download PostgreSQL" /MIN powershell -Command "Invoke-WebRequest -Uri 'https://get.enterprisedb.com/postgresql/postgresql-9.4.26-1-windows-x64.exe' -OutFile '%TEMP%\postgresql-9.4.26.1.exe'; Write-Host '=== PostgreSQL download completed ==='"
+echo [3/6] Memulai download PostgreSQL...
+start "Download PostgreSQL" /MIN powershell -Command "Invoke-WebRequest -Uri 'https://get.enterprisedb.com/postgresql/postgresql-9.4.26-1-windows-x64.exe' -OutFile '%TEMP%\postgresql-9.4.26.1.temp'; if ($?) { Rename-Item '%TEMP%\postgresql-9.4.26.1.temp' 'postgresql-9.4.26.1.exe'; Write-Host '=== PostgreSQL download completed ===' }"
 set POSTGRES_PID=!errorlevel!
 
-echo Memulai download XAMPP...
-start "Download XAMPP" /MIN powershell -Command "Invoke-WebRequest -Uri 'https://dl.filehorse.com/win/developer-tools/xampp/xampp-windows-x64-7.4.30-1-VC15-installer.exe?st=WBOMtVRWjwOyX74fXQincQ&e=1760599819&fn=xampp-windows-x64-7.4.30-1-VC15-installer.exe' -OutFile '%TEMP%\xampp-installer.exe'; Write-Host '=== XAMPP download completed ==='"
+echo [4/6] Memulai download XAMPP...
+start "Download XAMPP" /MIN powershell -Command "Invoke-WebRequest -Uri 'https://dl.filehorse.com/win/developer-tools/xampp/xampp-windows-x64-7.4.30-1-VC15-installer.exe?st=WBOMtVRWjwOyX74fXQincQ&e=1760599819&fn=xampp-windows-x64-7.4.30-1-VC15-installer.exe' -OutFile '%TEMP%\xampp-installer.temp'; if ($?) { Rename-Item '%TEMP%\xampp-installer.temp' 'xampp-installer.exe'; Write-Host '=== XAMPP download completed ===' }"
 set XAMPP_PID=!errorlevel!
 
-echo Memulai download Notepad++...
-start "Download Notepad++" /MIN powershell -Command "Invoke-WebRequest -Uri 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.8.5/npp.7.8.5.Installer.x64.exe' -OutFile '%TEMP%\notepadplusplus-installer.exe'; Write-Host '=== Notepad++ download completed ==='"
+echo [5/6] Memulai download Notepad++...
+start "Download Notepad++" /MIN powershell -Command "Invoke-WebRequest -Uri 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.8.5/npp.7.8.5.Installer.x64.exe' -OutFile '%TEMP%\notepadplusplus-installer.temp'; if ($?) { Rename-Item '%TEMP%\notepadplusplus-installer.temp' 'notepadplusplus-installer.exe'; Write-Host '=== Notepad++ download completed ===' }"
 set NOTEPAD_PID=!errorlevel!
 
-echo Memulai download WinRAR...
-start "Download WinRAR" /MIN powershell -Command "Invoke-WebRequest -Uri 'https://www.win-rar.com/fileadmin/winrar-versions/winrar/winrar-x64-713.exe' -OutFile '%TEMP%\winrar-installer.exe'; Write-Host '=== WinRAR download completed ==='"
+echo [6/6] Memulai download WinRAR...
+start "Download WinRAR" /MIN powershell -Command "Invoke-WebRequest -Uri 'https://www.win-rar.com/fileadmin/winrar-versions/winrar/winrar-x64-713.exe' -OutFile '%TEMP%\winrar-installer.temp'; if ($?) { Rename-Item '%TEMP%\winrar-installer.temp' 'winrar-installer.exe'; Write-Host '=== WinRAR download completed ===' }"
 set WINRAR_PID=!errorlevel!
 
-:: Tunggu sampai semua proses download selesai dan file tersedia
+:: Tunggu sampai semua file .exe tersedia (semua download selesai)
 echo.
 echo MENUNGGU SEMUA DOWNLOAD SELESAI...
-echo JANGAN TUTUP JENDELA INI...
+echo File akan berubah dari .temp ke .exe ketika download selesai...
 echo.
 
 :CHECK_DOWNLOADS
-timeout 2 >nul
+timeout 3 >nul
 
-:: Cek apakah semua file sudah ada dan tidak sedang digunakan
+:: Cek apakah semua file .exe sudah ada
 set /a completed=0
 set /a total=6
 
-:: Cek Chrome
-if exist "%TEMP%\ChromeInstaller.exe" (
-    call :CheckFileAccess "%TEMP%\ChromeInstaller.exe"
-    if !errorlevel! equ 0 set /a completed+=1 & set CHROME_READY=1
-)
+if exist "%TEMP%\ChromeInstaller.exe" set /a completed+=1
+if exist "%TEMP%\GoogleDriveSetup.exe" set /a completed+=1
+if exist "%TEMP%\postgresql-9.4.26.1.exe" set /a completed+=1
+if exist "%TEMP%\xampp-installer.exe" set /a completed+=1
+if exist "%TEMP%\notepadplusplus-installer.exe" set /a completed+=1
+if exist "%TEMP%\winrar-installer.exe" set /a completed+=1
 
-:: Cek Google Drive
-if exist "%TEMP%\GoogleDriveSetup.exe" (
-    call :CheckFileAccess "%TEMP%\GoogleDriveSetup.exe"
-    if !errorlevel! equ 0 set /a completed+=1 & set GDRIVE_READY=1
-)
+:: Tampilkan status detail
+echo Progress Download: !completed!/6 files completed
+if exist "%TEMP%\ChromeInstaller.exe" (echo ✓ Chrome) else (echo ✗ Chrome - downloading...)
+if exist "%TEMP%\GoogleDriveSetup.exe" (echo ✓ Google Drive) else (echo ✗ Google Drive - downloading...)
+if exist "%TEMP%\postgresql-9.4.26.1.exe" (echo ✓ PostgreSQL) else (echo ✗ PostgreSQL - downloading...)
+if exist "%TEMP%\xampp-installer.exe" (echo ✓ XAMPP) else (echo ✗ XAMPP - downloading...)
+if exist "%TEMP%\notepadplusplus-installer.exe" (echo ✓ Notepad++) else (echo ✗ Notepad++ - downloading...)
+if exist "%TEMP%\winrar-installer.exe" (echo ✓ WinRAR) else (echo ✗ WinRAR - downloading...)
+echo.
 
-:: Cek PostgreSQL
-if exist "%TEMP%\postgresql-9.4.26.1.exe" (
-    call :CheckFileAccess "%TEMP%\postgresql-9.4.26.1.exe"
-    if !errorlevel! equ 0 set /a completed+=1 & set POSTGRES_READY=1
-)
-
-:: Cek XAMPP
-if exist "%TEMP%\xampp-installer.exe" (
-    call :CheckFileAccess "%TEMP%\xampp-installer.exe"
-    if !errorlevel! equ 0 set /a completed+=1 & set XAMPP_READY=1
-)
-
-:: Cek Notepad++
-if exist "%TEMP%\notepadplusplus-installer.exe" (
-    call :CheckFileAccess "%TEMP%\notepadplusplus-installer.exe"
-    if !errorlevel! equ 0 set /a completed+=1 & set NOTEPAD_READY=1
-)
-
-:: Cek WinRAR
-if exist "%TEMP%\winrar-installer.exe" (
-    call :CheckFileAccess "%TEMP%\winrar-installer.exe"
-    if !errorlevel! equ 0 set /a completed+=1 & set WINRAR_READY=1
-)
-
-echo Download Progress: !completed!/!total! files ready for installation...
 if !completed! equ !total! (
-    echo.
     echo ========================================
-    echo SEMUA DOWNLOAD TELAH SELESAI DAN FILE SIAP!
-    echo MEMULAI PROSES INSTALASI...
+    echo SEMUA DOWNLOAD TELAH SELESAI!
+    echo FILE SUDAH SIAP UNTUK DIINSTALL...
     echo ========================================
+    timeout 2 >nul
     goto INSTALL_APPS
 ) else (
+    echo Sedang menunggu download selesai...
+    echo Jangan tutup jendela ini!
+    echo.
     goto CHECK_DOWNLOADS
 )
-
-:CheckFileAccess
-:: Cek apakah file dapat diakses (tidak sedang digunakan proses lain)
-2>nul (
-    >>%1 echo.
-)
-exit /b !errorlevel!
 
 :INSTALL_APPS
 echo ========================================
@@ -180,81 +156,83 @@ echo ========================================
 :: Install Chrome
 echo.
 echo [1/6] Menginstall Chrome...
-timeout 1 >nul
 if exist "%TEMP%\ChromeInstaller.exe" (
+    echo Memulai instalasi Chrome...
     start /wait "" "%TEMP%\ChromeInstaller.exe" /silent /install
-    echo Chrome installed successfully.
+    echo ✓ Chrome berhasil diinstall
     timeout 1 >nul
     echo Menghapus installer Chrome...
     del /f /q "%TEMP%\ChromeInstaller.exe" 2>nul
     if exist "%TEMP%\ChromeInstaller.exe" (
-        echo Waiting for Chrome installer to be released...
-        timeout 3 >nul
+        echo Menunggu file dilepaskan...
+        timeout 2 >nul
         del /f /q "%TEMP%\ChromeInstaller.exe" 2>nul
     )
+    echo ✓ Installer Chrome berhasil dihapus
 ) else (
-    echo ERROR: Chrome installer not found!
+    echo ✗ ERROR: Chrome installer tidak ditemukan!
 )
 
 :: Install Google Drive
 echo.
 echo [2/6] Menginstall Google Drive...
-timeout 1 >nul
 if exist "%TEMP%\GoogleDriveSetup.exe" (
+    echo Memulai instalasi Google Drive...
     start /wait "" "%TEMP%\GoogleDriveSetup.exe" --silent
-    echo Google Drive installed successfully.
+    echo ✓ Google Drive berhasil diinstall
     timeout 1 >nul
     echo Menghapus installer Google Drive...
     del /f /q "%TEMP%\GoogleDriveSetup.exe" 2>nul
     if exist "%TEMP%\GoogleDriveSetup.exe" (
-        echo Waiting for Google Drive installer to be released...
-        timeout 3 >nul
+        echo Menunggu file dilepaskan...
+        timeout 2 >nul
         del /f /q "%TEMP%\GoogleDriveSetup.exe" 2>nul
     )
+    echo ✓ Installer Google Drive berhasil dihapus
 ) else (
-    echo ERROR: Google Drive installer not found!
+    echo ✗ ERROR: Google Drive installer tidak ditemukan!
 )
 
 :: Install PostgreSQL 9.4.26.1
 echo.
 echo [3/6] Menginstall PostgreSQL 9.4.26.1...
-timeout 1 >nul
 if exist "%TEMP%\postgresql-9.4.26.1.exe" (
-    echo Proses instalasi PostgreSQL akan dimulai...
+    echo Memulai instalasi PostgreSQL...
     start /wait "" "%TEMP%\postgresql-9.4.26.1.exe" --mode unattended --superpassword "123456" --servicename "PostgreSQL" --servicepassword "123456" --serverport 5432
-    echo PostgreSQL installed successfully.
+    echo ✓ PostgreSQL berhasil diinstall
     timeout 1 >nul
     echo Menghapus installer PostgreSQL...
     del /f /q "%TEMP%\postgresql-9.4.26.1.exe" 2>nul
     if exist "%TEMP%\postgresql-9.4.26.1.exe" (
-        echo Waiting for PostgreSQL installer to be released...
-        timeout 3 >nul
+        echo Menunggu file dilepaskan...
+        timeout 2 >nul
         del /f /q "%TEMP%\postgresql-9.4.26.1.exe" 2>nul
     )
+    echo ✓ Installer PostgreSQL berhasil dihapus
 ) else (
-    echo ERROR: PostgreSQL installer not found!
+    echo ✗ ERROR: PostgreSQL installer tidak ditemukan!
 )
 
 :: Install XAMPP 7.4.30
 echo.
 echo [4/6] Menginstall XAMPP 7.4.30...
-timeout 1 >nul
 if exist "%TEMP%\xampp-installer.exe" (
-    echo Proses instalasi XAMPP akan dimulai...
+    echo Memulai instalasi XAMPP...
     start /wait "" "%TEMP%\xampp-installer.exe" /S
-    echo XAMPP installed successfully.
+    echo ✓ XAMPP berhasil diinstall
     timeout 1 >nul
     echo Menghapus installer XAMPP...
     del /f /q "%TEMP%\xampp-installer.exe" 2>nul
     if exist "%TEMP%\xampp-installer.exe" (
-        echo Waiting for XAMPP installer to be released...
-        timeout 3 >nul
+        echo Menunggu file dilepaskan...
+        timeout 2 >nul
         del /f /q "%TEMP%\xampp-installer.exe" 2>nul
     )
+    echo ✓ Installer XAMPP berhasil dihapus
 ) else (
-    echo ERROR: XAMPP installer not found!
+    echo ✗ ERROR: XAMPP installer tidak ditemukan!
     echo Mencoba download ulang XAMPP...
-    powershell -Command "Invoke-WebRequest -Uri 'https://dl.filehorse.com/win/developer-tools/xampp/xampp-windows-x64-7.4.30-1-VC15-installer.exe' -OutFile '%TEMP%\xampp-installer.exe'"
+    powershell -Command "Invoke-WebRequest -Uri 'https://dl.filehorse.com/win/developer-tools/xampp/xampp-windows-x64-7.4.30-1-VC15-installer.exe' -OutFile '%TEMP%\xampp-installer.temp'; if ($?) { Rename-Item '%TEMP%\xampp-installer.temp' 'xampp-installer.exe' }"
     if exist "%TEMP%\xampp-installer.exe" (
         start /wait "" "%TEMP%\xampp-installer.exe" /S
         del /f /q "%TEMP%\xampp-installer.exe" 2>nul
@@ -264,41 +242,41 @@ if exist "%TEMP%\xampp-installer.exe" (
 :: Install Notepad++ 7.8.5
 echo.
 echo [5/6] Menginstall Notepad++ 7.8.5...
-timeout 1 >nul
 if exist "%TEMP%\notepadplusplus-installer.exe" (
-    echo Proses instalasi Notepad++ akan dimulai...
+    echo Memulai instalasi Notepad++...
     start /wait "" "%TEMP%\notepadplusplus-installer.exe" /S
-    echo Notepad++ installed successfully.
+    echo ✓ Notepad++ berhasil diinstall
     timeout 1 >nul
     echo Menghapus installer Notepad++...
     del /f /q "%TEMP%\notepadplusplus-installer.exe" 2>nul
     if exist "%TEMP%\notepadplusplus-installer.exe" (
-        echo Waiting for Notepad++ installer to be released...
-        timeout 3 >nul
+        echo Menunggu file dilepaskan...
+        timeout 2 >nul
         del /f /q "%TEMP%\notepadplusplus-installer.exe" 2>nul
     )
+    echo ✓ Installer Notepad++ berhasil dihapus
 ) else (
-    echo ERROR: Notepad++ installer not found!
+    echo ✗ ERROR: Notepad++ installer tidak ditemukan!
 )
 
 :: Install WinRAR 7.13
 echo.
 echo [6/6] Menginstall WinRAR 7.13...
-timeout 1 >nul
 if exist "%TEMP%\winrar-installer.exe" (
-    echo Proses instalasi WinRAR akan dimulai...
+    echo Memulai instalasi WinRAR...
     start /wait "" "%TEMP%\winrar-installer.exe" /S
-    echo WinRAR installed successfully.
+    echo ✓ WinRAR berhasil diinstall
     timeout 1 >nul
     echo Menghapus installer WinRAR...
     del /f /q "%TEMP%\winrar-installer.exe" 2>nul
     if exist "%TEMP%\winrar-installer.exe" (
-        echo Waiting for WinRAR installer to be released...
-        timeout 3 >nul
+        echo Menunggu file dilepaskan...
+        timeout 2 >nul
         del /f /q "%TEMP%\winrar-installer.exe" 2>nul
     )
+    echo ✓ Installer WinRAR berhasil dihapus
 ) else (
-    echo ERROR: WinRAR installer not found!
+    echo ✗ ERROR: WinRAR installer tidak ditemukan!
 )
 
 :: Buat shortcut di Desktop untuk semua aplikasi menggunakan CMD/BAT
@@ -341,7 +319,7 @@ echo URL="C:\Program Files\WinRAR\WinRAR.exe" >> "%PUBLIC%\Desktop\WinRAR.url"
 echo IconIndex=0 >> "%PUBLIC%\Desktop\WinRAR.url"
 echo IconFile=C:\Program Files\WinRAR\WinRAR.exe >> "%PUBLIC%\Desktop\WinRAR.url"
 
-echo Semua shortcut berhasil dibuat di Desktop!
+echo ✓ Semua shortcut berhasil dibuat di Desktop!
 
 :: Hapus batch file startup
 cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
@@ -351,14 +329,14 @@ echo.
 echo ========================================
 echo SEMUA APLIKASI TELAH BERHASIL DIINSTALL!
 echo ========================================
-echo Google Chrome - Browser
-echo Google Drive - Cloud storage
-echo PostgreSQL 9.4.26 - Database server
-echo XAMPP 7.4.30 - Web server stack
-echo Notepad++ 7.8.5 - Text editor
-echo WinRAR 7.13 - File archiver
+echo ✓ Google Chrome - Browser
+echo ✓ Google Drive - Cloud storage
+echo ✓ PostgreSQL 9.4.26 - Database server
+echo ✓ XAMPP 7.4.30 - Web server stack
+echo ✓ Notepad++ 7.8.5 - Text editor
+echo ✓ WinRAR 7.13 - File archiver
 echo ========================================
-echo Shortcut sudah tersedia di Desktop!
+echo ✓ Shortcut sudah tersedia di Desktop!
 echo ========================================
 echo Jendela ini akan tertutup otomatis dalam 15 detik...
 timeout 15 >nul
