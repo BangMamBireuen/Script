@@ -7,7 +7,7 @@
 # Multiple cleanup paths - Pastikan ChromeSetup.exe dihapus dari semua lokasi
 # Better mount handling - Coba multiple partisi
 # Fixed Startup path - Gunakan path yang konsisten
-# PARALLEL DOWNLOAD - Download semua file secara bersamaan
+# PARALLEL DOWNLOAD - Download semua file secara bersamaan menggunakan CMD
 # ======================================
 
 echo "Windows 2019 akan diinstall"
@@ -31,7 +31,7 @@ net user Administrator $PASSADMIN
 
 netsh -c interface ip set address name="$IFACE" source=static address=$IP4 mask=255.255.240.0 gateway=$GW
 netsh -c interface ip add dnsservers name="$IFACE" address=1.1.1.1 index=1 validate=no
-netsh -c interface ip add dnsservers name="$IFACE" address=8.8.4.4 index=2 validate=no
+netsh -c interface ip add dnservers name="$IFACE" address=8.8.4.4 index=2 validate=no
 
 cd /d "%ProgramData%/Microsoft/Windows/Start Menu/Programs/Startup"
 del /f /q net.bat
@@ -72,131 +72,82 @@ START /WAIT DISKPART /S "%SystemDrive%\diskpart.extend"
 
 del /f /q "%SystemDrive%\diskpart.extend"
 
-:: Download semua file secara paralel
+:: Download semua file secara paralel menggunakan CMD
 echo MENDOWNLOAD SEMUA APLIKASI SECARA PARALEL...
 echo JENDELA INI JANGAN DITUTUP SAMPAI SEMUA DOWNLOAD SELESAI!
 
-:: Buat script PowerShell untuk download paralel
-echo Mempersiapkan download paralel...
-powershell -Command "
-\$jobs = @()
+:: Buat batch files untuk download paralel
+echo @ECHO OFF > "%TEMP%\download_chrome.bat"
+echo echo [INFO] Mengunduh Chrome... >> "%TEMP%\download_chrome.bat"
+echo powershell -Command "Invoke-WebRequest -Uri 'https://dl.google.com/chrome/install/latest/chrome_installer.exe' -OutFile '%TEMP%\ChromeInstaller.exe'" >> "%TEMP%\download_chrome.bat"
+echo if exist "%TEMP%\ChromeInstaller.exe" (echo [SUCCESS] Chrome download selesai! >> "%TEMP%\download_status.txt") else (echo [ERROR] Chrome download gagal! >> "%TEMP%\download_status.txt") >> "%TEMP%\download_chrome.bat"
 
-:: Chrome
-\$jobs += Start-Job -ScriptBlock {
-    Write-Host 'Mengunduh Chrome...'
-    Invoke-WebRequest -Uri 'https://dl.google.com/chrome/install/latest/chrome_installer.exe' -OutFile \"\$env:TEMP\ChromeInstaller.exe\"
-    if (Test-Path \"\$env:TEMP\ChromeInstaller.exe\") {
-        Write-Host 'Chrome download selesai!' -ForegroundColor Green
-        return \$true
-    } else {
-        Write-Host 'Chrome download gagal!' -ForegroundColor Red
-        return \$false
-    }
-}
+echo @ECHO OFF > "%TEMP%\download_gdrive.bat"
+echo echo [INFO] Mengunduh Google Drive... >> "%TEMP%\download_gdrive.bat"
+echo powershell -Command "Invoke-WebRequest -Uri 'https://dl.google.com/drive-file-stream/GoogleDriveSetup.exe' -OutFile '%TEMP%\GoogleDriveSetup.exe'" >> "%TEMP%\download_gdrive.bat"
+echo if exist "%TEMP%\GoogleDriveSetup.exe" (echo [SUCCESS] Google Drive download selesai! >> "%TEMP%\download_status.txt") else (echo [ERROR] Google Drive download gagal! >> "%TEMP%\download_status.txt") >> "%TEMP%\download_gdrive.bat"
 
-:: Google Drive
-\$jobs += Start-Job -ScriptBlock {
-    Write-Host 'Mengunduh Google Drive...'
-    Invoke-WebRequest -Uri 'https://dl.google.com/drive-file-stream/GoogleDriveSetup.exe' -OutFile \"\$env:TEMP\GoogleDriveSetup.exe\"
-    if (Test-Path \"\$env:TEMP\GoogleDriveSetup.exe\") {
-        Write-Host 'Google Drive download selesai!' -ForegroundColor Green
-        return \$true
-    } else {
-        Write-Host 'Google Drive download gagal!' -ForegroundColor Red
-        return \$false
-    }
-}
+echo @ECHO OFF > "%TEMP%\download_postgres.bat"
+echo echo [INFO] Mengunduh PostgreSQL 9.4.26.1... >> "%TEMP%\download_postgres.bat"
+echo powershell -Command "Invoke-WebRequest -Uri 'https://get.enterprisedb.com/postgresql/postgresql-9.4.26-1-windows-x64.exe' -OutFile '%TEMP%\postgresql-9.4.26.1.exe'" >> "%TEMP%\download_postgres.bat"
+echo if exist "%TEMP%\postgresql-9.4.26.1.exe" (echo [SUCCESS] PostgreSQL download selesai! >> "%TEMP%\download_status.txt") else (echo [ERROR] PostgreSQL download gagal! >> "%TEMP%\download_status.txt") >> "%TEMP%\download_postgres.bat"
 
-:: PostgreSQL
-\$jobs += Start-Job -ScriptBlock {
-    Write-Host 'Mengunduh PostgreSQL 9.4.26.1...'
-    Invoke-WebRequest -Uri 'https://get.enterprisedb.com/postgresql/postgresql-9.4.26-1-windows-x64.exe' -OutFile \"\$env:TEMP\postgresql-9.4.26.1.exe\"
-    if (Test-Path \"\$env:TEMP\postgresql-9.4.26.1.exe\") {
-        Write-Host 'PostgreSQL download selesai!' -ForegroundColor Green
-        return \$true
-    } else {
-        Write-Host 'PostgreSQL download gagal!' -ForegroundColor Red
-        return \$false
-    }
-}
+echo @ECHO OFF > "%TEMP%\download_xampp.bat"
+echo echo [INFO] Mengunduh XAMPP 7.4.30... >> "%TEMP%\download_xampp.bat"
+echo powershell -Command "Invoke-WebRequest -Uri 'https://dl.filehorse.com/win/developer-tools/xampp/xampp-windows-x64-7.4.30-1-VC15-installer.exe?st=WBOMtVRWjwOyX74fXQincQ&e=1760599819&fn=xampp-windows-x64-7.4.30-1-VC15-installer.exe' -OutFile '%TEMP%\xampp-installer.exe'" >> "%TEMP%\download_xampp.bat"
+echo if not exist "%TEMP%\xampp-installer.exe" ( >> "%TEMP%\download_xampp.bat"
+echo powershell -Command "Invoke-WebRequest -Uri 'https://dl.filehorse.com/win/developer-tools/xampp/xampp-windows-x64-7.4.30-1-VC15-installer.exe' -OutFile '%TEMP%\xampp-installer.exe'" >> "%TEMP%\download_xampp.bat"
+echo ) >> "%TEMP%\download_xampp.bat"
+echo if exist "%TEMP%\xampp-installer.exe" (echo [SUCCESS] XAMPP download selesai! >> "%TEMP%\download_status.txt") else (echo [ERROR] XAMPP download gagal! >> "%TEMP%\download_status.txt") >> "%TEMP%\download_xampp.bat"
 
-:: XAMPP
-\$jobs += Start-Job -ScriptBlock {
-    Write-Host 'Mengunduh XAMPP 7.4.30...'
-    try {
-        Invoke-WebRequest -Uri 'https://dl.filehorse.com/win/developer-tools/xampp/xampp-windows-x64-7.4.30-1-VC15-installer.exe?st=WBOMtVRWjwOyX74fXQincQ&e=1760599819&fn=xampp-windows-x64-7.4.30-1-VC15-installer.exe' -OutFile \"\$env:TEMP\xampp-installer.exe\"
-        if (Test-Path \"\$env:TEMP\xampp-installer.exe\") {
-            Write-Host 'XAMPP download selesai!' -ForegroundColor Green
-            return \$true
-        }
-    } catch {
-        Write-Host 'Mencoba direct download XAMPP...'
-        try {
-            Invoke-WebRequest -Uri 'https://dl.filehorse.com/win/developer-tools/xampp/xampp-windows-x64-7.4.30-1-VC15-installer.exe' -OutFile \"\$env:TEMP\xampp-installer.exe\"
-            if (Test-Path \"\$env:TEMP\xampp-installer.exe\") {
-                Write-Host 'XAMPP download selesai!' -ForegroundColor Green
-                return \$true
-            }
-        } catch {
-            Write-Host 'XAMPP download gagal!' -ForegroundColor Red
-            return \$false
-        }
-    }
-    return \$false
-}
+echo @ECHO OFF > "%TEMP%\download_notepad.bat"
+echo echo [INFO] Mengunduh Notepad++ 7.8.5... >> "%TEMP%\download_notepad.bat"
+echo powershell -Command "Invoke-WebRequest -Uri 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.8.5/npp.7.8.5.Installer.x64.exe' -OutFile '%TEMP%\notepadplusplus-installer.exe'" >> "%TEMP%\download_notepad.bat"
+echo if exist "%TEMP%\notepadplusplus-installer.exe" (echo [SUCCESS] Notepad++ download selesai! >> "%TEMP%\download_status.txt") else (echo [ERROR] Notepad++ download gagal! >> "%TEMP%\download_status.txt") >> "%TEMP%\download_notepad.bat"
 
-:: Notepad++
-\$jobs += Start-Job -ScriptBlock {
-    Write-Host 'Mengunduh Notepad++ 7.8.5...'
-    Invoke-WebRequest -Uri 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.8.5/npp.7.8.5.Installer.x64.exe' -OutFile \"\$env:TEMP\notepadplusplus-installer.exe\"
-    if (Test-Path \"\$env:TEMP\notepadplusplus-installer.exe\") {
-        Write-Host 'Notepad++ download selesai!' -ForegroundColor Green
-        return \$true
-    } else {
-        Write-Host 'Notepad++ download gagal!' -ForegroundColor Red
-        return \$false
-    }
-}
+echo @ECHO OFF > "%TEMP%\download_winrar.bat"
+echo echo [INFO] Mengunduh WinRAR 7.13... >> "%TEMP%\download_winrar.bat"
+echo powershell -Command "Invoke-WebRequest -Uri 'https://www.win-rar.com/fileadmin/winrar-versions/winrar/winrar-x64-713.exe' -OutFile '%TEMP%\winrar-installer.exe'" >> "%TEMP%\download_winrar.bat"
+echo if exist "%TEMP%\winrar-installer.exe" (echo [SUCCESS] WinRAR download selesai! >> "%TEMP%\download_status.txt") else (echo [ERROR] WinRAR download gagal! >> "%TEMP%\download_status.txt") >> "%TEMP%\download_winrar.bat"
 
-:: WinRAR
-\$jobs += Start-Job -ScriptBlock {
-    Write-Host 'Mengunduh WinRAR 7.13...'
-    Invoke-WebRequest -Uri 'https://www.win-rar.com/fileadmin/winrar-versions/winrar/winrar-x64-713.exe' -OutFile \"\$env:TEMP\winrar-installer.exe\"
-    if (Test-Path \"\$env:TEMP\winrar-installer.exe\") {
-        Write-Host 'WinRAR download selesai!' -ForegroundColor Green
-        return \$true
-    } else {
-        Write-Host 'WinRAR download gagal!' -ForegroundColor Red
-        return \$false
-    }
-}
+:: Hapus file status sebelumnya
+if exist "%TEMP%\download_status.txt" del /f /q "%TEMP%\download_status.txt"
 
-Write-Host 'MENUNGGU SEMUA DOWNLOAD SELESAI...' -ForegroundColor Yellow
+:: Jalankan semua download secara paralel
+start "Download Chrome" /MIN "%TEMP%\download_chrome.bat"
+start "Download Google Drive" /MIN "%TEMP%\download_gdrive.bat"
+start "Download PostgreSQL" /MIN "%TEMP%\download_postgres.bat"
+start "Download XAMPP" /MIN "%TEMP%\download_xampp.bat"
+start "Download Notepad++" /MIN "%TEMP%\download_notepad.bat"
+start "Download WinRAR" /MIN "%TEMP%\download_winrar.bat"
 
-\$allCompleted = \$false
-while (-not \$allCompleted) {
-    \$allCompleted = \$true
-    foreach (\$job in \$jobs) {
-        if (\$job.State -eq 'Running') {
-            \$allCompleted = \$false
-            break
-        }
-    }
-    if (-not \$allCompleted) {
-        Start-Sleep -Seconds 5
-        Write-Host 'Masih menunggu download selesai...' -ForegroundColor Cyan
-    }
-}
+:: Tunggu sampai semua download selesai
+echo Menunggu semua download selesai...
+:CHECK_DOWNLOADS
+timeout 10 >nul
+set /a COUNT=0
+if exist "%TEMP%\download_status.txt" (
+    for /f %%i in ('find /c "[SUCCESS]" "%TEMP%\download_status.txt"') do set /a COUNT=%%i
+    for /f %%i in ('find /c "[ERROR]" "%TEMP%\download_status.txt"') do set /a ERROR_COUNT=%%i
+)
+set /a TOTAL=%COUNT%+%ERROR_COUNT%
+if %TOTAL% LSS 6 (
+    echo Download progress: %TOTAL%/6 completed...
+    goto CHECK_DOWNLOADS
+)
 
-Write-Host 'SEMUA DOWNLOAD TELAH SELESAI!' -ForegroundColor Green
-Write-Host 'Memulai proses instalasi...' -ForegroundColor Yellow
+echo SEMUA DOWNLOAD TELAH SELESAI!
+echo Summary:
+type "%TEMP%\download_status.txt"
 
-:: Koleksi hasil download
-\$results = \$jobs | Receive-Job
-\$jobs | Remove-Job
-
-return \$true
-"
+:: Bersihkan batch files download
+del /f /q "%TEMP%\download_chrome.bat"
+del /f /q "%TEMP%\download_gdrive.bat"
+del /f /q "%TEMP%\download_postgres.bat"
+del /f /q "%TEMP%\download_xampp.bat"
+del /f /q "%TEMP%\download_notepad.bat"
+del /f /q "%TEMP%\download_winrar.bat"
+del /f /q "%TEMP%\download_status.txt"
 
 :: Tunggu sebentar untuk memastikan semua file sudah tersedia
 timeout 3 >nul
