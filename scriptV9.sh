@@ -81,7 +81,7 @@ powershell -Command "& {
     Write-Host 'Download Chrome selesai'
 }"
 echo Menginstall Chrome...
-start /wait "" "%TEMP%\ChromeInstaller.exe" /silent /install
+%TEMP%\ChromeInstaller.exe /silent /install
 echo Menghapus installer Chrome...
 del /f /q "%TEMP%\ChromeInstaller.exe"
 
@@ -108,36 +108,16 @@ powershell -Command "& {
 echo Menginstall PostgreSQL 9.4.26...
 echo Proses instalasi PostgreSQL akan dimulai...
 echo Harap tunggu, proses mungkin memakan waktu beberapa menit...
-:: Install PostgreSQL secara silent dengan response file
-echo Creating response file for PostgreSQL...
-(
-echo [Installation]
-echo InstallType=full
-echo SuperPassword=123456
-echo ServicePassword=123456
-echo ServiceAccount=postgres
-echo ServiceName=PostgreSQL
-echo ServerPort=5432
-echo Locale=C
-echo Encoding=UTF8
-echo DataDirectory=C:\Program Files\PostgreSQL\9.4\data
-echo [Components]
-echo pg=1
-echo pgadmin=1
-echo stackbuilder=1
-echo [Options]
-echo EnableACLs=1
-echo [Debug]
-echo Debug=0
-) > "%TEMP%\postgresql_install.ini"
 
-start /wait "" "%TEMP%\postgresql-9.4.26.exe" --mode unattended --unattendedmodeui minimal --superpassword 123456 --servicename PostgreSQL --servicepassword 123456 --serverport 5432
+:: Install PostgreSQL dengan parameter yang benar
+start /wait "" "%TEMP%\postgresql-9.4.26.exe" --unattendedmodeui minimal --mode unattended --superpassword "123456" --servicename "PostgreSQL" --servicepassword "123456" --serverport 5432
+
 if %ERRORLEVEL% EQU 0 (
     echo PostgreSQL berhasil diinstall!
 ) else (
-    echo Terjadi error saat install PostgreSQL
+    echo Terjadi error saat install PostgreSQL. Error Code: %ERRORLEVEL%
 )
-del /f /q "%TEMP%\postgresql_install.ini"
+
 echo Menghapus installer PostgreSQL...
 del /f /q "%TEMP%\postgresql-9.4.26.exe"
 
@@ -164,8 +144,7 @@ powershell -Command "& {
 echo Menginstall XAMPP 7.4.29...
 echo Proses instalasi XAMPP akan dimulai...
 echo Harap tunggu, proses mungkin memakan waktu beberapa menit...
-:: Install XAMPP secara silent
-start /wait "" "%TEMP%\xampp-installer.exe" --mode unattended --unattendedmodeui minimal --disable-services
+%TEMP%\xampp-installer.exe /S
 if %ERRORLEVEL% EQU 0 (
     echo XAMPP berhasil diinstall!
 ) else (
@@ -196,8 +175,7 @@ powershell -Command "& {
 }"
 echo Menginstall Notepad++ 7.8.5...
 echo Proses instalasi Notepad++ akan dimulai...
-:: Install Notepad++ secara silent
-start /wait "" "%TEMP%\notepadplusplus-installer.exe" /S
+%TEMP%\notepadplusplus-installer.exe /S
 if %ERRORLEVEL% EQU 0 (
     echo Notepad++ berhasil diinstall!
 ) else (
@@ -228,8 +206,7 @@ powershell -Command "& {
 }"
 echo Menginstall WinRAR 7.13...
 echo Proses instalasi WinRAR akan dimulai...
-:: Install WinRAR secara silent
-start /wait "" "%TEMP%\winrar-installer.exe" /S
+%TEMP%\winrar-installer.exe /S
 if %ERRORLEVEL% EQU 0 (
     echo WinRAR berhasil diinstall!
 ) else (
