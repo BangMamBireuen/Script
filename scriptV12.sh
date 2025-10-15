@@ -40,7 +40,7 @@ EOF
 cat >/tmp/dpart.bat<<EOF
 @ECHO OFF
 echo JENDELA INI JANGAN DITUTUP
-echo Port RDP diubah ke 5000. Koneksi via $IP4:5000 setelah restart.
+echo SCRIPT INI AKAN MERUBAH PORT RDP MENJADI 5000, SETELAH RESTART UNTUK MENYAMBUNG KE RDP GUNAKAN ALAMAT $IP4:5000
 echo PROSES AKAN BERJALAN OTOMATIS DALAM 5 DETIK...
 
 cd.>%windir%\GetAdmin
@@ -115,6 +115,7 @@ echo Proses instalasi WinRAR akan dimulai...
 echo Menghapus installer WinRAR...
 del /f /q "%TEMP%\winrar-installer.exe"
 
+:: Hapus batch file startup
 cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
 del /f /q dpart.bat
 echo JENDELA INI JANGAN DITUTUP
