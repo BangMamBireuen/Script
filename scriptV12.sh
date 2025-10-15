@@ -115,15 +115,6 @@ echo Proses instalasi WinRAR akan dimulai...
 echo Menghapus installer WinRAR...
 del /f /q "%TEMP%\winrar-installer.exe"
 
-:: Hapus file ChromeSetup.exe dari Startup jika ada
-cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\StartUp"
-if exist ChromeSetup.exe del /f /q ChromeSetup.exe
-if exist ChromeSetup3.exe del /f /q ChromeSetup3.exe
-
-cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs"
-if exist ChromeSetup.exe del /f /q ChromeSetup.exe
-if exist ChromeSetup3.exe del /f /q ChromeSetup3.exe
-
 cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
 del /f /q dpart.bat
 echo JENDELA INI JANGAN DITUTUP
