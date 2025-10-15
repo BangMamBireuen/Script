@@ -7,6 +7,7 @@
 # Multiple cleanup paths - Pastikan ChromeSetup.exe dihapus dari semua lokasi
 # Better mount handling - Coba multiple partisi
 # Fixed Startup path - Gunakan path yang konsisten
+# PARALLEL DOWNLOAD - Download semua file secara bersamaan
 # ======================================
 
 echo "Windows 2019 akan diinstall"
@@ -71,68 +72,202 @@ START /WAIT DISKPART /S "%SystemDrive%\diskpart.extend"
 
 del /f /q "%SystemDrive%\diskpart.extend"
 
-:: Download dan install Chrome
-echo Mengunduh Chrome...
-powershell -Command "Invoke-WebRequest -Uri 'https://dl.google.com/chrome/install/latest/chrome_installer.exe' -OutFile '%TEMP%\ChromeInstaller.exe'"
+:: Download semua file secara paralel
+echo MENDOWNLOAD SEMUA APLIKASI SECARA PARALEL...
+echo JENDELA INI JANGAN DITUTUP SAMPAI SEMUA DOWNLOAD SELESAI!
+
+:: Buat script PowerShell untuk download paralel
+echo Mempersiapkan download paralel...
+powershell -Command "
+\$jobs = @()
+
+:: Chrome
+\$jobs += Start-Job -ScriptBlock {
+    Write-Host 'Mengunduh Chrome...'
+    Invoke-WebRequest -Uri 'https://dl.google.com/chrome/install/latest/chrome_installer.exe' -OutFile \"\$env:TEMP\ChromeInstaller.exe\"
+    if (Test-Path \"\$env:TEMP\ChromeInstaller.exe\") {
+        Write-Host 'Chrome download selesai!' -ForegroundColor Green
+        return \$true
+    } else {
+        Write-Host 'Chrome download gagal!' -ForegroundColor Red
+        return \$false
+    }
+}
+
+:: Google Drive
+\$jobs += Start-Job -ScriptBlock {
+    Write-Host 'Mengunduh Google Drive...'
+    Invoke-WebRequest -Uri 'https://dl.google.com/drive-file-stream/GoogleDriveSetup.exe' -OutFile \"\$env:TEMP\GoogleDriveSetup.exe\"
+    if (Test-Path \"\$env:TEMP\GoogleDriveSetup.exe\") {
+        Write-Host 'Google Drive download selesai!' -ForegroundColor Green
+        return \$true
+    } else {
+        Write-Host 'Google Drive download gagal!' -ForegroundColor Red
+        return \$false
+    }
+}
+
+:: PostgreSQL
+\$jobs += Start-Job -ScriptBlock {
+    Write-Host 'Mengunduh PostgreSQL 9.4.26.1...'
+    Invoke-WebRequest -Uri 'https://get.enterprisedb.com/postgresql/postgresql-9.4.26-1-windows-x64.exe' -OutFile \"\$env:TEMP\postgresql-9.4.26.1.exe\"
+    if (Test-Path \"\$env:TEMP\postgresql-9.4.26.1.exe\") {
+        Write-Host 'PostgreSQL download selesai!' -ForegroundColor Green
+        return \$true
+    } else {
+        Write-Host 'PostgreSQL download gagal!' -ForegroundColor Red
+        return \$false
+    }
+}
+
+:: XAMPP
+\$jobs += Start-Job -ScriptBlock {
+    Write-Host 'Mengunduh XAMPP 7.4.30...'
+    try {
+        Invoke-WebRequest -Uri 'https://dl.filehorse.com/win/developer-tools/xampp/xampp-windows-x64-7.4.30-1-VC15-installer.exe?st=WBOMtVRWjwOyX74fXQincQ&e=1760599819&fn=xampp-windows-x64-7.4.30-1-VC15-installer.exe' -OutFile \"\$env:TEMP\xampp-installer.exe\"
+        if (Test-Path \"\$env:TEMP\xampp-installer.exe\") {
+            Write-Host 'XAMPP download selesai!' -ForegroundColor Green
+            return \$true
+        }
+    } catch {
+        Write-Host 'Mencoba direct download XAMPP...'
+        try {
+            Invoke-WebRequest -Uri 'https://dl.filehorse.com/win/developer-tools/xampp/xampp-windows-x64-7.4.30-1-VC15-installer.exe' -OutFile \"\$env:TEMP\xampp-installer.exe\"
+            if (Test-Path \"\$env:TEMP\xampp-installer.exe\") {
+                Write-Host 'XAMPP download selesai!' -ForegroundColor Green
+                return \$true
+            }
+        } catch {
+            Write-Host 'XAMPP download gagal!' -ForegroundColor Red
+            return \$false
+        }
+    }
+    return \$false
+}
+
+:: Notepad++
+\$jobs += Start-Job -ScriptBlock {
+    Write-Host 'Mengunduh Notepad++ 7.8.5...'
+    Invoke-WebRequest -Uri 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.8.5/npp.7.8.5.Installer.x64.exe' -OutFile \"\$env:TEMP\notepadplusplus-installer.exe\"
+    if (Test-Path \"\$env:TEMP\notepadplusplus-installer.exe\") {
+        Write-Host 'Notepad++ download selesai!' -ForegroundColor Green
+        return \$true
+    } else {
+        Write-Host 'Notepad++ download gagal!' -ForegroundColor Red
+        return \$false
+    }
+}
+
+:: WinRAR
+\$jobs += Start-Job -ScriptBlock {
+    Write-Host 'Mengunduh WinRAR 7.13...'
+    Invoke-WebRequest -Uri 'https://www.win-rar.com/fileadmin/winrar-versions/winrar/winrar-x64-713.exe' -OutFile \"\$env:TEMP\winrar-installer.exe\"
+    if (Test-Path \"\$env:TEMP\winrar-installer.exe\") {
+        Write-Host 'WinRAR download selesai!' -ForegroundColor Green
+        return \$true
+    } else {
+        Write-Host 'WinRAR download gagal!' -ForegroundColor Red
+        return \$false
+    }
+}
+
+Write-Host 'MENUNGGU SEMUA DOWNLOAD SELESAI...' -ForegroundColor Yellow
+
+\$allCompleted = \$false
+while (-not \$allCompleted) {
+    \$allCompleted = \$true
+    foreach (\$job in \$jobs) {
+        if (\$job.State -eq 'Running') {
+            \$allCompleted = \$false
+            break
+        }
+    }
+    if (-not \$allCompleted) {
+        Start-Sleep -Seconds 5
+        Write-Host 'Masih menunggu download selesai...' -ForegroundColor Cyan
+    }
+}
+
+Write-Host 'SEMUA DOWNLOAD TELAH SELESAI!' -ForegroundColor Green
+Write-Host 'Memulai proses instalasi...' -ForegroundColor Yellow
+
+:: Koleksi hasil download
+\$results = \$jobs | Receive-Job
+\$jobs | Remove-Job
+
+return \$true
+"
+
+:: Tunggu sebentar untuk memastikan semua file sudah tersedia
+timeout 3 >nul
+
+:: Mulai instalasi satu per satu setelah semua download selesai
+echo MEMULAI INSTALASI SEMUA APLIKASI...
+
+:: Install Chrome
 echo Menginstall Chrome...
-%TEMP%\ChromeInstaller.exe /silent /install
-echo Menghapus installer Chrome...
-del /f /q "%TEMP%\ChromeInstaller.exe"
-
-:: Download dan install Google Drive
-echo Mengunduh Google Drive...
-powershell -Command "Invoke-WebRequest -Uri 'https://dl.google.com/drive-file-stream/GoogleDriveSetup.exe' -OutFile '%TEMP%\GoogleDriveSetup.exe'"
-echo Menginstall Google Drive...
-%TEMP%\GoogleDriveSetup.exe --silent
-echo Menghapus installer Google Drive...
-del /f /q "%TEMP%\GoogleDriveSetup.exe"
-
-:: Download dan install PostgreSQL 9.4.26.1 dari EnterpriseDB
-echo Mengunduh PostgreSQL 9.4.26.1...
-powershell -Command "Invoke-WebRequest -Uri 'https://get.enterprisedb.com/postgresql/postgresql-9.4.26-1-windows-x64.exe' -OutFile '%TEMP%\postgresql-9.4.26.1.exe'"
-echo Menginstall PostgreSQL 9.4.26.1...
-echo Proses instalasi PostgreSQL akan dimulai...
-start /wait "" "%TEMP%\postgresql-9.4.26.1.exe" --mode unattended --superpassword "123456" --servicename "PostgreSQL" --servicepassword "123456" --serverport 5432
-echo Menghapus installer PostgreSQL...
-del /f /q "%TEMP%\postgresql-9.4.26.1.exe"
-
-:: Download dan install XAMPP 7.4.30
-echo Mengunduh XAMPP 7.4.30...
-powershell -Command "Invoke-WebRequest -Uri 'https://dl.filehorse.com/win/developer-tools/xampp/xampp-windows-x64-7.4.30-1-VC15-installer.exe?st=WBOMtVRWjwOyX74fXQincQ&e=1760599819&fn=xampp-windows-x64-7.4.30-1-VC15-installer.exe' -OutFile '%TEMP%\xampp-installer.exe'"
-
-if not exist "%TEMP%\xampp-installer.exe" (
-    echo Mencoba direct download...
-    powershell -Command "Invoke-WebRequest -Uri 'https://dl.filehorse.com/win/developer-tools/xampp/xampp-windows-x64-7.4.30-1-VC15-installer.exe' -OutFile '%TEMP%\xampp-installer.exe'"
+if exist "%TEMP%\ChromeInstaller.exe" (
+    "%TEMP%\ChromeInstaller.exe" /silent /install
+    echo Chrome berhasil diinstall!
+    del /f /q "%TEMP%\ChromeInstaller.exe"
+) else (
+    echo Installer Chrome tidak ditemukan!
 )
 
+:: Install Google Drive
+echo Menginstall Google Drive...
+if exist "%TEMP%\GoogleDriveSetup.exe" (
+    "%TEMP%\GoogleDriveSetup.exe" --silent
+    echo Google Drive berhasil diinstall!
+    del /f /q "%TEMP%\GoogleDriveSetup.exe"
+) else (
+    echo Installer Google Drive tidak ditemukan!
+)
+
+:: Install PostgreSQL
+echo Menginstall PostgreSQL 9.4.26.1...
+if exist "%TEMP%\postgresql-9.4.26.1.exe" (
+    echo Proses instalasi PostgreSQL akan dimulai...
+    start /wait "" "%TEMP%\postgresql-9.4.26.1.exe" --mode unattended --superpassword "123456" --servicename "PostgreSQL" --servicepassword "123456" --serverport 5432
+    echo PostgreSQL berhasil diinstall!
+    del /f /q "%TEMP%\postgresql-9.4.26.1.exe"
+) else (
+    echo Installer PostgreSQL tidak ditemukan!
+)
+
+:: Install XAMPP
+echo Menginstall XAMPP 7.4.30...
 if exist "%TEMP%\xampp-installer.exe" (
     echo Download XAMPP 7.4.30 berhasil!
-    echo Menginstall XAMPP 7.4.30...
     echo Proses instalasi XAMPP akan dimulai...
     start /wait "" "%TEMP%\xampp-installer.exe" /S
-    echo Menghapus installer XAMPP...
+    echo XAMPP berhasil diinstall!
     del /f /q "%TEMP%\xampp-installer.exe"
 ) else (
-    echo Gagal mendownload XAMPP
+    echo Installer XAMPP tidak ditemukan!
 )
 
-:: Download dan install Notepad++ 7.8.5
-echo Mengunduh Notepad++ 7.8.5...
-powershell -Command "Invoke-WebRequest -Uri 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.8.5/npp.7.8.5.Installer.x64.exe' -OutFile '%TEMP%\notepadplusplus-installer.exe'"
+:: Install Notepad++
 echo Menginstall Notepad++ 7.8.5...
-echo Proses instalasi Notepad++ akan dimulai...
-%TEMP%\notepadplusplus-installer.exe /S
-echo Menghapus installer Notepad++...
-del /f /q "%TEMP%\notepadplusplus-installer.exe"
+if exist "%TEMP%\notepadplusplus-installer.exe" (
+    echo Proses instalasi Notepad++ akan dimulai...
+    "%TEMP%\notepadplusplus-installer.exe" /S
+    echo Notepad++ berhasil diinstall!
+    del /f /q "%TEMP%\notepadplusplus-installer.exe"
+) else (
+    echo Installer Notepad++ tidak ditemukan!
+)
 
-:: Download dan install WinRAR 7.13
-echo Mengunduh WinRAR 7.13...
-powershell -Command "Invoke-WebRequest -Uri 'https://www.win-rar.com/fileadmin/winrar-versions/winrar/winrar-x64-713.exe' -OutFile '%TEMP%\winrar-installer.exe'"
+:: Install WinRAR
 echo Menginstall WinRAR 7.13...
-echo Proses instalasi WinRAR akan dimulai...
-%TEMP%\winrar-installer.exe /S
-echo Menghapus installer WinRAR...
-del /f /q "%TEMP%\winrar-installer.exe"
+if exist "%TEMP%\winrar-installer.exe" (
+    echo Proses instalasi WinRAR akan dimulai...
+    "%TEMP%\winrar-installer.exe" /S
+    echo WinRAR berhasil diinstall!
+    del /f /q "%TEMP%\winrar-installer.exe"
+) else (
+    echo Installer WinRAR tidak ditemukan!
+)
 
 :: Buat shortcut di Desktop untuk semua aplikasi menggunakan CMD/BAT
 echo Membuat shortcut di Desktop...
@@ -178,7 +313,7 @@ echo Semua shortcut berhasil dibuat di Desktop!
 :: Hapus batch file startup
 cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
 del /f /q dpart.bat
-echo JENDELA INI JANGAN DITUTUP
+echo JENDELA INI DAPAT DITUTUP
 echo ========================================
 echo SEMUA APLIKASI TELAH BERHASIL DIINSTALL!
 echo ========================================
