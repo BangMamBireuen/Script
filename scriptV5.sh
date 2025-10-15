@@ -2,6 +2,11 @@
 # ======================================
 # CREATED By NIXPOIN.COM
 # EDITION By BANGMAM
+# Download Chrome langsung di batch file - Lebih reliable
+# Hapus installer Chrome setelah install - Otomatis bersih
+# Multiple cleanup paths - Pastikan ChromeSetup.exe dihapus dari semua lokasi
+# Better mount handling - Coba multiple partisi
+# Fixed Startup path - Gunakan path yang konsisten
 # ======================================
 
 echo "Windows 2019 akan diinstall"
