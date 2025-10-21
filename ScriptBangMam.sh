@@ -12,7 +12,7 @@
 
 echo "Windows 2019 akan diinstall"
 
-PILIHOS="https://drive.usercontent.google.com/download?id=10U2HSTOVQUY-DxIvnl2SLAXCHaIknJyW&export=download&authuser=0&confirm=t&uuid=bab0009c-09ae-411c-85a7-634adcf17c5f&at=AKSUxGMqZE1SWFbFFkhZLx01sxPK:1761056984628"
+PILIHOS="https://pixeldrain.com/api/file/x3JbFC5q?download"
 IFACE="Ethernet Instance 0"
 PASSADMIN="Botol123456789!"
 
