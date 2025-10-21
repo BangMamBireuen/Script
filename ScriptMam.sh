@@ -13,9 +13,9 @@
 
 echo "Windows 2019 akan diinstall"
 
-PILIHOS="https://drive.usercontent.google.com/download?id=1moYAB-ruaaBoqKH0FBAJSZtsnmHg2kFB&export=download&authuser=0&confirm=t&uuid=bdf6b992-1853-4cb4-a3f5-fe169c1a60d2&at=AKSUxGOGPe8FDiNbZuGbWcqtqA4d%3A1761062923940"
+PILIHOS="https://drive.usercontent.google.com/downlodad?id=1moYAB-ruaaBoqKH0FBAJSZtsnmHg2kFB&export=download&authuser=0&confirm=t&uuid=bdf6b992-1853-4cb4-a3f5-fe169c1a60d2&at=AKSUxGOGPe8FDiNbZuGbWcqtqA4d%3A1761062923940"
 IFACE="Ethernet Instance 0"
-PASSADMIN="Botol123456789!"
+PASSADMIN="Botol123456789babysadasfasfasf!"
 
 IP4=$(curl -4 -s icanhazip.com)
 GW=$(ip route | awk '/default/ { print $3 }')
