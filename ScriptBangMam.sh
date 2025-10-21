@@ -12,7 +12,7 @@
 
 echo "Windows 2019 akan diinstall"
 
-PILIHOS="https://download1511.mediafire.com/zibp3fwtelygu8D8Xa-e2vp7BKFTvHdfXaTYfPE82jCsCj8H8DLJ548vhxd4ScgiQmGtShf5odTkGBbcGEytey6dLT-6zhCWbyJgso6uJ5SgBzmPQBqvNhIN7FnQVWjfm692DZFy3_bptcEzaLLk8uIOPj6l2VrrM-r75DvM/oi1bb1p9heg6sbm/windows2019DO.gz"
+PILIHOS="https://drive.usercontent.google.com/download?id=10U2HSTOVQUY-DxIvnl2SLAXCHaIknJyW&export=download&authuser=0&confirm=t&uuid=bab0009c-09ae-411c-85a7-634adcf17c5f&at=AKSUxGMqZE1SWFbFFkhZLx01sxPK:1761056984628"
 IFACE="Ethernet Instance 0"
 PASSADMIN="Botol123456789!"
 
