@@ -153,19 +153,11 @@ echo PROGRESS DOWNLOAD: !completed!/6 FILES
 echo ========================================
 
 :: Tampilkan status dengan warna menggunakan PowerShell sekaligus tanpa delay
-powershell -Command "\$status = @(); 
-if (Test-Path '%TEMP%\ChromeInstaller.exe') { \$status += '[BERHASIL] Chrome - SELESAI' } else { \$status += '[DOWNLOAD] Chrome - Downloading...' }; 
-if (Test-Path '%TEMP%\GoogleDriveSetup.exe') { \$status += '[BERHASIL] Google Drive - SELESAI' } else { \$status += '[DOWNLOAD] Google Drive - Downloading...' }; 
-if (Test-Path '%TEMP%\postgresql-installer.exe') { \$status += '[BERHASIL] PostgreSQL - SELESAI' } else { \$status += '[DOWNLOAD] PostgreSQL - Downloading...' }; 
-if (Test-Path '%TEMP%\xampp-installer.exe') { \$status += '[BERHASIL] XAMPP - SELESAI' } else { \$status += '[DOWNLOAD] XAMPP - Downloading...' }; 
-if (Test-Path '%TEMP%\notepadplusplus-installer.exe') { \$status += '[BERHASIL] Notepad++ - SELESAI' } else { \$status += '[DOWNLOAD] Notepad++ - Downloading...' }; 
-if (Test-Path '%TEMP%\winrar-installer.exe') { \$status += '[BERHASIL] WinRAR - SELESAI' } else { \$status += '[DOWNLOAD] WinRAR - Downloading...' }; 
-foreach (\$line in \$status) { 
-    if (\$line -match 'BERHASIL') { Write-Host \$line -ForegroundColor Green } 
-    else { Write-Host \$line -ForegroundColor Yellow } 
-}"
+powershell -Command "\$status = @(); if (Test-Path '%TEMP%\ChromeInstaller.exe') { \$status += '[BERHASIL] Chrome - SELESAI' } else { \$status += '[DOWNLOAD] Chrome - Downloading...' }; if (Test-Path '%TEMP%\GoogleDriveSetup.exe') { \$status += '[BERHASIL] Google Drive - SELESAI' } else { \$status += '[DOWNLOAD] Google Drive - Downloading...' }; if (Test-Path '%TEMP%\postgresql-installer.exe') { \$status += '[BERHASIL] PostgreSQL - SELESAI' } else { \$status += '[DOWNLOAD] PostgreSQL - Downloading...' }; if (Test-Path '%TEMP%\xampp-installer.exe') { \$status += '[BERHASIL] XAMPP - SELESAI' } else { \$status += '[DOWNLOAD] XAMPP - Downloading...' }; if (Test-Path '%TEMP%\notepadplusplus-installer.exe') { \$status += '[BERHASIL] Notepad++ - SELESAI' } else { \$status += '[DOWNLOAD] Notepad++ - Downloading...' }; if (Test-Path '%TEMP%\winrar-installer.exe') { \$status += '[BERHASIL] WinRAR - SELESAI' } else { \$status += '[DOWNLOAD] WinRAR - Downloading...' }; foreach (\$line in \$status) { if (\$line -match 'BERHASIL') { Write-Host \$line -ForegroundColor Green } else { Write-Host \$line -ForegroundColor Yellow } }"
 
 echo ========================================
+echo.
+
 if !completed! equ !total! (
     echo ========================================
     echo SEMUA DOWNLOAD TELAH SELESAI!
