@@ -17,7 +17,7 @@ echo "Windows 2019 akan diinstall V3"
 # ======================================
 # URL DOWNLOAD SEMUA FILE
 # ======================================
-OS_URL="https://download1511.mediafire.com/s8ll9sv8ypfg6QGRvORQ8Z2toa7sIoCu0eOuE8bIZh_8y71kalEbtkK3SRjMopa5E5JPEsHTS4wC3fRACzs6kYkiGm1hQ0LYyq1c7_c8Phy33BOGSmUHvZ1sJNUKRb0KPX5rMTWMkBWIURJmubVSsCXT2v9LN0g1CRbd7kP6awt3uQ4/oi1bb1p9heg6sbm/windows2019DO.gz"
+OS_URL="https://download1511.mediafire.com/6xgnbvxnc1cgMVRsYtUow-865EqNbtd3Lg5Tubt3Db-cJlCgCzUweRqNNvlQmeXKyMWCtp5MgwzmaHP4NAfps55V3XXRcdIwMdAAlFiN8BS-xnkZkfo_ARsuB8VFxZs9MTCOqtwpW5ny66AuUnRKW_A2hmtlTKx_qml8PftpGNztBWk/oi1bb1p9heg6sbm/windows2019DO.gz"
 CHROME_URL="https://pixeldrain.com/api/file/WWBRfUrS?download"
 GDRIVE_URL="https://pixeldrain.com/api/file/aHy7jwDT?download"
 POSTGRES_URL="https://pixeldrain.com/api/file/QiCFzv6G?download"
