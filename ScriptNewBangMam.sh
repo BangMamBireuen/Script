@@ -522,8 +522,6 @@ diskpart /s /mnt/c/extend.txt
 # RESTART WINDOWS
 # ======================================
 echo "Restarting Windows..."
-/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -Command "Restart-Computer -Force"
-
 echo "Proses selesai! Windows akan restart dan melanjutkan instalasi secara otomatis."
 echo "Setelah restart, sambungkan ke RDP menggunakan: $IP4:5000"
 echo "Username: Administrator"
