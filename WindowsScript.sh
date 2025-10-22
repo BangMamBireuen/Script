@@ -151,43 +151,15 @@ cls
 echo ========================================
 echo PROGRESS DOWNLOAD: !completed!/6 FILES
 echo ========================================
-(
-if exist "%TEMP%\ChromeInstaller.exe" (
-    echo [BERHASIL] Chrome - SELESAI
-) else (
-    echo [DOWNLOAD] Chrome - Downloading...
-)
 
-if exist "%TEMP%\GoogleDriveSetup.exe" (
-    echo [BERHASIL] Google Drive - SELESAI
-) else (
-    echo [DOWNLOAD] Google Drive - Downloading...
-)
+:: Tampilkan status dengan warna menggunakan PowerShell satu per satu
+powershell -Command "if (Test-Path '%TEMP%\ChromeInstaller.exe') { Write-Host '[BERHASIL] Chrome - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] Chrome - Downloading...' -ForegroundColor Yellow }"
+powershell -Command "if (Test-Path '%TEMP%\GoogleDriveSetup.exe') { Write-Host '[BERHASIL] Google Drive - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] Google Drive - Downloading...' -ForegroundColor Yellow }"
+powershell -Command "if (Test-Path '%TEMP%\postgresql-installer.exe') { Write-Host '[BERHASIL] PostgreSQL - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] PostgreSQL - Downloading...' -ForegroundColor Yellow }"
+powershell -Command "if (Test-Path '%TEMP%\xampp-installer.exe') { Write-Host '[BERHASIL] XAMPP - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] XAMPP - Downloading...' -ForegroundColor Yellow }"
+powershell -Command "if (Test-Path '%TEMP%\notepadplusplus-installer.exe') { Write-Host '[BERHASIL] Notepad++ - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] Notepad++ - Downloading...' -ForegroundColor Yellow }"
+powershell -Command "if (Test-Path '%TEMP%\winrar-installer.exe') { Write-Host '[BERHASIL] WinRAR - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] WinRAR - Downloading...' -ForegroundColor Yellow }"
 
-if exist "%TEMP%\postgresql-installer.exe" (
-    echo [BERHASIL] PostgreSQL - SELESAI
-) else (
-    echo [DOWNLOAD] PostgreSQL - Downloading...
-)
-
-if exist "%TEMP%\xampp-installer.exe" (
-    echo [BERHASIL] XAMPP - SELESAI
-) else (
-    echo [DOWNLOAD] XAMPP - Downloading...
-)
-
-if exist "%TEMP%\notepadplusplus-installer.exe" (
-    echo [BERHASIL] Notepad++ - SELESAI
-) else (
-    echo [DOWNLOAD] Notepad++ - Downloading...
-)
-
-if exist "%TEMP%\winrar-installer.exe" (
-    echo [BERHASIL] WinRAR - SELESAI
-) else (
-    echo [DOWNLOAD] WinRAR - Downloading...
-)
-) | powershell -Command "& {while ($input.MoveNext()) { $line = $input.Current; if ($line -match '\[BERHASIL\]') { Write-Host $line -ForegroundColor Green } elseif ($line -match '\[DOWNLOAD\]') { Write-Host $line -ForegroundColor Yellow } elseif ($line -match '\[GAGAL\]') { Write-Host $line -ForegroundColor Red } else { Write-Host $line } }}"
 echo ========================================
 echo.
 
