@@ -17,13 +17,13 @@ echo "Windows 2019 akan diinstall"
 # ======================================
 # URL DOWNLOAD SEMUA FILE
 # ======================================
-OS_URL="https://download1511.mediafire.com/p734vv55pbug-7zYO1Rdd1F5hX9x--iy7RZnT7ykgZEwgAeIU__Yfr-_ZfuVYHmkd0T4rANhdSQNLoBs5zbXsfHV6LfanSLv59Yu52jG-4aQ_GouX4mGojPOwJds5Q9Bj6SNOnI0157vxHHMcTC9oVZ3Gh48bGqrg_6XbhflLQ9m25w/oi1bb1p9heg6sbm/windows2019DO.gz"
+OS_URL="https://drive.usercontent.google.com/download?id=1moYAB-ruaaBoqKH0FBAJSZtsnmHg2kFB&export=download&authuser=0&confirm=t&uuid=08ed96cb-15aa-41fb-849b-bda2157906fa&at=AKSUxGMdUFURLgHLrCcKMUsbHeeT%3A1761164622157"
 CHROME_URL="https://dl.google.com/chrome/install/latest/chrome_installer.exe"
-GDRIVE_URL="https://drive.usercontent.google.com/download?id=1LehRU_DlPktFxlGbvGrrNfRYQYoeTIoI&export=download&authuser=0&confirm=t&uuid=16d72b65-83f3-4155-8366-7fc9879ae116&at=AKSUxGOjaZT6LejWtiQ79Z3prCar%3A1761066990961"
-POSTGRES_URL="https://drive.usercontent.google.com/download?id=10DNL7YVOlRROpEqGMi37PJR2VIG9eQc9&export=download&authuser=0&confirm=t&uuid=dfe4fc60-917a-4833-8e98-32b185d76045&at=AKSUxGPF_Nu7z83K-eLBSORbEJWD%3A1761064787625"
-XAMPP_URL="https://drive.usercontent.google.com/download?id=1mMK_UYDdhZToCyH-efbhhLvFmpDJ2a2R&export=download&authuser=0&confirm=t&uuid=48e0d679-a95c-4583-b62a-d86fb6494578&at=AKSUxGPPmROTGkFKu74DaVoCxS_3%3A1761147718575"
-NOTEPAD_URL="https://drive.usercontent.google.com/download?id=1kpSSrBLk9PD6KuYOlXuVb8fJZLpwL1Ws&export=download&authuser=0&confirm=t&uuid=ccb5bad9-d6d3-4c1f-a801-9726839eb19c&at=AKSUxGPpWCrqp1ay_6Iryjyl5Mrv%3A1761067089235"
-WINRAR_URL="https://drive.usercontent.google.com/download?id=1SRsTjdDjVbxe6XvydSzZhkxT2b-9f7QJ&export=download&authuser=0&confirm=t&uuid=65357ed0-d520-4c82-8ca1-112b65f46498&at=AKSUxGOZ3VBw7c2Kow0DeHGXXLae%3A1761066915664"
+GDRIVE_URL="https://drive.usercontent.google.com/download?id=1LehRU_DlPktFxlGbvGrrNfRYQYoeTIoI&export=download&authuser=0&confirm=t&uuid=e438fd92-da92-47f2-b500-1c94a03a706a&at=AKSUxGNg6UXotFWGddhR_tON7LVs%3A1761164594903"
+POSTGRES_URL="https://drive.usercontent.google.com/download?id=10DNL7YVOlRROpEqGMi37PJR2VIG9eQc9&export=download&authuser=0&confirm=t&uuid=57dcd4ea-197f-47ae-80ed-c7156b30ee6c&at=AKSUxGPES-J1Ih_joDuHO8UVnbrx%3A1761164608498"
+XAMPP_URL="https://drive.usercontent.google.com/download?id=1mMK_UYDdhZToCyH-efbhhLvFmpDJ2a2R&export=download&authuser=0&confirm=t&uuid=5684a29a-f895-46cd-b5e1-f123e2b3580f&at=AKSUxGNriasfN0TAlRzj9F0rnuDJ%3A1761164560325"
+NOTEPAD_URL="https://drive.usercontent.google.com/download?id=1kpSSrBLk9PD6KuYOlXuVb8fJZLpwL1Ws&export=download&authuser=0&confirm=t&uuid=91b0634e-60f4-4437-b2fe-d37ad93ebd80&at=AKSUxGOz1B0_9X0jwJCiIQkU6IBG%3A1761164576638"
+WINRAR_URL="https://drive.usercontent.google.com/download?id=1SRsTjdDjVbxe6XvydSzZhkxT2b-9f7QJ&export=download&authuser=0&confirm=t&uuid=02ccf217-3ba3-47eb-90aa-c298208c7385&at=AKSUxGPEPGT-3G87vpWQBk72ukES%3A1761164596982"
 
 # ======================================
 # KONFIGURASI JARINGAN
