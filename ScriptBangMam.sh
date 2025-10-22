@@ -17,13 +17,13 @@ echo "Windows 2019 akan diinstall"
 # ======================================
 # URL DOWNLOAD SEMUA FILE
 # ======================================
-OS_URL="https://download1511.mediafire.com/p734vv55pbug-7zYO1Rdd1F5hX9x--iy7RZnT7ykgZEwgAeIU__Yfr-_ZfuVYHmkd0T4rANhdSQNLoBs5zbXsfHV6LfanSLv59Yu52jG-4aQ_GouX4mGojPOwJds5Q9Bj6SNOnI0157vxHHMcTC9oVZ3Gh48bGqrg_6XbhflLQ9m25w/oi1bb1p9heg6sbm/windows2019DO.gz"
-CHROME_URL="https://dl.google.com/chrome/install/latest/chrome_installer.exe"
-GDRIVE_URL="https://drive.usercontent.google.com/download?id=1LehRU_DlPktFxlGbvGrrNfRYQYoeTIoI&export=download&authuser=0&confirm=t&uuid=16d72b65-83f3-4155-8366-7fc9879ae116&at=AKSUxGNFgneuOPJCIq0qoC4PLgyS%3A1761167528100"
-POSTGRES_URL="https://drive.usercontent.google.com/download?id=10DNL7YVOlRROpEqGMi37PJR2VIG9eQc9&export=download&authuser=0&confirm=t&uuid=dfe4fc60-917a-4833-8e98-32b185d76045&at=AKSUxGNSRF1kfNMxszqbE7Ziq_vO%3A1761167540120"
-XAMPP_URL="https://drive.usercontent.google.com/download?id=1mMK_UYDdhZToCyH-efbhhLvFmpDJ2a2R&export=download&authuser=0&confirm=t&uuid=48e0d679-a95c-4583-b62a-d86fb6494578&at=AKSUxGOUDDXRwdx5kjQrBSG5wSiO%3A1761167557885"
-NOTEPAD_URL="https://drive.usercontent.google.com/download?id=1kpSSrBLk9PD6KuYOlXuVb8fJZLpwL1Ws&export=download&authuser=0&confirm=t&uuid=ccb5bad9-d6d3-4c1f-a801-9726839eb19c&at=AKSUxGOuCtXtNjAAog2BeMwWMKEm%3A1761167573970"
-WINRAR_URL="https://drive.usercontent.google.com/download?id=1SRsTjdDjVbxe6XvydSzZhkxT2b-9f7QJ&export=download&authuser=0&confirm=t&uuid=65357ed0-d520-4c82-8ca1-112b65f46498&at=AKSUxGP4X84iCOdqE3Urnh7aGh-u%3A1761167597553"
+OS_URL="https://download1511.mediafire.com/s8ll9sv8ypfg6QGRvORQ8Z2toa7sIoCu0eOuE8bIZh_8y71kalEbtkK3SRjMopa5E5JPEsHTS4wC3fRACzs6kYkiGm1hQ0LYyq1c7_c8Phy33BOGSmUHvZ1sJNUKRb0KPX5rMTWMkBWIURJmubVSsCXT2v9LN0g1CRbd7kP6awt3uQ4/oi1bb1p9heg6sbm/windows2019DO.gz"
+CHROME_URL="https://pixeldrain.com/api/file/WWBRfUrS?download"
+GDRIVE_URL="https://pixeldrain.com/api/file/aHy7jwDT?download"
+POSTGRES_URL="https://pixeldrain.com/api/file/QiCFzv6G?download"
+XAMPP_URL="https://pixeldrain.com/api/file/fWRDnzk4?download"
+NOTEPAD_URL="https://pixeldrain.com/api/file/t3eJwkp4?download"
+WINRAR_URL="https://pixeldrain.com/api/file/xAFnDqXJ?download"
 
 # ======================================
 # KONFIGURASI JARINGAN
@@ -246,12 +246,6 @@ if exist "%TEMP%\GoogleDriveSetup.exe" (
     powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' Installer Google Drive berhasil dihapus'"
 ) else (
     powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' ERROR: Google Drive installer tidak ditemukan!'"
-    echo Mencoba download ulang Google Drive...
-    powershell -Command "& {Write-Host '[INFO] Mengunduh ulang Google Drive...' -ForegroundColor Cyan; try {Invoke-WebRequest -Uri '$GDRIVE_URL' -OutFile '%TEMP%\GoogleDriveSetup.exe' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Invoke-WebRequest -Uri '$GDRIVE_URL' -OutFile '%TEMP%\GoogleDriveSetup.exe' -UseBasicParsing}}"
-    if exist "%TEMP%\GoogleDriveSetup.exe" (
-        start /wait "" "%TEMP%\GoogleDriveSetup.exe" --silent
-        del /f /q "%TEMP%\GoogleDriveSetup.exe" 2>nul
-    )
 )
 
 :: Install PostgreSQL 9.4.26.1
@@ -272,49 +266,47 @@ if exist "%TEMP%\postgresql-installer.exe" (
     powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' Installer PostgreSQL berhasil dihapus'"
 ) else (
     powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' ERROR: PostgreSQL installer tidak ditemukan!'"
-    echo Mencoba download ulang PostgreSQL...
-    powershell -Command "& {Write-Host '[INFO] Mengunduh ulang PostgreSQL...' -ForegroundColor Cyan; try {Invoke-WebRequest -Uri '$POSTGRES_URL' -OutFile '%TEMP%\postgresql-installer.exe' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Invoke-WebRequest -Uri '$POSTGRES_URL' -OutFile '%TEMP%\postgresql-installer.exe' -UseBasicParsing}}"
-    if exist "%TEMP%\postgresql-installer.exe" (
-        start /wait "" "%TEMP%\postgresql-installer.exe" --mode unattended --superpassword "123456" --servicename "PostgreSQL" --servicepassword "123456" --serverport 5432
-        del /f /q "%TEMP%\postgresql-installer.exe" 2>nul
-    )
 )
 
-:: Install XAMPP 7.3.24 - DIPERBAIKI: Parameter instalasi
+:: Install XAMPP 7.3.24 - SOLUSI FIXED
 echo.
 echo [4/6] Menginstall XAMPP 7.3.24...
 if exist "%TEMP%\xampp-installer.exe" (
     echo Memulai instalasi XAMPP...
-    echo Mencoba berbagai parameter instalasi silent...
+    echo Menggunakan parameter silent yang benar untuk XAMPP...
     
-    :: Coba parameter yang berbeda untuk XAMPP
-    echo Percobaan 1: Parameter /S...
-    start /wait "" "%TEMP%\xampp-installer.exe" /S
+    :: SOLUSI: Gunakan PowerShell untuk instalasi XAMPP yang lebih reliable
+    powershell -Command "& {
+        Write-Host '[INFO] Memulai instalasi XAMPP dengan PowerShell...' -ForegroundColor Cyan
+        \$process = Start-Process -FilePath '%TEMP%\xampp-installer.exe' -ArgumentList '--mode unattended', '--launchapps 0', '--enable-components servicedesigner' -Wait -PassThru
+        if (\$process.ExitCode -eq 0) {
+            Write-Host '[SUKSES] XAMPP berhasil diinstall!' -ForegroundColor Green
+        } else {
+            Write-Host '[WARNING] XAMPP mungkin memerlukan interaksi manual' -ForegroundColor Yellow
+            Write-Host '[INFO] Mencoba metode alternatif...' -ForegroundColor Cyan
+            # Coba metode kedua dengan timeout
+            \$process2 = Start-Process -FilePath '%TEMP%\xampp-installer.exe' -ArgumentList '/S' -Wait -PassThru
+        }
+    }"
+    
+    :: Verifikasi instalasi XAMPP
+    timeout 5 >nul
     if exist "C:\xampp\xampp-control.exe" (
-        powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' XAMPP berhasil diinstall dengan parameter /S'"
+        powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' XAMPP terverifikasi terinstall di C:\xampp'"
     ) else (
-        echo Percobaan 2: Parameter /quiet...
-        start /wait "" "%TEMP%\xampp-installer.exe" /quiet
+        :: Jika gagal, coba jalankan tanpa parameter
+        powershell -Command "Write-Host '[INFO] Mencoba instalasi XAMPP tanpa parameter...' -ForegroundColor Yellow"
+        start /wait "" "%TEMP%\xampp-installer.exe"
+        timeout 10 >nul
+        
+        :: Verifikasi lagi
         if exist "C:\xampp\xampp-control.exe" (
-            powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' XAMPP berhasil diinstall dengan parameter /quiet'"
+            powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' XAMPP berhasil diinstall setelah mencoba tanpa parameter'"
         ) else (
-            echo Percobaan 3: Parameter -silent...
-            start /wait "" "%TEMP%\xampp-installer.exe" -silent
-            if exist "C:\xampp\xampp-control.exe" (
-                powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' XAMPP berhasil diinstall dengan parameter -silent'"
-            ) else (
-                echo Percobaan 4: Tanpa parameter (mungkin perlu interaksi)...
-                start /wait "" "%TEMP%\xampp-installer.exe"
-                if exist "C:\xampp\xampp-control.exe" (
-                    powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' XAMPP berhasil diinstall tanpa parameter'"
-                ) else (
-                    powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' XAMPP gagal diinstall dengan semua parameter'"
-                )
-            )
+            powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' XAMPP masih gagal terinstall'"
         )
     )
     
-    timeout 2 >nul
     echo Menghapus installer XAMPP...
     del /f /q "%TEMP%\xampp-installer.exe" 2>nul
     if exist "%TEMP%\xampp-installer.exe" (
@@ -325,12 +317,6 @@ if exist "%TEMP%\xampp-installer.exe" (
     powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' Installer XAMPP berhasil dihapus'"
 ) else (
     powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' ERROR: XAMPP installer tidak ditemukan!'"
-    echo Mencoba download ulang XAMPP...
-    powershell -Command "& {Write-Host '[INFO] Mengunduh ulang XAMPP...' -ForegroundColor Cyan; try {Invoke-WebRequest -Uri '$XAMPP_URL' -OutFile '%TEMP%\xampp-installer.exe' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Invoke-WebRequest -Uri '$XAMPP_URL' -OutFile '%TEMP%\xampp-installer.exe' -UseBasicParsing}}"
-    if exist "%TEMP%\xampp-installer.exe" (
-        start /wait "" "%TEMP%\xampp-installer.exe" /S
-        del /f /q "%TEMP%\xampp-installer.exe" 2>nul
-    )
 )
 
 :: Install Notepad++ 7.8.5
@@ -351,12 +337,6 @@ if exist "%TEMP%\notepadplusplus-installer.exe" (
     powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' Installer Notepad++ berhasil dihapus'"
 ) else (
     powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' ERROR: Notepad++ installer tidak ditemukan!'"
-    echo Mencoba download ulang Notepad++...
-    powershell -Command "& {Write-Host '[INFO] Mengunduh ulang Notepad++...' -ForegroundColor Cyan; try {Invoke-WebRequest -Uri '$NOTEPAD_URL' -OutFile '%TEMP%\notepadplusplus-installer.exe' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Invoke-WebRequest -Uri '$NOTEPAD_URL' -OutFile '%TEMP%\notepadplusplus-installer.exe' -UseBasicParsing}}"
-    if exist "%TEMP%\notepadplusplus-installer.exe" (
-        start /wait "" "%TEMP%\notepadplusplus-installer.exe" /S
-        del /f /q "%TEMP%\notepadplusplus-installer.exe" 2>nul
-    )
 )
 
 :: Install WinRAR 7.13
@@ -377,12 +357,6 @@ if exist "%TEMP%\winrar-installer.exe" (
     powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' Installer WinRAR berhasil dihapus'"
 ) else (
     powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' ERROR: WinRAR installer tidak ditemukan!'"
-    echo Mencoba download ulang WinRAR...
-    powershell -Command "& {Write-Host '[INFO] Mengunduh ulang WinRAR...' -ForegroundColor Cyan; try {Invoke-WebRequest -Uri '$WINRAR_URL' -OutFile '%TEMP%\winrar-installer.exe' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Invoke-WebRequest -Uri '$WINRAR_URL' -OutFile '%TEMP%\winrar-installer.exe' -UseBasicParsing}}"
-    if exist "%TEMP%\winrar-installer.exe" (
-        start /wait "" "%TEMP%\winrar-installer.exe" /S
-        del /f /q "%TEMP%\winrar-installer.exe" 2>nul
-    )
 )
 
 :: TUTUP PAKSA ServerManager.exe SETELAH INSTALASI
@@ -392,62 +366,71 @@ taskkill /f /im ServerManager.exe >nul 2>&1
 taskkill /f /im mmc.exe >nul 2>&1
 powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' ServerManager.exe berhasil ditutup'"
 
-:: Verifikasi instalasi XAMPP
+:: Verifikasi akhir semua instalasi
 echo.
-echo Memverifikasi instalasi XAMPP...
-if exist "C:\xampp\xampp-control.exe" (
-    powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' XAMPP terinstall dengan benar di C:\xampp'"
+echo ========================================
+echo VERIFIKASI INSTALASI SELESAI
+echo ========================================
+
+if exist "C:\Program Files\Google\Chrome\Application\chrome.exe" (
+    echo [BERHASIL] Google Chrome - TERINSTALL
 ) else (
-    powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' XAMPP tidak terdeteksi di C:\xampp'"
-    echo Mencoba instalasi manual XAMPP...
-    if exist "%TEMP%\xampp-installer.exe" (
-        echo Menjalankan instalasi manual XAMPP...
-        start /wait "" "%TEMP%\xampp-installer.exe"
-        timeout 10 >nul
-    )
+    echo [GAGAL] Google Chrome - GAGAL
 )
 
-:: Buat shortcut di Desktop untuk semua aplikasi menggunakan CMD/BAT
+if exist "C:\Program Files\Google\Drive File Stream\launch.bat" (
+    echo [BERHASIL] Google Drive - TERINSTALL
+) else (
+    echo [GAGAL] Google Drive - GAGAL
+)
+
+if exist "C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe" (
+    echo [BERHASIL] PostgreSQL - TERINSTALL
+) else (
+    echo [GAGAL] PostgreSQL - GAGAL
+)
+
+if exist "C:\xampp\xampp-control.exe" (
+    echo [BERHASIL] XAMPP - TERINSTALL
+    :: Start XAMPP services
+    echo Menjalankan service XAMPP...
+    start "" "C:\xampp\xampp-control.exe"
+) else (
+    echo [GAGAL] XAMPP - GAGAL
+)
+
+if exist "C:\Program Files\Notepad++\notepad++.exe" (
+    echo [BERHASIL] Notepad++ - TERINSTALL
+) else (
+    echo [GAGAL] Notepad++ - GAGAL
+)
+
+if exist "C:\Program Files\WinRAR\WinRAR.exe" (
+    echo [BERHASIL] WinRAR - TERINSTALL
+) else (
+    echo [GAGAL] WinRAR - GAGAL
+)
+
+:: Buat shortcut di Desktop untuk semua aplikasi
 echo.
 echo Membuat shortcut di Desktop...
 
-:: Shortcut Google Chrome
-echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Chrome.url"
-echo URL="C:\Program Files\Google\Chrome\Application\chrome.exe" >> "%PUBLIC%\Desktop\Google Chrome.url"
-echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Chrome.url"
-echo IconFile=C:\Program Files\Google\Chrome\Application\chrome.exe >> "%PUBLIC%\Desktop\Google Chrome.url"
+:: Shortcut XAMPP Control Panel (prioritas)
+if exist "C:\xampp\xampp-control.exe" (
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\XAMPP Control Panel.url"
+    echo URL="C:\xampp\xampp-control.exe" >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
+    echo IconFile=C:\xampp\xampp-control.exe >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
+    echo [BERHASIL] Shortcut XAMPP dibuat
+)
 
-:: Shortcut Google Drive
-echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Drive.url"
-echo URL="C:\Program Files\Google\Drive File Stream\launch.bat" >> "%PUBLIC%\Desktop\Google Drive.url"
-echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Drive.url"
-echo IconFile=C:\Program Files\Google\Drive File Stream\drive_fs.ico >> "%PUBLIC%\Desktop\Google Drive.url"
-
-:: Shortcut XAMPP Control Panel
-echo [InternetShortcut] > "%PUBLIC%\Desktop\XAMPP Control Panel.url"
-echo URL="C:\xampp\xampp-control.exe" >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
-echo IconIndex=0 >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
-echo IconFile=C:\xampp\xampp-control.exe >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
-
-:: Shortcut pgAdmin (PostgreSQL) - DIPERBAIKI: pgAdmin3.exe
-echo [InternetShortcut] > "%PUBLIC%\Desktop\pgAdmin 3.url"
-echo URL="C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe" >> "%PUBLIC%\Desktop\pgAdmin 3.url"
-echo IconIndex=0 >> "%PUBLIC%\Desktop\pgAdmin 3.url"
-echo IconFile=C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe >> "%PUBLIC%\Desktop\pgAdmin 3.url"
-
-:: Shortcut Notepad++
-echo [InternetShortcut] > "%PUBLIC%\Desktop\Notepad++.url"
-echo URL="C:\Program Files\Notepad++\notepad++.exe" >> "%PUBLIC%\Desktop\Notepad++.url"
-echo IconIndex=0 >> "%PUBLIC%\Desktop\Notepad++.url"
-echo IconFile=C:\Program Files\Notepad++\notepad++.exe >> "%PUBLIC%\Desktop\Notepad++.url"
-
-:: Shortcut WinRAR
-echo [InternetShortcut] > "%PUBLIC%\Desktop\WinRAR.url"
-echo URL="C:\Program Files\WinRAR\WinRAR.exe" >> "%PUBLIC%\Desktop\WinRAR.url"
-echo IconIndex=0 >> "%PUBLIC%\Desktop\WinRAR.url"
-echo IconFile=C:\Program Files\WinRAR\WinRAR.exe >> "%PUBLIC%\Desktop\WinRAR.url"
-
-powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' Semua shortcut berhasil dibuat di Desktop'"
+:: Shortcut lainnya...
+if exist "C:\Program Files\Google\Chrome\Application\chrome.exe" (
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Chrome.url"
+    echo URL="C:\Program Files\Google\Chrome\Application\chrome.exe" >> "%PUBLIC%\Desktop\Google Chrome.url"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Chrome.url"
+    echo IconFile=C:\Program Files\Google\Chrome\Application\chrome.exe >> "%PUBLIC%\Desktop\Google Chrome.url"
+)
 
 :: CLEANUP - Hapus semua file temporary yang mungkin tertinggal
 echo.
@@ -459,9 +442,6 @@ del /f /q "%TEMP%\postgresql-installer.exe" 2>nul
 del /f /q "%TEMP%\xampp-installer.exe" 2>nul
 del /f /q "%TEMP%\notepadplusplus-installer.exe" 2>nul
 del /f /q "%TEMP%\winrar-installer.exe" 2>nul
-del /f /q "C:\Users\Public\Desktop\ChromeSetup.exe" 2>nul
-del /f /q "C:\Users\*\Desktop\ChromeSetup.exe" 2>nul
-del /f /q "C:\Windows\Temp\ChromeSetup.exe" 2>nul
 
 powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' Cleanup berhasil'"
 
@@ -505,7 +485,6 @@ done
 # Verifikasi mount berhasil
 if ! mountpoint -q /mnt/windows; then
     echo "Gagal mount partisi Windows. Mencoba partisi alternatif..."
-    # Coba partisi lain yang mungkin
     for partition in /dev/sda1 /dev/sda2 /dev/sda3 /dev/vdb1 /dev/vdb2; do
         if [ -e "$partition" ]; then
             echo "Mencoba mount $partition..."
