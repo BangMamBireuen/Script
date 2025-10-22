@@ -101,8 +101,8 @@ echo [3/6] Memulai download PostgreSQL...
 start "Download PostgreSQL" /MIN powershell -Command "& {try {Invoke-WebRequest -Uri 'https://drive.usercontent.google.com/download?id=10DNL7YVOlRROpEqGMi37PJR2VIG9eQc9&export=download&authuser=0&confirm=t&uuid=dfe4fc60-917a-4833-8e98-32b185d76045&at=AKSUxGPF_Nu7z83K-eLBSORbEJWD%3A1761064787625' -OutFile '%TEMP%\postgresql-9.4.26.1.temp' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Invoke-WebRequest -Uri 'https://drive.usercontent.google.com/download?id=10DNL7YVOlRROpEqGMi37PJR2VIG9eQc9&export=download&authuser=0&confirm=t&uuid=dfe4fc60-917a-4833-8e98-32b185d76045&at=AKSUxGPF_Nu7z83K-eLBSORbEJWD%3A1761064787625' -OutFile '%TEMP%\postgresql-9.4.26.1.temp' -UseBasicParsing}; if (Test-Path '%TEMP%\postgresql-9.4.26.1.temp') {Rename-Item '%TEMP%\postgresql-9.4.26.1.temp' 'postgresql-9.4.26.1.exe'; Write-Host '=== PostgreSQL download completed ===' -ForegroundColor Green}}"
 set POSTGRES_PID=!errorlevel!
 
-echo [4/6] Memulai download XAMPP 7.3.28...
-start "Download XAMPP" /MIN powershell -Command "& {try {Invoke-WebRequest -Uri 'https://drive.usercontent.google.com/download?id=1cTc43M-MnzdGrPdT87Z_Rkm-g6EAuDfa&export=download&authuser=0&confirm=t&uuid=8100d446-b714-411f-844b-1a3e14c2c1d9&at=AKSUxGPRKsTGGTgJgoV62aJ5rwjZ%3A1761071057831' -OutFile '%TEMP%\xampp-installer.temp' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Invoke-WebRequest -Uri 'https://drive.usercontent.google.com/download?id=1cTc43M-MnzdGrPdT87Z_Rkm-g6EAuDfa&export=download&authuser=0&confirm=t&uuid=8100d446-b714-411f-844b-1a3e14c2c1d9&at=AKSUxGPRKsTGGTgJgoV62aJ5rwjZ%3A1761071057831' -OutFile '%TEMP%\xampp-installer.temp' -UseBasicParsing}; if (Test-Path '%TEMP%\xampp-installer.temp') {Rename-Item '%TEMP%\xampp-installer.temp' 'xampp-installer.exe'; Write-Host '=== XAMPP download completed ===' -ForegroundColor Green}}"
+echo [4/6] Memulai download XAMPP 7.3.24...
+start "Download XAMPP" /MIN powershell -Command "& {try {Invoke-WebRequest -Uri 'https://drive.usercontent.google.com/download?id=1mMK_UYDdhZToCyH-efbhhLvFmpDJ2a2R&export=download&authuser=0&confirm=t&uuid=48e0d679-a95c-4583-b62a-d86fb6494578&at=AKSUxGPPmROTGkFKu74DaVoCxS_3%3A1761147718575' -OutFile '%TEMP%\xampp-installer.temp' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Invoke-WebRequest -Uri 'https://drive.usercontent.google.com/download?id=1mMK_UYDdhZToCyH-efbhhLvFmpDJ2a2R&export=download&authuser=0&confirm=t&uuid=48e0d679-a95c-4583-b62a-d86fb6494578&at=AKSUxGPPmROTGkFKu74DaVoCxS_3%3A1761147718575' -OutFile '%TEMP%\xampp-installer.temp' -UseBasicParsing}; if (Test-Path '%TEMP%\xampp-installer.temp') {Rename-Item '%TEMP%\xampp-installer.temp' 'xampp-installer.exe'; Write-Host '=== XAMPP download completed ===' -ForegroundColor Green}}"
 set XAMPP_PID=!errorlevel!
 
 echo [5/6] Memulai download Notepad++...
@@ -245,13 +245,40 @@ if exist "%TEMP%\postgresql-9.4.26.1.exe" (
     )
 )
 
-:: Install XAMPP 7.3.28
+:: Install XAMPP 7.3.24 - DIPERBAIKI: Parameter instalasi
 echo.
-echo [4/6] Menginstall XAMPP 7.3.28...
+echo [4/6] Menginstall XAMPP 7.3.24...
 if exist "%TEMP%\xampp-installer.exe" (
     echo Memulai instalasi XAMPP...
+    echo Mencoba berbagai parameter instalasi silent...
+    
+    :: Coba parameter yang berbeda untuk XAMPP
+    echo Percobaan 1: Parameter /S...
     start /wait "" "%TEMP%\xampp-installer.exe" /S
-    echo [BERHASIL] XAMPP berhasil diinstall
+    if exist "C:\xampp\xampp-control.exe" (
+        echo [BERHASIL] XAMPP berhasil diinstall dengan parameter /S
+    ) else (
+        echo Percobaan 2: Parameter /quiet...
+        start /wait "" "%TEMP%\xampp-installer.exe" /quiet
+        if exist "C:\xampp\xampp-control.exe" (
+            echo [BERHASIL] XAMPP berhasil diinstall dengan parameter /quiet
+        ) else (
+            echo Percobaan 3: Parameter -silent...
+            start /wait "" "%TEMP%\xampp-installer.exe" -silent
+            if exist "C:\xampp\xampp-control.exe" (
+                echo [BERHASIL] XAMPP berhasil diinstall dengan parameter -silent
+            ) else (
+                echo Percobaan 4: Tanpa parameter (mungkin perlu interaksi)...
+                start /wait "" "%TEMP%\xampp-installer.exe"
+                if exist "C:\xampp\xampp-control.exe" (
+                    echo [BERHASIL] XAMPP berhasil diinstall tanpa parameter
+                ) else (
+                    echo [GAGAL] XAMPP gagal diinstall dengan semua parameter
+                )
+            )
+        )
+    )
+    
     timeout 2 >nul
     echo Menghapus installer XAMPP...
     del /f /q "%TEMP%\xampp-installer.exe" 2>nul
@@ -264,7 +291,7 @@ if exist "%TEMP%\xampp-installer.exe" (
 ) else (
     echo [GAGAL] ERROR: XAMPP installer tidak ditemukan!
     echo Mencoba download ulang XAMPP...
-    powershell -Command "& {try {Invoke-WebRequest -Uri 'https://drive.usercontent.google.com/download?id=1cTc43M-MnzdGrPdT87Z_Rkm-g6EAuDfa&export=download&authuser=0&confirm=t&uuid=8100d446-b714-411f-844b-1a3e14c2c1d9&at=AKSUxGPRKsTGGTgJgoV62aJ5rwjZ%3A1761071057831' -OutFile '%TEMP%\xampp-installer.exe' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Invoke-WebRequest -Uri 'https://drive.usercontent.google.com/download?id=1cTc43M-MnzdGrPdT87Z_Rkm-g6EAuDfa&export=download&authuser=0&confirm=t&uuid=8100d446-b714-411f-844b-1a3e14c2c1d9&at=AKSUxGPRKsTGGTgJgoV62aJ5rwjZ%3A1761071057831' -OutFile '%TEMP%\xampp-installer.exe' -UseBasicParsing}}"
+    powershell -Command "& {try {Invoke-WebRequest -Uri 'https://drive.usercontent.google.com/download?id=1mMK_UYDdhZToCyH-efbhhLvFmpDJ2a2R&export=download&authuser=0&confirm=t&uuid=48e0d679-a95c-4583-b62a-d86fb6494578&at=AKSUxGPPmROTGkFKu74DaVoCxS_3%3A1761147718575' -OutFile '%TEMP%\xampp-installer.exe' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Invoke-WebRequest -Uri 'https://drive.usercontent.google.com/download?id=1mMK_UYDdhZToCyH-efbhhLvFmpDJ2a2R&export=download&authuser=0&confirm=t&uuid=48e0d679-a95c-4583-b62a-d86fb6494578&at=AKSUxGPPmROTGkFKu74DaVoCxS_3%3A1761147718575' -OutFile '%TEMP%\xampp-installer.exe' -UseBasicParsing}}"
     if exist "%TEMP%\xampp-installer.exe" (
         start /wait "" "%TEMP%\xampp-installer.exe" /S
         del /f /q "%TEMP%\xampp-installer.exe" 2>nul
@@ -329,6 +356,21 @@ echo Menutup paksa ServerManager.exe setelah instalasi...
 taskkill /f /im ServerManager.exe >nul 2>&1
 taskkill /f /im mmc.exe >nul 2>&1
 echo [BERHASIL] ServerManager.exe berhasil ditutup
+
+:: Verifikasi instalasi XAMPP
+echo.
+echo Memverifikasi instalasi XAMPP...
+if exist "C:\xampp\xampp-control.exe" (
+    echo [BERHASIL] XAMPP terinstall dengan benar di C:\xampp
+) else (
+    echo [GAGAL] XAMPP tidak terdeteksi di C:\xampp
+    echo Mencoba instalasi manual XAMPP...
+    if exist "%TEMP%\xampp-installer.exe" (
+        echo Menjalankan instalasi manual XAMPP...
+        start /wait "" "%TEMP%\xampp-installer.exe"
+        timeout 10 >nul
+    )
+)
 
 :: Buat shortcut di Desktop untuk semua aplikasi menggunakan CMD/BAT
 echo.
