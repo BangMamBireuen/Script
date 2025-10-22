@@ -206,7 +206,7 @@ if !completed! equ !total! (
     set /a old_count=!completed!
     
     :MONITOR_LOOP
-    ping -n 1 127.0.0.1 >nul
+    ping -n 3 127.0.0.1 >nul
     
     :: Cek file ulang
     set /a new_count=0
