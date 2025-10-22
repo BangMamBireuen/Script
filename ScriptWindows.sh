@@ -12,7 +12,7 @@
 # Script BangMam News
 # ======================================
 
-echo "Windows 2019 akan diinstall"
+echo "Windows 2019 akan diinstall V3"
 
 # ======================================
 # URL DOWNLOAD SEMUA FILE
@@ -109,13 +109,27 @@ taskkill /f /im mmc.exe >nul 2>&1
 timeout 1 >nul
 powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' ServerManager.exe berhasil ditutup'"
 
-:: Install Chrome
+:: Install Chrome - FIXED SILENT MODE
 echo.
 echo [1/6] Menginstall Chrome...
 if exist "C:\installers\ChromeInstaller.exe" (
-    echo Memulai instalasi Chrome...
-    start /wait "" "C:\installers\ChromeInstaller.exe" /silent /install
-    powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' Chrome berhasil diinstall'"
+    echo Memulai instalasi Chrome dengan mode silent...
+    start /wait "" "C:\installers\ChromeInstaller.exe" --silent --install
+    timeout 10 >nul
+    :: Verifikasi instalasi Chrome
+    if exist "C:\Program Files\Google\Chrome\Application\chrome.exe" (
+        powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' Chrome berhasil diinstall'"
+    ) else (
+        :: Coba metode alternatif
+        echo Mencoba metode instalasi alternatif untuk Chrome...
+        "C:\installers\ChromeInstaller.exe" /silent /install
+        timeout 10 >nul
+        if exist "C:\Program Files\Google\Chrome\Application\chrome.exe" (
+            powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' Chrome berhasil diinstall (metode alternatif)'"
+        ) else (
+            powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' Chrome gagal diinstall'"
+        )
+    )
     timeout 2 >nul
     echo Menghapus installer Chrome...
     del /f /q "C:\installers\ChromeInstaller.exe" 2>nul
@@ -129,13 +143,27 @@ if exist "C:\installers\ChromeInstaller.exe" (
     powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' ERROR: Chrome installer tidak ditemukan!'"
 )
 
-:: Install Google Drive
+:: Install Google Drive - FIXED SILENT MODE
 echo.
 echo [2/6] Menginstall Google Drive...
 if exist "C:\installers\GoogleDriveSetup.exe" (
-    echo Memulai instalasi Google Drive...
+    echo Memulai instalasi Google Drive dengan mode silent...
     start /wait "" "C:\installers\GoogleDriveSetup.exe" --silent
-    powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' Google Drive berhasil diinstall'"
+    timeout 15 >nul
+    :: Verifikasi instalasi Google Drive
+    if exist "C:\Program Files\Google\Drive File Stream\launch.bat" (
+        powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' Google Drive berhasil diinstall'"
+    ) else (
+        :: Coba metode alternatif
+        echo Mencoba metode instalasi alternatif untuk Google Drive...
+        "C:\installers\GoogleDriveSetup.exe" /S
+        timeout 15 >nul
+        if exist "C:\Program Files\Google\Drive File Stream\launch.bat" (
+            powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' Google Drive berhasil diinstall (metode alternatif)'"
+        ) else (
+            powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' Google Drive gagal diinstall'"
+        )
+    )
     timeout 2 >nul
     echo Menghapus installer Google Drive...
     del /f /q "C:\installers\GoogleDriveSetup.exe" 2>nul
@@ -149,13 +177,27 @@ if exist "C:\installers\GoogleDriveSetup.exe" (
     powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' ERROR: Google Drive installer tidak ditemukan!'"
 )
 
-:: Install PostgreSQL 9.4.26.1
+:: Install PostgreSQL 9.4.26.1 - FIXED SILENT MODE
 echo.
 echo [3/6] Menginstall PostgreSQL 9.4.26.1...
 if exist "C:\installers\postgresql-installer.exe" (
-    echo Memulai instalasi PostgreSQL...
+    echo Memulai instalasi PostgreSQL dengan mode unattended...
     start /wait "" "C:\installers\postgresql-installer.exe" --mode unattended --superpassword "123456" --servicename "PostgreSQL" --servicepassword "123456" --serverport 5432
-    powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' PostgreSQL berhasil diinstall'"
+    timeout 30 >nul
+    :: Verifikasi instalasi PostgreSQL
+    if exist "C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe" (
+        powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' PostgreSQL berhasil diinstall'"
+    ) else (
+        :: Coba metode alternatif dengan PowerShell
+        echo Mencoba metode instalasi alternatif untuk PostgreSQL...
+        powershell -Command "Start-Process -FilePath 'C:\installers\postgresql-installer.exe' -ArgumentList '--mode unattended', '--superpassword \"123456\"', '--servicename \"PostgreSQL\"', '--servicepassword \"123456\"', '--serverport 5432' -Wait"
+        timeout 30 >nul
+        if exist "C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe" (
+            powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' PostgreSQL berhasil diinstall (metode alternatif)'"
+        ) else (
+            powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' PostgreSQL gagal diinstall'"
+        )
+    )
     timeout 2 >nul
     echo Menghapus installer PostgreSQL...
     del /f /q "C:\installers\postgresql-installer.exe" 2>nul
@@ -169,59 +211,60 @@ if exist "C:\installers\postgresql-installer.exe" (
     powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' ERROR: PostgreSQL installer tidak ditemukan!'"
 )
 
-:: Install XAMPP 7.3.24 - SOLUSI FIXED
+:: Install XAMPP 7.3.24 - SOLUSI FIXED COMPLETE
 echo.
 echo [4/6] Menginstall XAMPP 7.3.24...
 if exist "C:\installers\xampp-installer.exe" (
-    echo Memulai instalasi XAMPP...
-    echo Menggunakan parameter silent yang benar untuk XAMPP...
+    echo Memulai instalasi XAMPP dengan mode unattended...
     
-    :: SOLUSI: Gunakan parameter yang benar untuk XAMPP silent installation
-    powershell -Command "& {
-        Write-Host '[INFO] Memulai instalasi XAMPP dengan parameter yang benar...' -ForegroundColor Cyan
-        
-        # Coba berbagai parameter silent untuk XAMPP
-        \$params = @(
-            @('/S', '/P=/xampp', '/D=C:\xampp'),
-            @('--mode', 'unattended', '--launchapps', '0'),
-            @('/S', '/D=C:\xampp'),
-            @('/VERYSILENT', '/DIR=C:\xampp')
-        )
-        
-        \$success = \$false
-        foreach (\$param in \$params) {
-            Write-Host \"Mencoba parameter: \$param\" -ForegroundColor Yellow
-            \$process = Start-Process -FilePath 'C:\installers\xampp-installer.exe' -ArgumentList \$param -Wait -PassThru
-            if (\$process.ExitCode -eq 0) {
-                Write-Host '[SUKSES] XAMPP berhasil diinstall dengan parameter silent!' -ForegroundColor Green
-                \$success = \$true
-                break
-            } else {
-                Write-Host \"[GAGAL] Exit code: \$(\$process.ExitCode)\" -ForegroundColor Red
-            }
-            timeout 3
-        }
-        
-        if (-not \$success) {
-            Write-Host '[INFO] Mencoba instalasi manual XAMPP...' -ForegroundColor Yellow
-            # Jika semua parameter gagal, coba jalankan tanpa parameter
-            \$process = Start-Process -FilePath 'C:\installers\xampp-installer.exe' -Wait -PassThru
-        }
-    }"
+    :: SOLUSI: Coba berbagai metode parameter silent
+    echo Mencoba metode 1: Parameter standar...
+    start /wait "" "C:\installers\xampp-installer.exe" --mode unattended --launchapps 0
+    timeout 20 >nul
     
     :: Verifikasi instalasi XAMPP
-    timeout 10 >nul
     if exist "C:\xampp\xampp-control.exe" (
-        powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' XAMPP terverifikasi terinstall di C:\xampp'"
+        powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' XAMPP berhasil diinstall (metode 1)'"
     ) else (
-        powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' XAMPP gagal terinstall'"
+        echo Mencoba metode 2: Parameter /S...
+        start /wait "" "C:\installers\xampp-installer.exe" /S
+        timeout 20 >nul
+        
+        if exist "C:\xampp\xampp-control.exe" (
+            powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' XAMPP berhasil diinstall (metode 2)'"
+        ) else (
+            echo Mencoba metode 3: PowerShell dengan berbagai parameter...
+            powershell -Command "& {
+                Write-Host '[INFO] Mencoba instalasi XAMPP dengan PowerShell...' -ForegroundColor Cyan
+                \$process = Start-Process -FilePath 'C:\installers\xampp-installer.exe' -ArgumentList '--mode unattended', '--launchapps 0' -Wait -PassThru
+                if (\$process.ExitCode -eq 0) {
+                    Write-Host '[SUKSES] XAMPP berhasil diinstall!' -ForegroundColor Green
+                } else {
+                    Write-Host '[INFO] Mencoba parameter alternatif...' -ForegroundColor Yellow
+                    \$process2 = Start-Process -FilePath 'C:\installers\xampp-installer.exe' -ArgumentList '/S', '/quiet', '/norestart' -Wait -PassThru
+                    if (\$process2.ExitCode -eq 0) {
+                        Write-Host '[SUKSES] XAMPP berhasil diinstall dengan parameter alternatif!' -ForegroundColor Green
+                    } else {
+                        Write-Host '[GAGAL] XAMPP gagal diinstall dengan semua metode' -ForegroundColor Red
+                    }
+                }
+            }"
+            timeout 10 >nul
+        )
+    )
+    
+    :: Final verification
+    if exist "C:\xampp\xampp-control.exe" (
+        powershell -Command "Write-Host '[VERIFIKASI]' -ForegroundColor Cyan -NoNewline; Write-Host ' XAMPP terverifikasi terinstall di C:\xampp'"
+    ) else (
+        powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' XAMPP tidak terinstall setelah semua metode'"
     )
     
     echo Menghapus installer XAMPP...
     del /f /q "C:\installers\xampp-installer.exe" 2>nul
     if exist "C:\installers\xampp-installer.exe" (
         echo Menunggu file dilepaskan...
-        timeout 3 >nul
+        timeout 5 >nul
         del /f /q "C:\installers\xampp-installer.exe" 2>nul
     )
     powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' Installer XAMPP berhasil dihapus'"
@@ -229,50 +272,28 @@ if exist "C:\installers\xampp-installer.exe" (
     powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' ERROR: XAMPP installer tidak ditemukan!'"
 )
 
-:: Install Notepad++ 7.8.5 - SOLUSI FIXED
+:: Install Notepad++ 7.8.5 - FIXED SILENT MODE
 echo.
 echo [5/6] Menginstall Notepad++ 7.8.5...
 if exist "C:\installers\notepadplusplus-installer.exe" (
-    echo Memulai instalasi Notepad++...
-    
-    :: SOLUSI: Coba berbagai parameter silent untuk Notepad++
-    powershell -Command "& {
-        Write-Host '[INFO] Memulai instalasi Notepad++...' -ForegroundColor Cyan
-        
-        \$params = @(
-            @('/S'),
-            @('/S', '/D=C:\Program Files\Notepad++'),
-            @('/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART'),
-            @('/SILENT', '/NORESTART')
-        )
-        
-        \$success = \$false
-        foreach (\$param in \$params) {
-            Write-Host \"Mencoba parameter: \$param\" -ForegroundColor Yellow
-            \$process = Start-Process -FilePath 'C:\installers\notepadplusplus-installer.exe' -ArgumentList \$param -Wait -PassThru
-            if (\$process.ExitCode -eq 0) {
-                Write-Host '[SUKSES] Notepad++ berhasil diinstall dengan parameter silent!' -ForegroundColor Green
-                \$success = \$true
-                break
-            } else {
-                Write-Host \"[GAGAL] Exit code: \$(\$process.ExitCode)\" -ForegroundColor Red
-            }
-            timeout 3
-        }
-        
-        if (-not \$success) {
-            Write-Host '[INFO] Mencoba instalasi manual Notepad++...' -ForegroundColor Yellow
-            \$process = Start-Process -FilePath 'C:\installers\notepadplusplus-installer.exe' -Wait -PassThru
-        }
-    }"
-    
-    timeout 5 >nul
+    echo Memulai instalasi Notepad++ dengan mode silent...
+    start /wait "" "C:\installers\notepadplusplus-installer.exe" /S
+    timeout 10 >nul
+    :: Verifikasi instalasi Notepad++
     if exist "C:\Program Files\Notepad++\notepad++.exe" (
         powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' Notepad++ berhasil diinstall'"
     ) else (
-        powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' Notepad++ gagal diinstall'"
+        :: Coba metode alternatif
+        echo Mencoba metode instalasi alternatif untuk Notepad++...
+        "C:\installers\notepadplusplus-installer.exe" /VERYSILENT /SUPPRESSMSGBOXES /NORESTART
+        timeout 10 >nul
+        if exist "C:\Program Files\Notepad++\notepad++.exe" (
+            powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' Notepad++ berhasil diinstall (metode alternatif)'"
+        ) else (
+            powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' Notepad++ gagal diinstall'"
+        )
     )
-    
+    timeout 2 >nul
     echo Menghapus installer Notepad++...
     del /f /q "C:\installers\notepadplusplus-installer.exe" 2>nul
     if exist "C:\installers\notepadplusplus-installer.exe" (
@@ -285,50 +306,28 @@ if exist "C:\installers\notepadplusplus-installer.exe" (
     powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' ERROR: Notepad++ installer tidak ditemukan!'"
 )
 
-:: Install WinRAR 7.13 - SOLUSI FIXED
+:: Install WinRAR 7.13 - FIXED SILENT MODE
 echo.
 echo [6/6] Menginstall WinRAR 7.13...
 if exist "C:\installers\winrar-installer.exe" (
-    echo Memulai instalasi WinRAR...
-    
-    :: SOLUSI: Coba berbagai parameter silent untuk WinRAR
-    powershell -Command "& {
-        Write-Host '[INFO] Memulai instalasi WinRAR...' -ForegroundColor Cyan
-        
-        \$params = @(
-            @('/S'),
-            @('/S', '/D=C:\Program Files\WinRAR'),
-            @('/SILENT'),
-            @('/VERYSILENT')
-        )
-        
-        \$success = \$false
-        foreach (\$param in \$params) {
-            Write-Host \"Mencoba parameter: \$param\" -ForegroundColor Yellow
-            \$process = Start-Process -FilePath 'C:\installers\winrar-installer.exe' -ArgumentList \$param -Wait -PassThru
-            if (\$process.ExitCode -eq 0) {
-                Write-Host '[SUKSES] WinRAR berhasil diinstall dengan parameter silent!' -ForegroundColor Green
-                \$success = \$true
-                break
-            } else {
-                Write-Host \"[GAGAL] Exit code: \$(\$process.ExitCode)\" -ForegroundColor Red
-            }
-            timeout 3
-        }
-        
-        if (-not \$success) {
-            Write-Host '[INFO] Mencoba instalasi manual WinRAR...' -ForegroundColor Yellow
-            \$process = Start-Process -FilePath 'C:\installers\winrar-installer.exe' -Wait -PassThru
-        }
-    }"
-    
-    timeout 5 >nul
+    echo Memulai instalasi WinRAR dengan mode silent...
+    start /wait "" "C:\installers\winrar-installer.exe" /S
+    timeout 10 >nul
+    :: Verifikasi instalasi WinRAR
     if exist "C:\Program Files\WinRAR\WinRAR.exe" (
         powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' WinRAR berhasil diinstall'"
     ) else (
-        powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' WinRAR gagal diinstall'"
+        :: Coba metode alternatif
+        echo Mencoba metode instalasi alternatif untuk WinRAR...
+        "C:\installers\winrar-installer.exe" /S /allusers
+        timeout 10 >nul
+        if exist "C:\Program Files\WinRAR\WinRAR.exe" (
+            powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' WinRAR berhasil diinstall (metode alternatif)'"
+        ) else (
+            powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' WinRAR gagal diinstall'"
+        )
     )
-    
+    timeout 2 >nul
     echo Menghapus installer WinRAR...
     del /f /q "C:\installers\winrar-installer.exe" 2>nul
     if exist "C:\installers\winrar-installer.exe" (
