@@ -152,16 +152,8 @@ echo ========================================
 echo PROGRESS DOWNLOAD: !completed!/6 FILES
 echo ========================================
 
-:: Tampilkan status semua download sekaligus
-powershell -Command "& {
-    Write-Host '`nSTATUS DOWNLOAD:' -ForegroundColor Cyan
-    if (Test-Path '$env:TEMP\ChromeInstaller.exe') { Write-Host '[BERHASIL] Chrome - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] Chrome - Downloading...' -ForegroundColor Yellow }
-    if (Test-Path '$env:TEMP\GoogleDriveSetup.exe') { Write-Host '[BERHASIL] Google Drive - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] Google Drive - Downloading...' -ForegroundColor Yellow }
-    if (Test-Path '$env:TEMP\postgresql-installer.exe') { Write-Host '[BERHASIL] PostgreSQL - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] PostgreSQL - Downloading...' -ForegroundColor Yellow }
-    if (Test-Path '$env:TEMP\xampp-installer.exe') { Write-Host '[BERHASIL] XAMPP - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] XAMPP - Downloading...' -ForegroundColor Yellow }
-    if (Test-Path '$env:TEMP\notepadplusplus-installer.exe') { Write-Host '[BERHASIL] Notepad++ - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] Notepad++ - Downloading...' -ForegroundColor Yellow }
-    if (Test-Path '$env:TEMP\winrar-installer.exe') { Write-Host '[BERHASIL] WinRAR - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] WinRAR - Downloading...' -ForegroundColor Yellow }
-}"
+:: Tampilkan status dengan warna menggunakan PowerShell sekaligus tanpa delay
+powershell -Command "\$status = @(); if (Test-Path '%TEMP%\ChromeInstaller.exe') { \$status += '[BERHASIL] Chrome - SELESAI' } else { \$status += '[DOWNLOAD] Chrome - Downloading...' }; if (Test-Path '%TEMP%\GoogleDriveSetup.exe') { \$status += '[BERHASIL] Google Drive - SELESAI' } else { \$status += '[DOWNLOAD] Google Drive - Downloading...' }; if (Test-Path '%TEMP%\postgresql-installer.exe') { \$status += '[BERHASIL] PostgreSQL - SELESAI' } else { \$status += '[DOWNLOAD] PostgreSQL - Downloading...' }; if (Test-Path '%TEMP%\xampp-installer.exe') { \$status += '[BERHASIL] XAMPP - SELESAI' } else { \$status += '[DOWNLOAD] XAMPP - Downloading...' }; if (Test-Path '%TEMP%\notepadplusplus-installer.exe') { \$status += '[BERHASIL] Notepad++ - SELESAI' } else { \$status += '[DOWNLOAD] Notepad++ - Downloading...' }; if (Test-Path '%TEMP%\winrar-installer.exe') { \$status += '[BERHASIL] WinRAR - SELESAI' } else { \$status += '[DOWNLOAD] WinRAR - Downloading...' }; foreach (\$line in \$status) { if (\$line -match 'BERHASIL') { Write-Host \$line -ForegroundColor Green } else { Write-Host \$line -ForegroundColor Yellow } }"
 
 echo ========================================
 echo.
