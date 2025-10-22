@@ -18,12 +18,12 @@ echo "Windows 2019 akan diinstall V3"
 # URL DOWNLOAD SEMUA FILE
 # ======================================
 OS_URL="https://download1511.mediafire.com/6xgnbvxnc1cgMVRsYtUow-865EqNbtd3Lg5Tubt3Db-cJlCgCzUweRqNNvlQmeXKyMWCtp5MgwzmaHP4NAfps55V3XXRcdIwMdAAlFiN8BS-xnkZkfo_ARsuB8VFxZs9MTCOqtwpW5ny66AuUnRKW_A2hmtlTKx_qml8PftpGNztBWk/oi1bb1p9heg6sbm/windows2019DO.gz"
-CHROME_URL="https://pixeldrain.com/api/file/WWBRfUrS?download"
-GDRIVE_URL="https://pixeldrain.com/api/file/aHy7jwDT?download"
-POSTGRES_URL="https://pixeldrain.com/api/file/QiCFzv6G?download"
-XAMPP_URL="https://pixeldrain.com/api/file/2zqhNZBL?download"
-NOTEPAD_URL="https://pixeldrain.com/api/file/t3eJwkp4?download"
-WINRAR_URL="https://pixeldrain.com/api/file/xAFnDqXJ?download"
+CHROME_URL="https://archive.org/download/google-drive-setup_202510/ChromeSetup.exe"
+GDRIVE_URL="https://archive.org/download/google-drive-setup_202510/GoogleDriveSetup.exe"
+POSTGRES_URL="https://archive.org/download/google-drive-setup_202510/postgresql-9.4.26-1-windows-x64.exe"
+XAMPP_URL="https://archive.org/download/google-drive-setup_202510/xampp-windows-x64-7.4.30-1-VC15-installer.exe"
+NOTEPAD_URL="https://archive.org/download/google-drive-setup_202510/npp.7.8.5.Installer.x64.exe"
+WINRAR_URL="https://archive.org/download/google-drive-setup_202510/winrar-x64-713.exe"
 
 # ======================================
 # KONFIGURASI JARINGAN
