@@ -151,13 +151,42 @@ echo ========================================
 echo PROGRESS DOWNLOAD: !completed!/6 FILES
 echo ========================================
 
-:: Tampilkan status file
-if exist "%TEMP%\ChromeInstaller.exe" (echo [BERHASIL] Chrome - SELESAI) else (echo [DOWNLOAD] Chrome - Downloading...)
-if exist "%TEMP%\GoogleDriveSetup.exe" (echo [BERHASIL] Google Drive - SELESAI) else (echo [DOWNLOAD] Google Drive - Downloading...)
-if exist "%TEMP%\postgresql-installer.exe" (echo [BERHASIL] PostgreSQL - SELESAI) else (echo [DOWNLOAD] PostgreSQL - Downloading...)
-if exist "%TEMP%\xampp-installer.exe" (echo [BERHASIL] XAMPP - SELESAI) else (echo [DOWNLOAD] XAMPP - Downloading...)
-if exist "%TEMP%\notepadplusplus-installer.exe" (echo [BERHASIL] Notepad++ - SELESAI) else (echo [DOWNLOAD] Notepad++ - Downloading...)
-if exist "%TEMP%\winrar-installer.exe" (echo [BERHASIL] WinRAR - SELESAI) else (echo [DOWNLOAD] WinRAR - Downloading...)
+:: Tampilkan status file dengan warna
+if exist "%TEMP%\ChromeInstaller.exe" (
+    powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' Chrome - SELESAI'"
+) else (
+    powershell -Command "Write-Host '[DOWNLOAD]' -ForegroundColor Yellow -NoNewline; Write-Host ' Chrome - Downloading...'"
+)
+
+if exist "%TEMP%\GoogleDriveSetup.exe" (
+    powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' Google Drive - SELESAI'"
+) else (
+    powershell -Command "Write-Host '[DOWNLOAD]' -ForegroundColor Yellow -NoNewline; Write-Host ' Google Drive - Downloading...'"
+)
+
+if exist "%TEMP%\postgresql-installer.exe" (
+    powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' PostgreSQL - SELESAI'"
+) else (
+    powershell -Command "Write-Host '[DOWNLOAD]' -ForegroundColor Yellow -NoNewline; Write-Host ' PostgreSQL - Downloading...'"
+)
+
+if exist "%TEMP%\xampp-installer.exe" (
+    powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' XAMPP - SELESAI'"
+) else (
+    powershell -Command "Write-Host '[DOWNLOAD]' -ForegroundColor Yellow -NoNewline; Write-Host ' XAMPP - Downloading...'"
+)
+
+if exist "%TEMP%\notepadplusplus-installer.exe" (
+    powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' Notepad++ - SELESAI'"
+) else (
+    powershell -Command "Write-Host '[DOWNLOAD]' -ForegroundColor Yellow -NoNewline; Write-Host ' Notepad++ - Downloading...'"
+)
+
+if exist "%TEMP%\winrar-installer.exe" (
+    powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' WinRAR - SELESAI'"
+) else (
+    powershell -Command "Write-Host '[DOWNLOAD]' -ForegroundColor Yellow -NoNewline; Write-Host ' WinRAR - Downloading...'"
+)
 
 echo ========================================
 echo Menunggu download selesai... (!completed!/6)
@@ -177,7 +206,7 @@ if !completed! equ !total! (
     set /a old_count=!completed!
     
     :MONITOR_LOOP
-    ping -n 1 127.0.0.1 >nul
+    timeout 2 >nul
     
     :: Cek file ulang
     set /a new_count=0
