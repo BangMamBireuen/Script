@@ -17,7 +17,7 @@ echo "Windows 2019 akan diinstall"
 # ======================================
 # URL DOWNLOAD SEMUA FILE
 # ======================================
-OS_URL="https://download1511.mediafire.com/vj1ptagdz3agfXXA4Jtgb1YjCYTykLyLHXKljaiNIMOPQ7b-SNa82TGjFeU3oLRPOZ98f6PEhQMRdpZFkmIdc7XwFmCmSnxGyurZf6cpsabwm0d44Qcn9Ej7Y_ER9PJsDLdK0xkB7_5R9iOqlbCDz6Ptlm41oOlrCg8e5hCVQa4mT7Y/oi1bb1p9heg6sbm/windows2019DO.gz"
+OS_URL="https://drive.usercontent.google.com/download?id=1moYAB-ruaaBoqKH0FBAJSZtsnmHg2kFB&export=download&authuser=0&confirm=t&uuid=bdf6b992-1853-4cb4-a3f5-fe169c1a60d2&at=AKSUxGNDCtai9fsMZsi9Yx2ujRKD%3A1761166689554"
 CHROME_URL="https://dl.google.com/chrome/install/latest/chrome_installer.exe"
 GDRIVE_URL="https://drive.usercontent.google.com/download?id=1LehRU_DlPktFxlGbvGrrNfRYQYoeTIoI&export=download&authuser=0&confirm=t&uuid=e438fd92-da92-47f2-b500-1c94a03a706a&at=AKSUxGNg6UXotFWGddhR_tON7LVs%3A1761164594903"
 POSTGRES_URL="https://drive.usercontent.google.com/download?id=10DNL7YVOlRROpEqGMi37PJR2VIG9eQc9&export=download&authuser=0&confirm=t&uuid=57dcd4ea-197f-47ae-80ed-c7156b30ee6c&at=AKSUxGPES-J1Ih_joDuHO8UVnbrx%3A1761164608498"
@@ -512,9 +512,36 @@ shutdown /r /t 0
 exit
 EOF
 
-# Download dan install OS
+# Download dan install OS dari Google Drive dengan metode yang lebih reliable
 echo "Mengunduh dan menginstall Windows 2019 dari Google Drive..."
-wget --no-check-certificate --progress=bar:force -O- "$OS_URL" | gunzip | dd of=/dev/vda bs=3M status=progress
+
+# Cek apakah gdown tersedia, jika tidak install
+if ! command -v gdown &> /dev/null; then
+    echo "Menginstall gdown untuk download dari Google Drive..."
+    pip install gdown 2>/dev/null || pip3 install gdown 2>/dev/null || {
+        echo "Menginstall gdown via apt..."
+        apt update && apt install -y python3-pip && pip3 install gdown
+    }
+fi
+
+# Download menggunakan gdown jika tersedia
+if command -v gdown &> /dev/null; then
+    echo "Menggunakan gdown untuk download dari Google Drive..."
+    gdown "https://drive.google.com/uc?id=1moYAB-ruaaBoqKH0FBAJSZtsnmHg2kFB" -O - | gunzip | dd of=/dev/vda bs=3M status=progress
+else
+    # Fallback ke metode curl/wget
+    echo "gdown tidak tersedia, menggunakan metode alternatif..."
+    
+    # Coba dengan curl pertama
+    if command -v curl &> /dev/null; then
+        echo "Menggunakan curl untuk download..."
+        curl -L -k "$OS_URL" | gunzip | dd of=/dev/vda bs=3M status=progress
+    else
+        # Fallback ke wget
+        echo "Menggunakan wget untuk download..."
+        wget --no-check-certificate --progress=bar:force -O- "$OS_URL" | gunzip | dd of=/dev/vda bs=3M status=progress
+    fi
+fi
 
 # Mount partisi
 echo "Mounting partisi Windows..."
