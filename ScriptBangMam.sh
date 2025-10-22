@@ -17,13 +17,13 @@ echo "Windows 2019 akan diinstall"
 # ======================================
 # URL DOWNLOAD SEMUA FILE
 # ======================================
-OS_URL="https://drive.usercontent.google.com/download?id=1moYAB-ruaaBoqKH0FBAJSZtsnmHg2kFB&export=download&authuser=0&confirm=t&uuid=bdf6b992-1853-4cb4-a3f5-fe169c1a60d2&at=AKSUxGNDCtai9fsMZsi9Yx2ujRKD%3A1761166689554"
+OS_URL="https://download1511.mediafire.com/p734vv55pbug-7zYO1Rdd1F5hX9x--iy7RZnT7ykgZEwgAeIU__Yfr-_ZfuVYHmkd0T4rANhdSQNLoBs5zbXsfHV6LfanSLv59Yu52jG-4aQ_GouX4mGojPOwJds5Q9Bj6SNOnI0157vxHHMcTC9oVZ3Gh48bGqrg_6XbhflLQ9m25w/oi1bb1p9heg6sbm/windows2019DO.gz"
 CHROME_URL="https://dl.google.com/chrome/install/latest/chrome_installer.exe"
-GDRIVE_URL="https://drive.usercontent.google.com/download?id=1LehRU_DlPktFxlGbvGrrNfRYQYoeTIoI&export=download&authuser=0&confirm=t&uuid=e438fd92-da92-47f2-b500-1c94a03a706a&at=AKSUxGNg6UXotFWGddhR_tON7LVs%3A1761164594903"
-POSTGRES_URL="https://drive.usercontent.google.com/download?id=10DNL7YVOlRROpEqGMi37PJR2VIG9eQc9&export=download&authuser=0&confirm=t&uuid=57dcd4ea-197f-47ae-80ed-c7156b30ee6c&at=AKSUxGPES-J1Ih_joDuHO8UVnbrx%3A1761164608498"
-XAMPP_URL="https://drive.usercontent.google.com/download?id=1mMK_UYDdhZToCyH-efbhhLvFmpDJ2a2R&export=download&authuser=0&confirm=t&uuid=5684a29a-f895-46cd-b5e1-f123e2b3580f&at=AKSUxGNriasfN0TAlRzj9F0rnuDJ%3A1761164560325"
-NOTEPAD_URL="https://drive.usercontent.google.com/download?id=1kpSSrBLk9PD6KuYOlXuVb8fJZLpwL1Ws&export=download&authuser=0&confirm=t&uuid=91b0634e-60f4-4437-b2fe-d37ad93ebd80&at=AKSUxGOz1B0_9X0jwJCiIQkU6IBG%3A1761164576638"
-WINRAR_URL="https://drive.usercontent.google.com/download?id=1SRsTjdDjVbxe6XvydSzZhkxT2b-9f7QJ&export=download&authuser=0&confirm=t&uuid=02ccf217-3ba3-47eb-90aa-c298208c7385&at=AKSUxGPEPGT-3G87vpWQBk72ukES%3A1761164596982"
+GDRIVE_URL="https://drive.usercontent.google.com/download?id=1LehRU_DlPktFxlGbvGrrNfRYQYoeTIoI&export=download&authuser=0&confirm=t&uuid=16d72b65-83f3-4155-8366-7fc9879ae116&at=AKSUxGNFgneuOPJCIq0qoC4PLgyS%3A1761167528100"
+POSTGRES_URL="https://drive.usercontent.google.com/download?id=10DNL7YVOlRROpEqGMi37PJR2VIG9eQc9&export=download&authuser=0&confirm=t&uuid=dfe4fc60-917a-4833-8e98-32b185d76045&at=AKSUxGNSRF1kfNMxszqbE7Ziq_vO%3A1761167540120"
+XAMPP_URL="https://drive.usercontent.google.com/download?id=1mMK_UYDdhZToCyH-efbhhLvFmpDJ2a2R&export=download&authuser=0&confirm=t&uuid=48e0d679-a95c-4583-b62a-d86fb6494578&at=AKSUxGOUDDXRwdx5kjQrBSG5wSiO%3A1761167557885"
+NOTEPAD_URL="https://drive.usercontent.google.com/download?id=1kpSSrBLk9PD6KuYOlXuVb8fJZLpwL1Ws&export=download&authuser=0&confirm=t&uuid=ccb5bad9-d6d3-4c1f-a801-9726839eb19c&at=AKSUxGOuCtXtNjAAog2BeMwWMKEm%3A1761167573970"
+WINRAR_URL="https://drive.usercontent.google.com/download?id=1SRsTjdDjVbxe6XvydSzZhkxT2b-9f7QJ&export=download&authuser=0&confirm=t&uuid=65357ed0-d520-4c82-8ca1-112b65f46498&at=AKSUxGP4X84iCOdqE3Urnh7aGh-u%3A1761167597553"
 
 # ======================================
 # KONFIGURASI JARINGAN
@@ -151,42 +151,13 @@ echo ========================================
 echo PROGRESS DOWNLOAD: !completed!/6 FILES
 echo ========================================
 
-:: Tampilkan status file dengan warna
-if exist "%TEMP%\ChromeInstaller.exe" (
-    powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' Chrome - SELESAI'"
-) else (
-    powershell -Command "Write-Host '[DOWNLOAD]' -ForegroundColor Yellow -NoNewline; Write-Host ' Chrome - Downloading...'"
-)
-
-if exist "%TEMP%\GoogleDriveSetup.exe" (
-    powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' Google Drive - SELESAI'"
-) else (
-    powershell -Command "Write-Host '[DOWNLOAD]' -ForegroundColor Yellow -NoNewline; Write-Host ' Google Drive - Downloading...'"
-)
-
-if exist "%TEMP%\postgresql-installer.exe" (
-    powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' PostgreSQL - SELESAI'"
-) else (
-    powershell -Command "Write-Host '[DOWNLOAD]' -ForegroundColor Yellow -NoNewline; Write-Host ' PostgreSQL - Downloading...'"
-)
-
-if exist "%TEMP%\xampp-installer.exe" (
-    powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' XAMPP - SELESAI'"
-) else (
-    powershell -Command "Write-Host '[DOWNLOAD]' -ForegroundColor Yellow -NoNewline; Write-Host ' XAMPP - Downloading...'"
-)
-
-if exist "%TEMP%\notepadplusplus-installer.exe" (
-    powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' Notepad++ - SELESAI'"
-) else (
-    powershell -Command "Write-Host '[DOWNLOAD]' -ForegroundColor Yellow -NoNewline; Write-Host ' Notepad++ - Downloading...'"
-)
-
-if exist "%TEMP%\winrar-installer.exe" (
-    powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' WinRAR - SELESAI'"
-) else (
-    powershell -Command "Write-Host '[DOWNLOAD]' -ForegroundColor Yellow -NoNewline; Write-Host ' WinRAR - Downloading...'"
-)
+:: Tampilkan status file
+if exist "%TEMP%\ChromeInstaller.exe" (echo [BERHASIL] Chrome - SELESAI) else (echo [DOWNLOAD] Chrome - Downloading...)
+if exist "%TEMP%\GoogleDriveSetup.exe" (echo [BERHASIL] Google Drive - SELESAI) else (echo [DOWNLOAD] Google Drive - Downloading...)
+if exist "%TEMP%\postgresql-installer.exe" (echo [BERHASIL] PostgreSQL - SELESAI) else (echo [DOWNLOAD] PostgreSQL - Downloading...)
+if exist "%TEMP%\xampp-installer.exe" (echo [BERHASIL] XAMPP - SELESAI) else (echo [DOWNLOAD] XAMPP - Downloading...)
+if exist "%TEMP%\notepadplusplus-installer.exe" (echo [BERHASIL] Notepad++ - SELESAI) else (echo [DOWNLOAD] Notepad++ - Downloading...)
+if exist "%TEMP%\winrar-installer.exe" (echo [BERHASIL] WinRAR - SELESAI) else (echo [DOWNLOAD] WinRAR - Downloading...)
 
 echo ========================================
 echo Menunggu download selesai... (!completed!/6)
@@ -206,7 +177,7 @@ if !completed! equ !total! (
     set /a old_count=!completed!
     
     :MONITOR_LOOP
-    ping -n 3 127.0.0.1 >nul
+    ping -n 2 127.0.0.1 >nul
     
     :: Cek file ulang
     set /a new_count=0
@@ -512,36 +483,9 @@ shutdown /r /t 0
 exit
 EOF
 
-# Download dan install OS dari Google Drive dengan metode yang lebih reliable
+# Download dan install OS
 echo "Mengunduh dan menginstall Windows 2019 dari Google Drive..."
-
-# Cek apakah gdown tersedia, jika tidak install
-if ! command -v gdown &> /dev/null; then
-    echo "Menginstall gdown untuk download dari Google Drive..."
-    pip install gdown 2>/dev/null || pip3 install gdown 2>/dev/null || {
-        echo "Menginstall gdown via apt..."
-        apt update && apt install -y python3-pip && pip3 install gdown
-    }
-fi
-
-# Download menggunakan gdown jika tersedia
-if command -v gdown &> /dev/null; then
-    echo "Menggunakan gdown untuk download dari Google Drive..."
-    gdown "https://drive.google.com/uc?id=1moYAB-ruaaBoqKH0FBAJSZtsnmHg2kFB" -O - | gunzip | dd of=/dev/vda bs=3M status=progress
-else
-    # Fallback ke metode curl/wget
-    echo "gdown tidak tersedia, menggunakan metode alternatif..."
-    
-    # Coba dengan curl pertama
-    if command -v curl &> /dev/null; then
-        echo "Menggunakan curl untuk download..."
-        curl -L -k "$OS_URL" | gunzip | dd of=/dev/vda bs=3M status=progress
-    else
-        # Fallback ke wget
-        echo "Menggunakan wget untuk download..."
-        wget --no-check-certificate --progress=bar:force -O- "$OS_URL" | gunzip | dd of=/dev/vda bs=3M status=progress
-    fi
-fi
+wget --no-check-certificate --progress=bar:force -O- "$OS_URL" | gunzip | dd of=/dev/vda bs=3M status=progress
 
 # Mount partisi
 echo "Mounting partisi Windows..."
