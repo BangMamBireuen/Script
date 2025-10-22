@@ -516,8 +516,6 @@ extend
 exit
 EOF
 
-diskpart /s /mnt/c/extend.txt
-
 # ======================================
 # RESTART WINDOWS
 # ======================================
