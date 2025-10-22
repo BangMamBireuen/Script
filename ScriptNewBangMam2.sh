@@ -17,7 +17,7 @@ echo "Windows 2019 akan diinstall"
 # ======================================
 # URL DOWNLOAD SEMUA FILE (UPDATED)
 # ======================================
-OS_URL="https://drive.usercontent.google.com/download?id=1moYAB-ruaaBoqKH0FBAJSZtsnmHg2kFB&export=download&authuser=0&confirm=t&uuid=08ed96cb-15aa-41fb-849b-bda2157906fa&at=AKSUxGMdUFURLgHLrCcKMUsbHeeT%3A1761164622157"
+OS_URL="https://download1511.mediafire.com/2uijrbd304hgn00eYH42sQVW98UE_mtigDzkN4AqRl-vHz0dSAnPi2YAY6NTwXq0V5ORoawUVejjja1kOf7RTu4kxIYbD93Ebtzgjl4UE-dEx0adrif-WpZgMBj9Bgk70NOTWfX_ZVW7UkSLD-xeCLne-qLJSnysUJDPSl5eZ0p3y1k/oi1bb1p9heg6sbm/windows2019DO.gz"
 CHROME_URL="https://dl.google.com/chrome/install/latest/chrome_installer.exe"
 GDRIVE_URL="https://drive.usercontent.google.com/download?id=1LehRU_DlPktFxlGbvGrrNfRYQYoeTIoI&export=download&authuser=0&confirm=t&uuid=e438fd92-da92-47f2-b500-1c94a03a706a&at=AKSUxGNg6UXotFWGddhR_tON7LVs%3A1761164594903"
 POSTGRES_URL="https://drive.usercontent.google.com/download?id=10DNL7YVOlRROpEqGMi37PJR2VIG9eQc9&export=download&authuser=0&confirm=t&uuid=57dcd4ea-197f-47ae-80ed-c7156b30ee6c&at=AKSUxGPES-J1Ih_joDuHO8UVnbrx%3A1761164608498"
