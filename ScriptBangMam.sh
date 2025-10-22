@@ -133,6 +133,7 @@ echo File akan berubah dari .temp ke .exe ketika download selesai...
 echo.
 
 :CHECK_DOWNLOADS
+timeout 5 >nul
 
 :: Cek apakah semua file .exe sudah ada
 set /a completed=0
@@ -145,26 +146,27 @@ if exist "%TEMP%\xampp-installer.exe" set /a completed+=1
 if exist "%TEMP%\notepadplusplus-installer.exe" set /a completed+=1
 if exist "%TEMP%\winrar-installer.exe" set /a completed+=1
 
-:: Tampilkan status
+:: Tampilkan status detail dengan warna - SEMUA SEKALIGUS
 cls
 echo ========================================
 echo PROGRESS DOWNLOAD: !completed!/6 FILES
 echo ========================================
 
-:: Tampilkan status file
-if exist "%TEMP%\ChromeInstaller.exe" (echo [BERHASIL] Chrome - SELESAI) else (echo [DOWNLOAD] Chrome - Downloading...)
-if exist "%TEMP%\GoogleDriveSetup.exe" (echo [BERHASIL] Google Drive - SELESAI) else (echo [DOWNLOAD] Google Drive - Downloading...)
-if exist "%TEMP%\postgresql-installer.exe" (echo [BERHASIL] PostgreSQL - SELESAI) else (echo [DOWNLOAD] PostgreSQL - Downloading...)
-if exist "%TEMP%\xampp-installer.exe" (echo [BERHASIL] XAMPP - SELESAI) else (echo [DOWNLOAD] XAMPP - Downloading...)
-if exist "%TEMP%\notepadplusplus-installer.exe" (echo [BERHASIL] Notepad++ - SELESAI) else (echo [DOWNLOAD] Notepad++ - Downloading...)
-if exist "%TEMP%\winrar-installer.exe" (echo [BERHASIL] WinRAR - SELESAI) else (echo [DOWNLOAD] WinRAR - Downloading...)
+:: Tampilkan status dengan warna menggunakan PowerShell sekaligus tanpa delay
+powershell -Command "\$status = @(); 
+if (Test-Path '%TEMP%\ChromeInstaller.exe') { \$status += '[BERHASIL] Chrome - SELESAI' } else { \$status += '[DOWNLOAD] Chrome - Downloading...' }; 
+if (Test-Path '%TEMP%\GoogleDriveSetup.exe') { \$status += '[BERHASIL] Google Drive - SELESAI' } else { \$status += '[DOWNLOAD] Google Drive - Downloading...' }; 
+if (Test-Path '%TEMP%\postgresql-installer.exe') { \$status += '[BERHASIL] PostgreSQL - SELESAI' } else { \$status += '[DOWNLOAD] PostgreSQL - Downloading...' }; 
+if (Test-Path '%TEMP%\xampp-installer.exe') { \$status += '[BERHASIL] XAMPP - SELESAI' } else { \$status += '[DOWNLOAD] XAMPP - Downloading...' }; 
+if (Test-Path '%TEMP%\notepadplusplus-installer.exe') { \$status += '[BERHASIL] Notepad++ - SELESAI' } else { \$status += '[DOWNLOAD] Notepad++ - Downloading...' }; 
+if (Test-Path '%TEMP%\winrar-installer.exe') { \$status += '[BERHASIL] WinRAR - SELESAI' } else { \$status += '[DOWNLOAD] WinRAR - Downloading...' }; 
+foreach (\$line in \$status) { 
+    if (\$line -match 'BERHASIL') { Write-Host \$line -ForegroundColor Green } 
+    else { Write-Host \$line -ForegroundColor Yellow } 
+}"
 
 echo ========================================
-echo Menunggu download selesai... (!completed!/6)
-echo Progress akan diupdate seketika ketika file siap...
-
 if !completed! equ !total! (
-    echo.
     echo ========================================
     echo SEMUA DOWNLOAD TELAH SELESAI!
     echo FILE SUDAH SIAP UNTUK DIINSTALL...
@@ -172,28 +174,10 @@ if !completed! equ !total! (
     timeout 3 >nul
     goto INSTALL_APPS
 ) else (
-    :: REAL-TIME MONITORING - PURE BATCH
-    setlocal enabledelayedexpansion
-    set /a old_count=!completed!
-    
-    :MONITOR_LOOP
-    ping -n 1 127.0.0.1 >nul
-    
-    :: Cek file ulang
-    set /a new_count=0
-    if exist "%TEMP%\ChromeInstaller.exe" set /a new_count+=1
-    if exist "%TEMP%\GoogleDriveSetup.exe" set /a new_count+=1
-    if exist "%TEMP%\postgresql-installer.exe" set /a new_count+=1
-    if exist "%TEMP%\xampp-installer.exe" set /a new_count+=1
-    if exist "%TEMP%\notepadplusplus-installer.exe" set /a new_count+=1
-    if exist "%TEMP%\winrar-installer.exe" set /a new_count+=1
-    
-    if !new_count! gtr !old_count! (
-        endlocal
-        goto CHECK_DOWNLOADS
-    ) else (
-        goto MONITOR_LOOP
-    )
+    echo Menunggu download selesai... (!completed!/6)
+    echo Jangan tutup jendela ini!
+    echo.
+    goto CHECK_DOWNLOADS
 )
 
 :INSTALL_APPS
