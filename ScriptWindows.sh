@@ -21,7 +21,7 @@ OS_URL="https://download1511.mediafire.com/6xgnbvxnc1cgMVRsYtUow-865EqNbtd3Lg5Tu
 CHROME_URL="https://pixeldrain.com/api/file/WWBRfUrS?download"
 GDRIVE_URL="https://pixeldrain.com/api/file/aHy7jwDT?download"
 POSTGRES_URL="https://pixeldrain.com/api/file/QiCFzv6G?download"
-XAMPP_URL="https://pixeldrain.com/api/file/fWRDnzk4?download"
+XAMPP_URL="https://pixeldrain.com/api/file/2zqhNZBL?download"
 NOTEPAD_URL="https://pixeldrain.com/api/file/t3eJwkp4?download"
 WINRAR_URL="https://pixeldrain.com/api/file/xAFnDqXJ?download"
 
