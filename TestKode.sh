@@ -316,22 +316,49 @@ if exist "C:\Program Files\WinRAR\WinRAR.exe" (
 echo.
 echo Membuat shortcut di Desktop...
 
-:: Shortcut XAMPP Control Panel (prioritas)
-if exist "C:\xampp\xampp-control.exe" (
-    echo [InternetShortcut] > "%PUBLIC%\Desktop\XAMPP Control Panel.url"
-    echo URL="C:\xampp\xampp-control.exe" >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
-    echo IconIndex=0 >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
-    echo IconFile=C:\xampp\xampp-control.exe >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
-    echo [BERHASIL] Shortcut XAMPP dibuat
-)
+:: Shortcut Google Chrome
+echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Chrome.url"
+echo URL="C:\Program Files\Google\Chrome\Application\chrome.exe" >> "%PUBLIC%\Desktop\Google Chrome.url"
+echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Chrome.url"
+echo IconFile=C:\Program Files\Google\Chrome\Application\chrome.exe >> "%PUBLIC%\Desktop\Google Chrome.url"
 
-:: Shortcut lainnya...
-if exist "C:\Program Files\Google\Chrome\Application\chrome.exe" (
-    echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Chrome.url"
-    echo URL="C:\Program Files\Google\Chrome\Application\chrome.exe" >> "%PUBLIC%\Desktop\Google Chrome.url"
-    echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Chrome.url"
-    echo IconFile=C:\Program Files\Google\Chrome\Application\chrome.exe >> "%PUBLIC%\Desktop\Google Chrome.url"
-)
+:: Shortcut Google Drive
+echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Drive.url"
+echo URL="C:\Program Files\Google\Drive File Stream\launch.bat" >> "%PUBLIC%\Desktop\Google Drive.url"
+echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Drive.url"
+echo IconFile=C:\Program Files\Google\Drive File Stream\drive_fs.ico >> "%PUBLIC%\Desktop\Google Drive.url"
+
+:: Shortcut XAMPP Control Panel
+echo [InternetShortcut] > "%PUBLIC%\Desktop\XAMPP Control Panel.url"
+echo URL="C:\xampp\xampp-control.exe" >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
+echo IconIndex=0 >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
+echo IconFile=C:\xampp\xampp-control.exe >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
+
+:: Shortcut pgAdmin (PostgreSQL) - DIPERBAIKI: pgAdmin3.exe
+echo [InternetShortcut] > "%PUBLIC%\Desktop\pgAdmin 3.url"
+echo URL="C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe" >> "%PUBLIC%\Desktop\pgAdmin 3.url"
+echo IconIndex=0 >> "%PUBLIC%\Desktop\pgAdmin 3.url"
+echo IconFile=C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe >> "%PUBLIC%\Desktop\pgAdmin 3.url"
+
+:: Shortcut Notepad++
+echo [InternetShortcut] > "%PUBLIC%\Desktop\Notepad++.url"
+echo URL="C:\Program Files\Notepad++\notepad++.exe" >> "%PUBLIC%\Desktop\Notepad++.url"
+echo IconIndex=0 >> "%PUBLIC%\Desktop\Notepad++.url"
+echo IconFile=C:\Program Files\Notepad++\notepad++.exe >> "%PUBLIC%\Desktop\Notepad++.url"
+
+:: Shortcut WinRAR
+echo [InternetShortcut] > "%PUBLIC%\Desktop\WinRAR.url"
+echo URL="C:\Program Files\WinRAR\WinRAR.exe" >> "%PUBLIC%\Desktop\WinRAR.url"
+echo IconIndex=0 >> "%PUBLIC%\Desktop\WinRAR.url"
+echo IconFile=C:\Program Files\WinRAR\WinRAR.exe >> "%PUBLIC%\Desktop\WinRAR.url"
+
+:: Hapus shortcut Google yang tidak diinginkan
+echo Menghapus shortcut Google yang tidak diinginkan...
+del /f /q "%PUBLIC%\Desktop\Google Slides.url" 2>nul
+del /f /q "%PUBLIC%\Desktop\Google Sheets.url" 2>nul
+del /f /q "%PUBLIC%\Desktop\Google Docs.url" 2>nul
+
+powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' Semua shortcut berhasil dibuat dan dibersihkan'"
 
 :: CLEANUP - Hapus semua file temporary yang mungkin tertinggal
 echo.
