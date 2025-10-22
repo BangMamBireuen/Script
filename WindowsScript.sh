@@ -103,27 +103,27 @@ echo FILE AKAN DISIMPAN SEBAGAI .temp SELAMA DOWNLOAD
 echo ========================================
 
 echo [1/6] Memulai download Chrome...
-start "Download Chrome" /MIN powershell -Command "& {try {Invoke-WebRequest -Uri '$CHROME_URL' -OutFile '%TEMP%\ChromeInstaller.temp' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Invoke-WebRequest -Uri '$CHROME_URL' -OutFile '%TEMP%\ChromeInstaller.temp' -UseBasicParsing}; if (Test-Path '%TEMP%\ChromeInstaller.temp') {Rename-Item '%TEMP%\ChromeInstaller.temp' 'ChromeInstaller.exe'; Write-Host '=== Chrome download completed ===' -ForegroundColor Green}}"
+start "Download Chrome" /MIN powershell -Command "& {Write-Host '[INFO] Mengunduh Google Chrome...' -ForegroundColor Cyan; try {Invoke-WebRequest -Uri '$CHROME_URL' -OutFile '%TEMP%\ChromeInstaller.temp' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Write-Host '[ERROR] Gagal download Chrome, mencoba metode alternatif...' -ForegroundColor Red; Invoke-WebRequest -Uri '$CHROME_URL' -OutFile '%TEMP%\ChromeInstaller.temp' -UseBasicParsing}; if (Test-Path '%TEMP%\ChromeInstaller.temp') {Rename-Item '%TEMP%\ChromeInstaller.temp' 'ChromeInstaller.exe'; Write-Host '[SUKSES] Download Chrome selesai!' -ForegroundColor Green}}"
 set CHROME_PID=!errorlevel!
 
 echo [2/6] Memulai download Google Drive...
-start "Download Google Drive" /MIN powershell -Command "& {try {Invoke-WebRequest -Uri '$GDRIVE_URL' -OutFile '%TEMP%\GoogleDriveSetup.temp' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Invoke-WebRequest -Uri '$GDRIVE_URL' -OutFile '%TEMP%\GoogleDriveSetup.temp' -UseBasicParsing}; if (Test-Path '%TEMP%\GoogleDriveSetup.temp') {Rename-Item '%TEMP%\GoogleDriveSetup.temp' 'GoogleDriveSetup.exe'; Write-Host '=== Google Drive download completed ===' -ForegroundColor Green}}"
+start "Download Google Drive" /MIN powershell -Command "& {Write-Host '[INFO] Mengunduh Google Drive...' -ForegroundColor Cyan; try {Invoke-WebRequest -Uri '$GDRIVE_URL' -OutFile '%TEMP%\GoogleDriveSetup.temp' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Write-Host '[ERROR] Gagal download Google Drive, mencoba metode alternatif...' -ForegroundColor Red; Invoke-WebRequest -Uri '$GDRIVE_URL' -OutFile '%TEMP%\GoogleDriveSetup.temp' -UseBasicParsing}; if (Test-Path '%TEMP%\GoogleDriveSetup.temp') {Rename-Item '%TEMP%\GoogleDriveSetup.temp' 'GoogleDriveSetup.exe'; Write-Host '[SUKSES] Download Google Drive selesai!' -ForegroundColor Green}}"
 set GDRIVE_PID=!errorlevel!
 
 echo [3/6] Memulai download PostgreSQL...
-start "Download PostgreSQL" /MIN powershell -Command "& {try {Invoke-WebRequest -Uri '$POSTGRES_URL' -OutFile '%TEMP%\postgresql-installer.temp' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Invoke-WebRequest -Uri '$POSTGRES_URL' -OutFile '%TEMP%\postgresql-installer.temp' -UseBasicParsing}; if (Test-Path '%TEMP%\postgresql-installer.temp') {Rename-Item '%TEMP%\postgresql-installer.temp' 'postgresql-installer.exe'; Write-Host '=== PostgreSQL download completed ===' -ForegroundColor Green}}"
+start "Download PostgreSQL" /MIN powershell -Command "& {Write-Host '[INFO] Mengunduh PostgreSQL 9.4.26...' -ForegroundColor Cyan; try {Invoke-WebRequest -Uri '$POSTGRES_URL' -OutFile '%TEMP%\postgresql-installer.temp' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Write-Host '[ERROR] Gagal download PostgreSQL, mencoba metode alternatif...' -ForegroundColor Red; Invoke-WebRequest -Uri '$POSTGRES_URL' -OutFile '%TEMP%\postgresql-installer.temp' -UseBasicParsing}; if (Test-Path '%TEMP%\postgresql-installer.temp') {Rename-Item '%TEMP%\postgresql-installer.temp' 'postgresql-installer.exe'; Write-Host '[SUKSES] Download PostgreSQL selesai!' -ForegroundColor Green}}"
 set POSTGRES_PID=!errorlevel!
 
 echo [4/6] Memulai download XAMPP 7.3.24...
-start "Download XAMPP" /MIN powershell -Command "& {try {Invoke-WebRequest -Uri '$XAMPP_URL' -OutFile '%TEMP%\xampp-installer.temp' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Invoke-WebRequest -Uri '$XAMPP_URL' -OutFile '%TEMP%\xampp-installer.temp' -UseBasicParsing}; if (Test-Path '%TEMP%\xampp-installer.temp') {Rename-Item '%TEMP%\xampp-installer.temp' 'xampp-installer.exe'; Write-Host '=== XAMPP download completed ===' -ForegroundColor Green}}"
+start "Download XAMPP" /MIN powershell -Command "& {Write-Host '[INFO] Mengunduh XAMPP 7.3.24...' -ForegroundColor Cyan; try {Invoke-WebRequest -Uri '$XAMPP_URL' -OutFile '%TEMP%\xampp-installer.temp' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Write-Host '[ERROR] Gagal download XAMPP, mencoba metode alternatif...' -ForegroundColor Red; Invoke-WebRequest -Uri '$XAMPP_URL' -OutFile '%TEMP%\xampp-installer.temp' -UseBasicParsing}; if (Test-Path '%TEMP%\xampp-installer.temp') {Rename-Item '%TEMP%\xampp-installer.temp' 'xampp-installer.exe'; Write-Host '[SUKSES] Download XAMPP selesai!' -ForegroundColor Green}}"
 set XAMPP_PID=!errorlevel!
 
 echo [5/6] Memulai download Notepad++...
-start "Download Notepad++" /MIN powershell -Command "& {try {Invoke-WebRequest -Uri '$NOTEPAD_URL' -OutFile '%TEMP%\notepadplusplus-installer.temp' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Invoke-WebRequest -Uri '$NOTEPAD_URL' -OutFile '%TEMP%\notepadplusplus-installer.temp' -UseBasicParsing}; if (Test-Path '%TEMP%\notepadplusplus-installer.temp') {Rename-Item '%TEMP%\notepadplusplus-installer.temp' 'notepadplusplus-installer.exe'; Write-Host '=== Notepad++ download completed ===' -ForegroundColor Green}}"
+start "Download Notepad++" /MIN powershell -Command "& {Write-Host '[INFO] Mengunduh Notepad++...' -ForegroundColor Cyan; try {Invoke-WebRequest -Uri '$NOTEPAD_URL' -OutFile '%TEMP%\notepadplusplus-installer.temp' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Write-Host '[ERROR] Gagal download Notepad++, mencoba metode alternatif...' -ForegroundColor Red; Invoke-WebRequest -Uri '$NOTEPAD_URL' -OutFile '%TEMP%\notepadplusplus-installer.temp' -UseBasicParsing}; if (Test-Path '%TEMP%\notepadplusplus-installer.temp') {Rename-Item '%TEMP%\notepadplusplus-installer.temp' 'notepadplusplus-installer.exe'; Write-Host '[SUKSES] Download Notepad++ selesai!' -ForegroundColor Green}}"
 set NOTEPAD_PID=!errorlevel!
 
 echo [6/6] Memulai download WinRAR...
-start "Download WinRAR" /MIN powershell -Command "& {try {Invoke-WebRequest -Uri '$WINRAR_URL' -OutFile '%TEMP%\winrar-installer.temp' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Invoke-WebRequest -Uri '$WINRAR_URL' -OutFile '%TEMP%\winrar-installer.temp' -UseBasicParsing}; if (Test-Path '%TEMP%\winrar-installer.temp') {Rename-Item '%TEMP%\winrar-installer.temp' 'winrar-installer.exe'; Write-Host '=== WinRAR download completed ===' -ForegroundColor Green}}"
+start "Download WinRAR" /MIN powershell -Command "& {Write-Host '[INFO] Mengunduh WinRAR...' -ForegroundColor Cyan; try {Invoke-WebRequest -Uri '$WINRAR_URL' -OutFile '%TEMP%\winrar-installer.temp' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Write-Host '[ERROR] Gagal download WinRAR, mencoba metode alternatif...' -ForegroundColor Red; Invoke-WebRequest -Uri '$WINRAR_URL' -OutFile '%TEMP%\winrar-installer.temp' -UseBasicParsing}; if (Test-Path '%TEMP%\winrar-installer.temp') {Rename-Item '%TEMP%\winrar-installer.temp' 'winrar-installer.exe'; Write-Host '[SUKSES] Download WinRAR selesai!' -ForegroundColor Green}}"
 set WINRAR_PID=!errorlevel!
 
 :: Tunggu sampai semua file .exe tersedia (semua download selesai)
@@ -146,46 +146,48 @@ if exist "%TEMP%\xampp-installer.exe" set /a completed+=1
 if exist "%TEMP%\notepadplusplus-installer.exe" set /a completed+=1
 if exist "%TEMP%\winrar-installer.exe" set /a completed+=1
 
-:: Tampilkan status detail dengan warna
+:: Tampilkan status detail dengan warna - SEMUA SEKALIGUS
 cls
 echo ========================================
 echo PROGRESS DOWNLOAD: !completed!/6 FILES
 echo ========================================
+(
 if exist "%TEMP%\ChromeInstaller.exe" (
-    powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' Chrome - SELESAI'"
+    echo [BERHASIL] Chrome - SELESAI
 ) else (
-    powershell -Command "Write-Host '[DOWNLOAD]' -ForegroundColor Yellow -NoNewline; Write-Host ' Chrome - Downloading...'"
+    echo [DOWNLOAD] Chrome - Downloading...
 )
 
 if exist "%TEMP%\GoogleDriveSetup.exe" (
-    powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' Google Drive - SELESAI'"
+    echo [BERHASIL] Google Drive - SELESAI
 ) else (
-    powershell -Command "Write-Host '[DOWNLOAD]' -ForegroundColor Yellow -NoNewline; Write-Host ' Google Drive - Downloading...'"
+    echo [DOWNLOAD] Google Drive - Downloading...
 )
 
 if exist "%TEMP%\postgresql-installer.exe" (
-    powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' PostgreSQL - SELESAI'"
+    echo [BERHASIL] PostgreSQL - SELESAI
 ) else (
-    powershell -Command "Write-Host '[DOWNLOAD]' -ForegroundColor Yellow -NoNewline; Write-Host ' PostgreSQL - Downloading...'"
+    echo [DOWNLOAD] PostgreSQL - Downloading...
 )
 
 if exist "%TEMP%\xampp-installer.exe" (
-    powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' XAMPP - SELESAI'"
+    echo [BERHASIL] XAMPP - SELESAI
 ) else (
-    powershell -Command "Write-Host '[DOWNLOAD]' -ForegroundColor Yellow -NoNewline; Write-Host ' XAMPP - Downloading...'"
+    echo [DOWNLOAD] XAMPP - Downloading...
 )
 
 if exist "%TEMP%\notepadplusplus-installer.exe" (
-    powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' Notepad++ - SELESAI'"
+    echo [BERHASIL] Notepad++ - SELESAI
 ) else (
-    powershell -Command "Write-Host '[DOWNLOAD]' -ForegroundColor Yellow -NoNewline; Write-Host ' Notepad++ - Downloading...'"
+    echo [DOWNLOAD] Notepad++ - Downloading...
 )
 
 if exist "%TEMP%\winrar-installer.exe" (
-    powershell -Command "Write-Host '[BERHASIL]' -ForegroundColor Green -NoNewline; Write-Host ' WinRAR - SELESAI'"
+    echo [BERHASIL] WinRAR - SELESAI
 ) else (
-    powershell -Command "Write-Host '[DOWNLOAD]' -ForegroundColor Yellow -NoNewline; Write-Host ' WinRAR - Downloading...'"
+    echo [DOWNLOAD] WinRAR - Downloading...
 )
+) | powershell -Command "& {while ($input.MoveNext()) { $line = $input.Current; if ($line -match '\[BERHASIL\]') { Write-Host $line -ForegroundColor Green } elseif ($line -match '\[DOWNLOAD\]') { Write-Host $line -ForegroundColor Yellow } elseif ($line -match '\[GAGAL\]') { Write-Host $line -ForegroundColor Red } else { Write-Host $line } }}"
 echo ========================================
 echo.
 
@@ -254,7 +256,7 @@ if exist "%TEMP%\GoogleDriveSetup.exe" (
 ) else (
     powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' ERROR: Google Drive installer tidak ditemukan!'"
     echo Mencoba download ulang Google Drive...
-    powershell -Command "& {try {Invoke-WebRequest -Uri '$GDRIVE_URL' -OutFile '%TEMP%\GoogleDriveSetup.exe' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Invoke-WebRequest -Uri '$GDRIVE_URL' -OutFile '%TEMP%\GoogleDriveSetup.exe' -UseBasicParsing}}"
+    powershell -Command "& {Write-Host '[INFO] Mengunduh ulang Google Drive...' -ForegroundColor Cyan; try {Invoke-WebRequest -Uri '$GDRIVE_URL' -OutFile '%TEMP%\GoogleDriveSetup.exe' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Invoke-WebRequest -Uri '$GDRIVE_URL' -OutFile '%TEMP%\GoogleDriveSetup.exe' -UseBasicParsing}}"
     if exist "%TEMP%\GoogleDriveSetup.exe" (
         start /wait "" "%TEMP%\GoogleDriveSetup.exe" --silent
         del /f /q "%TEMP%\GoogleDriveSetup.exe" 2>nul
@@ -280,7 +282,7 @@ if exist "%TEMP%\postgresql-installer.exe" (
 ) else (
     powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' ERROR: PostgreSQL installer tidak ditemukan!'"
     echo Mencoba download ulang PostgreSQL...
-    powershell -Command "& {try {Invoke-WebRequest -Uri '$POSTGRES_URL' -OutFile '%TEMP%\postgresql-installer.exe' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Invoke-WebRequest -Uri '$POSTGRES_URL' -OutFile '%TEMP%\postgresql-installer.exe' -UseBasicParsing}}"
+    powershell -Command "& {Write-Host '[INFO] Mengunduh ulang PostgreSQL...' -ForegroundColor Cyan; try {Invoke-WebRequest -Uri '$POSTGRES_URL' -OutFile '%TEMP%\postgresql-installer.exe' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Invoke-WebRequest -Uri '$POSTGRES_URL' -OutFile '%TEMP%\postgresql-installer.exe' -UseBasicParsing}}"
     if exist "%TEMP%\postgresql-installer.exe" (
         start /wait "" "%TEMP%\postgresql-installer.exe" --mode unattended --superpassword "123456" --servicename "PostgreSQL" --servicepassword "123456" --serverport 5432
         del /f /q "%TEMP%\postgresql-installer.exe" 2>nul
@@ -333,7 +335,7 @@ if exist "%TEMP%\xampp-installer.exe" (
 ) else (
     powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' ERROR: XAMPP installer tidak ditemukan!'"
     echo Mencoba download ulang XAMPP...
-    powershell -Command "& {try {Invoke-WebRequest -Uri '$XAMPP_URL' -OutFile '%TEMP%\xampp-installer.exe' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Invoke-WebRequest -Uri '$XAMPP_URL' -OutFile '%TEMP%\xampp-installer.exe' -UseBasicParsing}}"
+    powershell -Command "& {Write-Host '[INFO] Mengunduh ulang XAMPP...' -ForegroundColor Cyan; try {Invoke-WebRequest -Uri '$XAMPP_URL' -OutFile '%TEMP%\xampp-installer.exe' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Invoke-WebRequest -Uri '$XAMPP_URL' -OutFile '%TEMP%\xampp-installer.exe' -UseBasicParsing}}"
     if exist "%TEMP%\xampp-installer.exe" (
         start /wait "" "%TEMP%\xampp-installer.exe" /S
         del /f /q "%TEMP%\xampp-installer.exe" 2>nul
@@ -359,7 +361,7 @@ if exist "%TEMP%\notepadplusplus-installer.exe" (
 ) else (
     powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' ERROR: Notepad++ installer tidak ditemukan!'"
     echo Mencoba download ulang Notepad++...
-    powershell -Command "& {try {Invoke-WebRequest -Uri '$NOTEPAD_URL' -OutFile '%TEMP%\notepadplusplus-installer.exe' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Invoke-WebRequest -Uri '$NOTEPAD_URL' -OutFile '%TEMP%\notepadplusplus-installer.exe' -UseBasicParsing}}"
+    powershell -Command "& {Write-Host '[INFO] Mengunduh ulang Notepad++...' -ForegroundColor Cyan; try {Invoke-WebRequest -Uri '$NOTEPAD_URL' -OutFile '%TEMP%\notepadplusplus-installer.exe' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Invoke-WebRequest -Uri '$NOTEPAD_URL' -OutFile '%TEMP%\notepadplusplus-installer.exe' -UseBasicParsing}}"
     if exist "%TEMP%\notepadplusplus-installer.exe" (
         start /wait "" "%TEMP%\notepadplusplus-installer.exe" /S
         del /f /q "%TEMP%\notepadplusplus-installer.exe" 2>nul
@@ -385,7 +387,7 @@ if exist "%TEMP%\winrar-installer.exe" (
 ) else (
     powershell -Command "Write-Host '[GAGAL]' -ForegroundColor Red -NoNewline; Write-Host ' ERROR: WinRAR installer tidak ditemukan!'"
     echo Mencoba download ulang WinRAR...
-    powershell -Command "& {try {Invoke-WebRequest -Uri '$WINRAR_URL' -OutFile '%TEMP%\winrar-installer.exe' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Invoke-WebRequest -Uri '$WINRAR_URL' -OutFile '%TEMP%\winrar-installer.exe' -UseBasicParsing}}"
+    powershell -Command "& {Write-Host '[INFO] Mengunduh ulang WinRAR...' -ForegroundColor Cyan; try {Invoke-WebRequest -Uri '$WINRAR_URL' -OutFile '%TEMP%\winrar-installer.exe' -UserAgent 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'} catch {Invoke-WebRequest -Uri '$WINRAR_URL' -OutFile '%TEMP%\winrar-installer.exe' -UseBasicParsing}}"
     if exist "%TEMP%\winrar-installer.exe" (
         start /wait "" "%TEMP%\winrar-installer.exe" /S
         del /f /q "%TEMP%\winrar-installer.exe" 2>nul
