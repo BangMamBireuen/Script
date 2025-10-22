@@ -153,14 +153,12 @@ echo PROGRESS DOWNLOAD: !completed!/6 FILES
 echo ========================================
 
 :: Gunakan PowerShell single command untuk semua status (LEBIH CEPAT)
-powershell -Command "& {
-    if (Test-Path '$env:TEMP\ChromeInstaller.exe') { Write-Host '[BERHASIL] Chrome - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] Chrome - Downloading...' -ForegroundColor Yellow }
-    if (Test-Path '$env:TEMP\GoogleDriveSetup.exe') { Write-Host '[BERHASIL] Google Drive - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] Google Drive - Downloading...' -ForegroundColor Yellow }
-    if (Test-Path '$env:TEMP\postgresql-installer.exe') { Write-Host '[BERHASIL] PostgreSQL - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] PostgreSQL - Downloading...' -ForegroundColor Yellow }
-    if (Test-Path '$env:TEMP\xampp-installer.exe') { Write-Host '[BERHASIL] XAMPP - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] XAMPP - Downloading...' -ForegroundColor Yellow }
-    if (Test-Path '$env:TEMP\notepadplusplus-installer.exe') { Write-Host '[BERHASIL] Notepad++ - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] Notepad++ - Downloading...' -ForegroundColor Yellow }
-    if (Test-Path '$env:TEMP\winrar-installer.exe') { Write-Host '[BERHASIL] WinRAR - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] WinRAR - Downloading...' -ForegroundColor Yellow }
-}"
+powershell -Command "if (Test-Path '$env:TEMP\ChromeInstaller.exe') { Write-Host '[BERHASIL] Chrome - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] Chrome - Downloading...' -ForegroundColor Yellow }"
+powershell -Command "if (Test-Path '$env:TEMP\GoogleDriveSetup.exe') { Write-Host '[BERHASIL] Google Drive - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] Google Drive - Downloading...' -ForegroundColor Yellow }"
+powershell -Command "if (Test-Path '$env:TEMP\postgresql-installer.exe') { Write-Host '[BERHASIL] PostgreSQL - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] PostgreSQL - Downloading...' -ForegroundColor Yellow }"
+powershell -Command "if (Test-Path '$env:TEMP\xampp-installer.exe') { Write-Host '[BERHASIL] XAMPP - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] XAMPP - Downloading...' -ForegroundColor Yellow }"
+powershell -Command "if (Test-Path '$env:TEMP\notepadplusplus-installer.exe') { Write-Host '[BERHASIL] Notepad++ - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] Notepad++ - Downloading...' -ForegroundColor Yellow }"
+powershell -Command "if (Test-Path '$env:TEMP\winrar-installer.exe') { Write-Host '[BERHASIL] WinRAR - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] WinRAR - Downloading...' -ForegroundColor Yellow }"
 
 echo ========================================
 echo.
