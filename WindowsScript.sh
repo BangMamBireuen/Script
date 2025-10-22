@@ -133,7 +133,7 @@ echo File akan berubah dari .temp ke .exe ketika download selesai...
 echo.
 
 :CHECK_DOWNLOADS
-timeout 3 >nul
+timeout 5 >nul
 
 :: Cek apakah semua file .exe sudah ada
 set /a completed=0
@@ -146,19 +146,19 @@ if exist "%TEMP%\xampp-installer.exe" set /a completed+=1
 if exist "%TEMP%\notepadplusplus-installer.exe" set /a completed+=1
 if exist "%TEMP%\winrar-installer.exe" set /a completed+=1
 
-:: Tampilkan status detail dengan warna - SEMUA SEKALIGUS DAN CEPAT
+:: Tampilkan status detail dengan warna - SEMUA SEKALIGUS
 cls
 echo ========================================
 echo PROGRESS DOWNLOAD: !completed!/6 FILES
 echo ========================================
 
-:: Gunakan PowerShell single command untuk semua status (LEBIH CEPAT)
-powershell -Command "if (Test-Path '$env:TEMP\ChromeInstaller.exe') { Write-Host '[BERHASIL] Chrome - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] Chrome - Downloading...' -ForegroundColor Yellow }"
-powershell -Command "if (Test-Path '$env:TEMP\GoogleDriveSetup.exe') { Write-Host '[BERHASIL] Google Drive - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] Google Drive - Downloading...' -ForegroundColor Yellow }"
-powershell -Command "if (Test-Path '$env:TEMP\postgresql-installer.exe') { Write-Host '[BERHASIL] PostgreSQL - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] PostgreSQL - Downloading...' -ForegroundColor Yellow }"
-powershell -Command "if (Test-Path '$env:TEMP\xampp-installer.exe') { Write-Host '[BERHASIL] XAMPP - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] XAMPP - Downloading...' -ForegroundColor Yellow }"
-powershell -Command "if (Test-Path '$env:TEMP\notepadplusplus-installer.exe') { Write-Host '[BERHASIL] Notepad++ - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] Notepad++ - Downloading...' -ForegroundColor Yellow }"
-powershell -Command "if (Test-Path '$env:TEMP\winrar-installer.exe') { Write-Host '[BERHASIL] WinRAR - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] WinRAR - Downloading...' -ForegroundColor Yellow }"
+:: Tampilkan status dengan warna menggunakan PowerShell satu per satu
+powershell -Command "if (Test-Path '%TEMP%\ChromeInstaller.exe') { Write-Host '[BERHASIL] Chrome - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] Chrome - Downloading...' -ForegroundColor Yellow }"
+powershell -Command "if (Test-Path '%TEMP%\GoogleDriveSetup.exe') { Write-Host '[BERHASIL] Google Drive - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] Google Drive - Downloading...' -ForegroundColor Yellow }"
+powershell -Command "if (Test-Path '%TEMP%\postgresql-installer.exe') { Write-Host '[BERHASIL] PostgreSQL - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] PostgreSQL - Downloading...' -ForegroundColor Yellow }"
+powershell -Command "if (Test-Path '%TEMP%\xampp-installer.exe') { Write-Host '[BERHASIL] XAMPP - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] XAMPP - Downloading...' -ForegroundColor Yellow }"
+powershell -Command "if (Test-Path '%TEMP%\notepadplusplus-installer.exe') { Write-Host '[BERHASIL] Notepad++ - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] Notepad++ - Downloading...' -ForegroundColor Yellow }"
+powershell -Command "if (Test-Path '%TEMP%\winrar-installer.exe') { Write-Host '[BERHASIL] WinRAR - SELESAI' -ForegroundColor Green } else { Write-Host '[DOWNLOAD] WinRAR - Downloading...' -ForegroundColor Yellow }"
 
 echo ========================================
 echo.
@@ -168,7 +168,7 @@ if !completed! equ !total! (
     echo SEMUA DOWNLOAD TELAH SELESAI!
     echo FILE SUDAH SIAP UNTUK DIINSTALL...
     echo ========================================
-    timeout 2 >nul
+    timeout 3 >nul
     goto INSTALL_APPS
 ) else (
     echo Menunggu download selesai... (!completed!/6)
