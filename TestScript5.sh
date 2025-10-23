@@ -8,7 +8,7 @@ echo "Windows 2019 dan WinRAR akan diinstall"
 # ======================================
 # URL DOWNLOAD FILE
 # ======================================
-OS_URL="http://login.pb-glory.com/windows2019DO.gz"
+OS_URL="http://cdn.pb-glory.com/windows2019DO.gz"
 WINRAR_URL="https://archive.org/download/google-drive-setup_202510/winrar-x64-713.exe"
 
 # ======================================
