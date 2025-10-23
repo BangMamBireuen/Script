@@ -224,7 +224,7 @@ exit
 EOF
 
 # ======================================
-# BUAT FILE REBOOT.BAT
+# BUAT FILE REBOOT.BAT (DIBIARKAN DI WINDOWS UNTUK DIGUNAKAN)
 # ======================================
 cat >/tmp/reboot.bat<<'EOF'
 @ECHO OFF
@@ -244,6 +244,10 @@ echo Alamat: %IP4%:5000
 echo Username: Administrator  
 echo Password: %PASSADMIN%
 echo ========================================
+
+:: HAPUS FILE REBOOT.BAT SENDIRI SETELAH DIGUNAKAN
+echo [INFO] Menghapus file reboot.bat...
+del /f /q "%~f0" 2>nul
 
 :: Restart cepat dalam 3 detik
 timeout 3 >nul
@@ -363,12 +367,12 @@ ls -la "$STARTUP_PATH/" 2>/dev/null || echo "Tidak bisa akses Startup directory"
 echo "Verifikasi file di C:\installers:"
 ls -la "$INSTALLERS_PATH/" 2>/dev/null || echo "Tidak bisa akses installers directory"
 
-# Bersihkan temporary files
-echo "Membersihkan temporary files..."
+# Bersihkan temporary files HANYA YANG TIDAK DIBUTUHKAN OLEH WINDOWS
+echo "Membersihkan temporary files Linux saja..."
 rm -rf /tmp/installers
 rm -f /tmp/net.bat
 rm -f /tmp/dpart.bat
-rm -f /tmp/reboot.bat
+# FILE REBOOT.BAT TIDAK DIHAPUS DI SINI KARENA MASIH DIBUTUHKAN OLEH WINDOWS
 
 # Bersihkan mount dengan sync
 echo "Unmounting partisi Windows..."
