@@ -180,7 +180,7 @@ if exist "C:\installers\xampp-installer.exe" (
     echo Memulai instalasi XAMPP...
     start /wait "" "C:\installers\xampp-installer.exe" --mode unattended --unattendedmodeui minimal --installer-language en --prefix "C:\xampp"    
     :: Beri waktu untuk proses instalasi XAMPP
-    timeout 30 >nul
+    timeout 10 >nul
     :: Verifikasi apakah instalasi berhasil
     if exist "C:\xampp\xampp-control.exe" (
         echo [BERHASIL] XAMPP berhasil diinstall di C:\xampp
