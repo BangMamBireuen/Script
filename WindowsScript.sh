@@ -472,13 +472,13 @@ echo.
 echo ========================================
 echo INSTALASI SELESAI!
 echo ========================================
-echo Sistem akan direstart dalam 10 detik...
+echo Sistem akan direstart dalam 20 detik...
 echo Setelah restart, gunakan alamat berikut untuk RDP:
 echo %IP4%:5000
 echo Username: Administrator
 echo Password: %PASSADMIN%
 echo ========================================
-timeout 10 >nul
+timeout 20 >nul
 
 shutdown /r /t 0
 
