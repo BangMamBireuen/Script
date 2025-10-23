@@ -271,8 +271,11 @@ echo.
 echo [8/8] Menginstall Navicat Premium 16...
 if exist "C:\installers\navicat-installer.exe" (
     echo Memulai instalasi Navicat Premium 16...
-    start /wait "" "C:\installers\navicat-installer.exe" /S
+    start /wait "" "C:\installers\navicat-installer.exe" /VERYSILENT /NORESTART /SP-
     echo [BERHASIL] Navicat Premium 16 berhasil diinstall
+    
+    :: Tunggu proses instalasi selesai
+    timeout 5 >nul
     
     :: Copy file crack Navicat
     echo Mengcopy file crack Navicat...
