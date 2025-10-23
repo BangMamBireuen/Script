@@ -339,17 +339,6 @@ echo ========================================
 echo MEMBUAT SHORTCUT BARU DI DESKTOP
 echo ========================================
 
-:: Shortcut Google Chrome
-if exist "C:\Program Files\Google\Chrome\Application\chrome.exe" (
-    echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Chrome.lnk"
-    echo URL="C:\Program Files\Google\Chrome\Application\chrome.exe" >> "%PUBLIC%\Desktop\Google Chrome.lnk"
-    echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Chrome.lnk"
-    echo IconFile=C:\Program Files\Google\Chrome\Application\chrome.exe >> "%PUBLIC%\Desktop\Google Chrome.lnk"
-    echo [BERHASIL] Shortcut Google Chrome dibuat
-) else (
-    echo [GAGAL] Google Chrome tidak ditemukan - shortcut tidak dibuat
-)
-
 :: Shortcut Google Drive
 if exist "C:\Program Files\Google\Drive File Stream\launch.bat" (
     echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Drive.lnk"
@@ -403,17 +392,6 @@ if exist "C:\Program Files\WinRAR\WinRAR.exe" (
     echo [BERHASIL] Shortcut WinRAR dibuat
 ) else (
     echo [GAGAL] WinRAR tidak ditemukan - shortcut tidak dibuat
-)
-
-:: Shortcut Navicat Premium 16
-if exist "C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe" (
-    echo [InternetShortcut] > "%PUBLIC%\Desktop\Navicat Premium 16.lnk"
-    echo URL="C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe" >> "%PUBLIC%\Desktop\Navicat Premium 16.lnk"
-    echo IconIndex=0 >> "%PUBLIC%\Desktop\Navicat Premium 16.lnk"
-    echo IconFile=C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe >> "%PUBLIC%\Desktop\Navicat Premium 16.lnk"
-    echo [BERHASIL] Shortcut Navicat Premium 16 dibuat
-) else (
-    echo [GAGAL] Navicat Premium 16 tidak ditemukan - shortcut tidak dibuat
 )
 
 echo [BERHASIL] Semua shortcut berhasil dibuat
