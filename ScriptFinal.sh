@@ -462,20 +462,19 @@ echo IconFile=C:\Program Files\Notepad++\notepad++.exe >> "%PUBLIC%\Desktop\Note
 echo [InternetShortcut] > "%PUBLIC%\Desktop\WinRAR.url"
 echo URL="C:\Program Files\WinRAR\WinRAR.exe" >> "%PUBLIC%\Desktop\WinRAR.url"
 echo IconIndex=0 >> "%PUBLIC%\Desktop\WinRAR.url"
-echo IconFile=C:\Program Files\WinRAR\WinRAR.exe >> "%PUBLIC%\Desktop\WinRAR.lnk"
+echo IconFile=C:\Program Files\WinRAR\WinRAR.exe >> "%PUBLIC%\Desktop\WinRAR.url"
 
 :: Shortcut Navicat Premium 16
-echo [InternetShortcut] > "%PUBLIC%\Desktop\Navicat Premium 16.lnk"
-echo URL="C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe" >> "%PUBLIC%\Desktop\Navicat Premium 16.lnk"
-echo IconIndex=0 >> "%PUBLIC%\Desktop\Navicat Premium 16.lnk"
-echo IconFile=C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe >> "%PUBLIC%\Desktop\Navicat Premium 16.lnk"
-
-:: Shortcut DeepFreeze (jika ada)
-if exist "C:\installers\DFStdServ.exe" (
-    echo [InternetShortcut] > "%PUBLIC%\Desktop\DeepFreeze Installer.lnk"
-    echo URL="C:\installers\DFStdServ.exe" >> "%PUBLIC%\Desktop\DeepFreeze Installer.lnk"
-    echo IconIndex=0 >> "%PUBLIC%\Desktop\DeepFreeze Installer.lnk"
-    echo IconFile=C:\installers\DFStdServ.exe >> "%PUBLIC%\Desktop\DeepFreeze Installer.lnk"
+if exist "C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe" (
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\Navicat Premium 16.url"
+    echo URL="C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe" >> "%PUBLIC%\Desktop\Navicat Premium 16.url"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\Navicat Premium 16.url"
+    echo IconFile=C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe >> "%PUBLIC%\Desktop\Navicat Premium 16.url"
+) else if exist "C:\Program Files (x86)\PremiumSoft\Navicat Premium 16\navicat.exe" (
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\Navicat Premium 16.url"
+    echo URL="C:\Program Files (x86)\PremiumSoft\Navicat Premium 16\navicat.exe" >> "%PUBLIC%\Desktop\Navicat Premium 16.url"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\Navicat Premium 16.url"
+    echo IconFile=C:\Program Files (x86)\PremiumSoft\Navicat Premium 16\navicat.exe >> "%PUBLIC%\Desktop\Navicat Premium 16.url"
 )
 
 :: Hapus shortcut Google yang tidak diinginkan
