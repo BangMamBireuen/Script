@@ -271,39 +271,89 @@ echo.
 echo [8/8] Menginstall Navicat Premium 16...
 if exist "C:\installers\navicat-installer.exe" (
     echo Memulai instalasi Navicat Premium 16...
-    start /wait "" "C:\installers\navicat-installer.exe" /S
-    echo [BERHASIL] Navicat Premium 16 berhasil diinstall
     
-    :: Copy file crack Navicat
-    echo Mengcopy file crack Navicat...
-    if exist "C:\installers\libcc.dll" (
-        if exist "C:\Program Files\PremiumSoft\Navicat Premium 16\" (
-            copy /Y "C:\installers\libcc.dll" "C:\Program Files\PremiumSoft\Navicat Premium 16\libcc.dll" >nul 2>&1
-            if exist "C:\Program Files\PremiumSoft\Navicat Premium 16\libcc.dll" (
-                echo [BERHASIL] File crack berhasil dicopy
-            ) else (
-                echo [GAGAL] Gagal mencopy file crack
+    :: Coba berbagai metode instalasi silent
+    echo Mencoba metode instalasi silent Navicat...
+    start /wait "" "C:\installers\navicat-installer.exe" /SILENT /NORESTART
+    
+    :: Tunggu lebih lama untuk Navicat
+    echo Menunggu proses instalasi Navicat selesai...
+    timeout 30 >nul
+    
+    :: Verifikasi apakah Navicat berhasil terinstall
+    if exist "C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe" (
+        echo [BERHASIL] Navicat Premium 16 berhasil diinstall
+        
+        :: Copy file crack Navicat - coba berbagai lokasi
+        echo Mengcopy file crack Navicat...
+        if exist "C:\installers\libcc.dll" (
+            :: Coba copy ke beberapa kemungkinan lokasi
+            if exist "C:\Program Files\PremiumSoft\Navicat Premium 16\" (
+                copy /Y "C:\installers\libcc.dll" "C:\Program Files\PremiumSoft\Navicat Premium 16\" >nul 2>&1
+                if exist "C:\Program Files\PremiumSoft\Navicat Premium 16\libcc.dll" (
+                    echo [BERHASIL] File crack berhasil dicopy ke folder Navicat
+                ) else (
+                    echo [GAGAL] Gagal mencopy file crack ke folder Navicat
+                )
+            )
+            
+            :: Coba copy ke folder Program Files
+            if exist "C:\Program Files\Navicat\" (
+                copy /Y "C:\installers\libcc.dll" "C:\Program Files\Navicat\" >nul 2>&1
+                if exist "C:\Program Files\Navicat\libcc.dll" (
+                    echo [BERHASIL] File crack berhasil dicopy ke Navicat Program Files
+                )
+            )
+            
+            :: Coba copy ke folder Program Files (x86) untuk versi 32-bit
+            if exist "C:\Program Files (x86)\PremiumSoft\Navicat Premium 16\" (
+                copy /Y "C:\installers\libcc.dll" "C:\Program Files (x86)\PremiumSoft\Navicat Premium 16\" >nul 2>&1
+                if exist "C:\Program Files (x86)\PremiumSoft\Navicat Premium 16\libcc.dll" (
+                    echo [BERHASIL] File crack berhasil dicopy ke Navicat 32-bit
+                )
             )
         ) else (
-            echo [GAGAL] Folder Navicat tidak ditemukan
+            echo [GAGAL] File crack libcc.dll tidak ditemukan di C:\installers\
         )
     ) else (
-        echo [GAGAL] File crack tidak ditemukan
+        echo [GAGAL] Navicat gagal terinstall - file navicat.exe tidak ditemukan
+        echo [INFO] Mencoba instalasi manual dengan parameter berbeda...
+        
+        :: Coba metode instalasi alternatif
+        start /wait "" "C:\installers\navicat-installer.exe" /VERYSILENT /SUPPRESSMSGBOXES /NORESTART
+        
+        timeout 20 >nul
+        
+        :: Verifikasi lagi setelah metode alternatif
+        if exist "C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe" (
+            echo [BERHASIL] Navicat berhasil diinstall dengan metode alternatif
+        ) else (
+            echo [GAGAL] Navicat tetap gagal terinstall
+        )
     )
     
-    timeout 2 >nul
+    timeout 5 >nul
     echo Menghapus installer Navicat...
+    
+    :: Force delete dengan multiple attempts
     del /f /q "C:\installers\navicat-installer.exe" 2>nul
     del /f /q "C:\installers\libcc.dll" 2>nul
+    
+    :: Jika masih ada, tunggu dan coba lagi
     if exist "C:\installers\navicat-installer.exe" (
         echo Menunggu file dilepaskan...
-        timeout 3 >nul
+        timeout 5 >nul
+        taskkill /f /im navicat-installer.exe 2>nul
+        taskkill /f /im Navicat* 2>nul
         del /f /q "C:\installers\navicat-installer.exe" 2>nul
         del /f /q "C:\installers\libcc.dll" 2>nul
     )
+    
     echo [BERHASIL] Installer Navicat berhasil dihapus
 ) else (
     echo [GAGAL] ERROR: Navicat installer tidak ditemukan!
+    echo [INFO] File yang tersedia di C:\installers:
+    dir "C:\installers\" 2>nul
 )
 
 :: TUTUP PAKSA ServerManager.exe SETELAH INSTALASI
@@ -379,39 +429,39 @@ echo.
 echo Membuat shortcut di Desktop...
 
 :: Shortcut Google Chrome
-echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Chrome.lnk"
-echo URL="C:\Program Files\Google\Chrome\Application\chrome.exe" >> "%PUBLIC%\Desktop\Google Chrome.lnk"
-echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Chrome.lnk"
-echo IconFile=C:\Program Files\Google\Chrome\Application\chrome.exe >> "%PUBLIC%\Desktop\Google Chrome.lnk"
+echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Chrome.url"
+echo URL="C:\Program Files\Google\Chrome\Application\chrome.exe" >> "%PUBLIC%\Desktop\Google Chrome.url"
+echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Chrome.url"
+echo IconFile=C:\Program Files\Google\Chrome\Application\chrome.exe >> "%PUBLIC%\Desktop\Google Chrome.url"
 
 :: Shortcut Google Drive
-echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Drive.lnk"
-echo URL="C:\Program Files\Google\Drive File Stream\launch.bat" >> "%PUBLIC%\Desktop\Google Drive.lnk"
-echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Drive.lnk"
-echo IconFile=C:\Program Files\Google\Drive File Stream\drive_fs.ico >> "%PUBLIC%\Desktop\Google Drive.lnk"
+echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Drive.url"
+echo URL="C:\Program Files\Google\Drive File Stream\launch.bat" >> "%PUBLIC%\Desktop\Google Drive.url"
+echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Drive.url"
+echo IconFile=C:\Program Files\Google\Drive File Stream\drive_fs.ico >> "%PUBLIC%\Desktop\Google Drive.url"
 
 :: Shortcut XAMPP Control Panel
-echo [InternetShortcut] > "%PUBLIC%\Desktop\XAMPP Control Panel.lnk"
-echo URL="C:\xampp\xampp-control.exe" >> "%PUBLIC%\Desktop\XAMPP Control Panel.lnk"
-echo IconIndex=0 >> "%PUBLIC%\Desktop\XAMPP Control Panel.lnk"
-echo IconFile=C:\xampp\xampp-control.exe >> "%PUBLIC%\Desktop\XAMPP Control Panel.lnk"
+echo [InternetShortcut] > "%PUBLIC%\Desktop\XAMPP Control Panel.url"
+echo URL="C:\xampp\xampp-control.exe" >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
+echo IconIndex=0 >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
+echo IconFile=C:\xampp\xampp-control.exe >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
 
 :: Shortcut pgAdmin (PostgreSQL) - DIPERBAIKI: pgAdmin3.exe
-echo [InternetShortcut] > "%PUBLIC%\Desktop\pgAdmin 3.lnk"
-echo URL="C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe" >> "%PUBLIC%\Desktop\pgAdmin 3.lnk"
-echo IconIndex=0 >> "%PUBLIC%\Desktop\pgAdmin 3.lnk"
-echo IconFile=C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe >> "%PUBLIC%\Desktop\pgAdmin 3.lnk"
+echo [InternetShortcut] > "%PUBLIC%\Desktop\pgAdmin 3.url"
+echo URL="C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe" >> "%PUBLIC%\Desktop\pgAdmin 3.url"
+echo IconIndex=0 >> "%PUBLIC%\Desktop\pgAdmin 3.url"
+echo IconFile=C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe >> "%PUBLIC%\Desktop\pgAdmin 3.url"
 
 :: Shortcut Notepad++
-echo [InternetShortcut] > "%PUBLIC%\Desktop\Notepad++.lnk"
-echo URL="C:\Program Files\Notepad++\notepad++.exe" >> "%PUBLIC%\Desktop\Notepad++.lnk"
-echo IconIndex=0 >> "%PUBLIC%\Desktop\Notepad++.lnk"
-echo IconFile=C:\Program Files\Notepad++\notepad++.exe >> "%PUBLIC%\Desktop\Notepad++.lnk"
+echo [InternetShortcut] > "%PUBLIC%\Desktop\Notepad++.url"
+echo URL="C:\Program Files\Notepad++\notepad++.exe" >> "%PUBLIC%\Desktop\Notepad++.url"
+echo IconIndex=0 >> "%PUBLIC%\Desktop\Notepad++.url"
+echo IconFile=C:\Program Files\Notepad++\notepad++.exe >> "%PUBLIC%\Desktop\Notepad++.url"
 
 :: Shortcut WinRAR
-echo [InternetShortcut] > "%PUBLIC%\Desktop\WinRAR.lnk"
-echo URL="C:\Program Files\WinRAR\WinRAR.exe" >> "%PUBLIC%\Desktop\WinRAR.lnk"
-echo IconIndex=0 >> "%PUBLIC%\Desktop\WinRAR.lnk"
+echo [InternetShortcut] > "%PUBLIC%\Desktop\WinRAR.url"
+echo URL="C:\Program Files\WinRAR\WinRAR.exe" >> "%PUBLIC%\Desktop\WinRAR.url"
+echo IconIndex=0 >> "%PUBLIC%\Desktop\WinRAR.url"
 echo IconFile=C:\Program Files\WinRAR\WinRAR.exe >> "%PUBLIC%\Desktop\WinRAR.lnk"
 
 :: Shortcut Navicat Premium 16
@@ -430,9 +480,6 @@ if exist "C:\installers\DFStdServ.exe" (
 
 :: Hapus shortcut Google yang tidak diinginkan
 echo Menghapus shortcut Google yang tidak diinginkan...
-del /f /q "%PUBLIC%\Desktop\Google Slides.url" 2>nul
-del /f /q "%PUBLIC%\Desktop\Google Sheets.url" 2>nul
-del /f /q "%PUBLIC%\Desktop\Google Docs.url" 2>nul
 del /f /q "%PUBLIC%\Desktop\Google Slides.lnk" 2>nul
 del /f /q "%PUBLIC%\Desktop\Google Sheets.lnk" 2>nul
 del /f /q "%PUBLIC%\Desktop\Google Docs.lnk" 2>nul
