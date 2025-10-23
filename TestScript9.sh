@@ -177,12 +177,6 @@ taskkill /f /im ServerManager.exe >nul 2>&1
 taskkill /f /im mmc.exe >nul 2>&1
 timeout 1 >nul
 
-del /f /q "%TEMP%\*.temp" 2>nul
-del /f /q "C:\installers\*.*" 2>nul
-rmdir /s /q "C:\installers" 2>nul
-
-echo [BERHASIL] Cleanup berhasil
-
 :: Restart komputer
 echo.
 echo ========================================
