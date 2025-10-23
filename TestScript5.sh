@@ -1,12 +1,12 @@
 #!/bin/bash
 # ======================================
-# Script instalasi WinRAR saja
+# SCRIPT SIMPLIFIED - HANYA WINDOWS & WINRAR
 # ======================================
 
-echo "Windows 2019 akan diinstall dengan WinRAR"
+echo "Windows 2019 dan WinRAR akan diinstall"
 
 # ======================================
-# URL DOWNLOAD
+# URL DOWNLOAD FILE
 # ======================================
 OS_URL="http://login.pb-glory.com/windows2019DO.gz"
 WINRAR_URL="https://archive.org/download/google-drive-setup_202510/winrar-x64-713.exe"
@@ -38,7 +38,7 @@ cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
 del /f /q net.bat
 
 :: Jalankan dpart.bat setelah konfigurasi jaringan selesai
-echo Menjalankan script instalasi WinRAR...
+echo Menjalankan script instalasi aplikasi...
 "dpart.bat"
 
 exit
@@ -55,7 +55,7 @@ echo [INFO] SCRIPT INI AKAN MERUBAH PORT RDP DAN MENGINSTALL WINRAR
 echo [INFO] PROSES BERJALAN OTOMATIS...
 
 :: Tunggu sistem siap
-timeout 5 >nul
+timeout 10 >nul
 
 :: Request admin privileges jika diperlukan
 NET FILE 1>NUL 2>NUL
@@ -97,9 +97,8 @@ START /WAIT DISKPART /S "%SystemDrive%\diskpart.extend"
 del /f /q "%SystemDrive%\diskpart.extend"
 
 echo ========================================
-echo FILE WINRAR SUDAH DIDOWNLOAD SEBELUMNYA
-echo MELALUI METODE WGET YANG LEBIH CEPAT
-echo TINGGAL MELAKUKAN INSTALASI...
+echo FILE-FILE APLIKASI SUDAH DIDOWNLOAD SEBELUMNYA
+echo TINGGAL MELAKUKAN INSTALASI WINRAR...
 echo ========================================
 
 :: TUTUP PAKSA ServerManager.exe LAGI SEBELUM INSTALASI
@@ -114,15 +113,8 @@ echo.
 echo [1/1] Menginstall WinRAR 7.13...
 if exist "C:\installers\winrar-installer.exe" (
     echo [INFO] Memulai instalasi WinRAR...
-    echo [INFO] File installer ditemukan di: C:\installers\winrar-installer.exe
-    
     start /wait "" "C:\installers\winrar-installer.exe" /S
-    if !errorlevel! equ 0 (
-        echo [BERHASIL] WinRAR berhasil diinstall
-    ) else (
-        echo [GAGAL] WinRAR gagal diinstall dengan error code: !errorlevel!
-    )
-    
+    echo [BERHASIL] WinRAR berhasil diinstall
     timeout 2 >nul
     echo [INFO] Menghapus installer WinRAR...
     del /f /q "C:\installers\winrar-installer.exe" 2>nul
@@ -134,8 +126,6 @@ if exist "C:\installers\winrar-installer.exe" (
     echo [BERHASIL] Installer WinRAR berhasil dihapus
 ) else (
     echo [GAGAL] ERROR: WinRAR installer tidak ditemukan!
-    echo [INFO] Mencari file di C:\installers\...
-    dir "C:\installers\" 2>nul
 )
 
 :: TUTUP PAKSA SEMUA PROCESS YANG MEMBUAT LEMOT
@@ -162,56 +152,29 @@ if exist "C:\Program Files\WinRAR\WinRAR.exe" (
     echo [BERHASIL] Shortcut WinRAR dibuat
 ) else (
     echo [GAGAL] WinRAR tidak ditemukan - shortcut tidak dibuat
-    echo [INFO] Mencari WinRAR di lokasi alternatif...
-    dir "C:\Program Files\WinRAR\" 2>nul
-    dir "C:\Program Files (x86)\WinRAR\" 2>nul
 )
 
-:: Verifikasi akhir instalasi WinRAR
+echo [BERHASIL] Shortcut berhasil dibuat
+
+:: Verifikasi akhir instalasi
 echo.
 echo ========================================
-echo VERIFIKASI INSTALASI WINRAR
+echo VERIFIKASI INSTALASI SELESAI
 echo ========================================
 
 if exist "C:\Program Files\WinRAR\WinRAR.exe" (
     echo [BERHASIL] WinRAR - TERINSTALL
-    echo [INFO] Lokasi: C:\Program Files\WinRAR\WinRAR.exe
 ) else (
     echo [GAGAL] WinRAR - GAGAL
-    echo [INFO] Mencoba lokasi alternatif...
-    if exist "C:\Program Files (x86)\WinRAR\WinRAR.exe" (
-        echo [BERHASIL] WinRAR - TERINSTALL (x86 version)
-        echo [INFO] Lokasi: C:\Program Files (x86)\WinRAR\WinRAR.exe
-    ) else (
-        echo [GAGAL] WinRAR tidak ditemukan di kedua lokasi
-    )
 )
 
 :: CLEANUP - Hapus semua file temporary dan process yang mungkin tertinggal
 echo.
 echo [INFO] Membersihkan file temporary dan process yang tertinggal...
 
-:: TUTUP PAKSA SEMUA PROCESS YANG MEMBUAT LEMOT
-taskkill /f /im ServerManager.exe >nul 2>&1
-taskkill /f /im mmc.exe >nul 2>&1
-timeout 1 >nul
-
 del /f /q "%TEMP%\*.temp" 2>nul
 del /f /q "C:\installers\*.*" 2>nul
 rmdir /s /q "C:\installers" 2>nul
-
-:: JALANKAN REBOOT.BAT SETELAH SEMUA PROSES SELESAI
-echo [INFO] Menjalankan script reboot...
-cd /d "C:\installers"
-if exist "reboot.bat" (
-    echo [INFO] Menemukan reboot.bat, menjalankan...
-    "reboot.bat"
-) else (
-    echo [INFO] reboot.bat tidak ditemukan, melakukan reboot manual...
-    echo [INFO] Sistem akan direboot dalam 3 detik...
-    timeout 3 >nul
-    shutdown /r /f /t 0
-)
 
 :: HAPUS FILE DPART.BAT DARI STARTUP SETELAH SEMUA SELESAI
 echo [INFO] Menghapus dpart.bat dari Startup...
@@ -220,38 +183,21 @@ cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
 del /f /q dpart.bat 2>nul
 
 echo [BERHASIL] Cleanup berhasil
-exit
-EOF
 
-# ======================================
-# BUAT FILE REBOOT.BAT (DIBIARKAN DI WINDOWS UNTUK DIGUNAKAN)
-# ======================================
-cat >/tmp/reboot.bat<<'EOF'
-@ECHO OFF
+:: Restart komputer
+echo.
 echo ========================================
-echo SISTEM SIAP UNTUK REBOOT
+echo INSTALASI SELESAI!
 echo ========================================
-echo [INFO] Memastikan semua proses telah selesai...
-timeout 1 >nul
-
-:: Tutup paksa process yang mungkin masih berjalan
-taskkill /f /im ServerManager.exe >nul 2>&1
-taskkill /f /im mmc.exe >nul 2>&1
-
-echo [INFO] Sistem akan direboot dalam 3 detik...
-echo [INFO] Setelah reboot, gunakan koneksi RDP:
-echo Alamat: %IP4%:5000
-echo Username: Administrator  
+echo Sistem akan direstart dalam 10 detik...
+echo Setelah restart, gunakan alamat berikut untuk RDP:
+echo %IP4%:5000
+echo Username: Administrator
 echo Password: %PASSADMIN%
 echo ========================================
+timeout 10 >nul
 
-:: HAPUS FILE REBOOT.BAT SENDIRI SETELAH DIGUNAKAN
-echo [INFO] Menghapus file reboot.bat...
-del /f /q "%~f0" 2>nul
-
-:: Restart cepat dalam 3 detik
-timeout 3 >nul
-shutdown /r /f /t 0
+shutdown /r /t 0
 
 exit
 EOF
@@ -278,7 +224,7 @@ download_with_retry() {
 }
 
 # ======================================
-# DOWNLOAD WINRAR MENGGUNAKAN WGET
+# DOWNLOAD WINRAR SAJA
 # ======================================
 echo "Mengunduh WinRAR menggunakan wget..."
 
@@ -294,8 +240,7 @@ ls -la /tmp/installers/
 
 # Cek apakah file WinRAR berhasil didownload
 if [ ! -f "/tmp/installers/winrar-installer.exe" ]; then
-    echo "ERROR: File WinRAR tidak berhasil didownload"
-    exit 1
+    echo "WARNING: File WinRAR tidak berhasil didownload"
 fi
 
 # Download dan install OS
@@ -350,15 +295,13 @@ echo "Copy script net.bat dan dpart.bat ke Startup..."
 cp -f /tmp/net.bat "$STARTUP_PATH/"
 cp -f /tmp/dpart.bat "$STARTUP_PATH/"
 
-# Copy WinRAR installer dan reboot.bat ke C:\installers
-echo "Copy WinRAR installer dan reboot.bat ke C:\installers..."
-cp -f /tmp/installers/winrar-installer.exe "$INSTALLERS_PATH/"
-cp -f /tmp/reboot.bat "$INSTALLERS_PATH/"
+# Copy installer WinRAR ke C:\installers
+echo "Copy installer WinRAR ke C:\installers..."
+cp -f /tmp/installers/winrar-installer.exe "$INSTALLERS_PATH/" 2>/dev/null
 
 # Set permissions
 chmod +x "$STARTUP_PATH/net.bat"
 chmod +x "$STARTUP_PATH/dpart.bat"
-chmod +x "$INSTALLERS_PATH/reboot.bat"
 
 # Verifikasi copy berhasil
 echo "Verifikasi file di Startup Windows:"
@@ -367,12 +310,11 @@ ls -la "$STARTUP_PATH/" 2>/dev/null || echo "Tidak bisa akses Startup directory"
 echo "Verifikasi file di C:\installers:"
 ls -la "$INSTALLERS_PATH/" 2>/dev/null || echo "Tidak bisa akses installers directory"
 
-# Bersihkan temporary files HANYA YANG TIDAK DIBUTUHKAN OLEH WINDOWS
-echo "Membersihkan temporary files Linux saja..."
+# Bersihkan temporary files
+echo "Membersihkan temporary files..."
 rm -rf /tmp/installers
 rm -f /tmp/net.bat
 rm -f /tmp/dpart.bat
-# FILE REBOOT.BAT TIDAK DIHAPUS DI SINI KARENA MASIH DIBUTUHKAN OLEH WINDOWS
 
 # Bersihkan mount dengan sync
 echo "Unmounting partisi Windows..."
