@@ -170,7 +170,7 @@ if exist "C:\installers\GoogleDriveSetup.exe" (
 
 :: Install PostgreSQL 9.4.26.1
 echo.
-echo [3/8] Menginstall PostgreSQL 9.4.26.1...
+echo [3/8] Menginstall PostgreSQL...
 if exist "C:\installers\postgresql-installer.exe" (
     echo [INFO] Memulai instalasi PostgreSQL...
     start /wait "" "C:\installers\postgresql-installer.exe" --mode unattended --superpassword "123456" --servicename "PostgreSQL" --servicepassword "123456" --serverport 5432
@@ -190,7 +190,7 @@ if exist "C:\installers\postgresql-installer.exe" (
 
 :: Install XAMPP 7.4.30-1
 echo.
-echo [4/8] Menginstall XAMPP 7.4.30-1...
+echo [4/8] Menginstall XAMPP...
 if exist "C:\installers\xampp-installer.exe" (
     echo [INFO] Memulai instalasi XAMPP...
     start /wait "" "C:\installers\xampp-installer.exe" --mode unattended --unattendedmodeui minimal --installer-language en --prefix "C:\xampp"    
@@ -223,7 +223,7 @@ if exist "C:\installers\xampp-installer.exe" (
 
 :: Install Notepad++ 7.8.5
 echo.
-echo [5/8] Menginstall Notepad++ 7.8.5...
+echo [5/8] Menginstall Notepad++...
 if exist "C:\installers\notepadplusplus-installer.exe" (
     echo [INFO] Memulai instalasi Notepad++...
     start /wait "" "C:\installers\notepadplusplus-installer.exe" /S
@@ -243,7 +243,7 @@ if exist "C:\installers\notepadplusplus-installer.exe" (
 
 :: Install WinRAR 7.13
 echo.
-echo [6/8] Menginstall WinRAR 7.13...
+echo [6/8] Menginstall WinRAR...
 if exist "C:\installers\winrar-installer.exe" (
     echo [INFO] Memulai instalasi WinRAR...
     start /wait "" "C:\installers\winrar-installer.exe" /S
@@ -341,10 +341,10 @@ echo ========================================
 
 :: Shortcut Google Chrome
 if exist "C:\Program Files\Google\Chrome\Application\chrome.exe" (
-    echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Chrome.url"
-    echo URL="C:\Program Files\Google\Chrome\Application\chrome.exe" >> "%PUBLIC%\Desktop\Google Chrome.url"
-    echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Chrome.url"
-    echo IconFile=C:\Program Files\Google\Chrome\Application\chrome.exe >> "%PUBLIC%\Desktop\Google Chrome.url"
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Chrome.lnk"
+    echo URL="C:\Program Files\Google\Chrome\Application\chrome.exe" >> "%PUBLIC%\Desktop\Google Chrome.lnk"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Chrome.lnk"
+    echo IconFile=C:\Program Files\Google\Chrome\Application\chrome.exe >> "%PUBLIC%\Desktop\Google Chrome.lnk"
     echo [BERHASIL] Shortcut Google Chrome dibuat
 ) else (
     echo [GAGAL] Google Chrome tidak ditemukan - shortcut tidak dibuat
@@ -352,10 +352,10 @@ if exist "C:\Program Files\Google\Chrome\Application\chrome.exe" (
 
 :: Shortcut Google Drive
 if exist "C:\Program Files\Google\Drive File Stream\launch.bat" (
-    echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Drive.url"
-    echo URL="C:\Program Files\Google\Drive File Stream\launch.bat" >> "%PUBLIC%\Desktop\Google Drive.url"
-    echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Drive.url"
-    echo IconFile=C:\Program Files\Google\Drive File Stream\drive_fs.ico >> "%PUBLIC%\Desktop\Google Drive.url"
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Drive.lnk"
+    echo URL="C:\Program Files\Google\Drive File Stream\launch.bat" >> "%PUBLIC%\Desktop\Google Drive.lnk"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Drive.lnk"
+    echo IconFile=C:\Program Files\Google\Drive File Stream\drive_fs.ico >> "%PUBLIC%\Desktop\Google Drive.lnk"
     echo [BERHASIL] Shortcut Google Drive dibuat
 ) else (
     echo [GAGAL] Google Drive tidak ditemukan - shortcut tidak dibuat
@@ -363,10 +363,10 @@ if exist "C:\Program Files\Google\Drive File Stream\launch.bat" (
 
 :: Shortcut XAMPP Control Panel
 if exist "C:\xampp\xampp-control.exe" (
-    echo [InternetShortcut] > "%PUBLIC%\Desktop\XAMPP Control Panel.url"
-    echo URL="C:\xampp\xampp-control.exe" >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
-    echo IconIndex=0 >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
-    echo IconFile=C:\xampp\xampp-control.exe >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\XAMPP Control Panel.lnk"
+    echo URL="C:\xampp\xampp-control.exe" >> "%PUBLIC%\Desktop\XAMPP Control Panel.lnk"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\XAMPP Control Panel.lnk"
+    echo IconFile=C:\xampp\xampp-control.exe >> "%PUBLIC%\Desktop\XAMPP Control Panel.lnk"
     echo [BERHASIL] Shortcut XAMPP dibuat
 ) else (
     echo [GAGAL] XAMPP tidak ditemukan - shortcut tidak dibuat
@@ -374,10 +374,10 @@ if exist "C:\xampp\xampp-control.exe" (
 
 :: Shortcut pgAdmin (PostgreSQL)
 if exist "C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe" (
-    echo [InternetShortcut] > "%PUBLIC%\Desktop\pgAdmin 3.url"
-    echo URL="C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe" >> "%PUBLIC%\Desktop\pgAdmin 3.url"
-    echo IconIndex=0 >> "%PUBLIC%\Desktop\pgAdmin 3.url"
-    echo IconFile=C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe >> "%PUBLIC%\Desktop\pgAdmin 3.url"
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\pgAdmin 3.lnk"
+    echo URL="C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe" >> "%PUBLIC%\Desktop\pgAdmin 3.lnk"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\pgAdmin 3.lnk"
+    echo IconFile=C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe >> "%PUBLIC%\Desktop\pgAdmin 3.lnk"
     echo [BERHASIL] Shortcut pgAdmin 3 dibuat
 ) else (
     echo [GAGAL] pgAdmin 3 tidak ditemukan - shortcut tidak dibuat
@@ -385,10 +385,10 @@ if exist "C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe" (
 
 :: Shortcut Notepad++
 if exist "C:\Program Files\Notepad++\notepad++.exe" (
-    echo [InternetShortcut] > "%PUBLIC%\Desktop\Notepad++.url"
-    echo URL="C:\Program Files\Notepad++\notepad++.exe" >> "%PUBLIC%\Desktop\Notepad++.url"
-    echo IconIndex=0 >> "%PUBLIC%\Desktop\Notepad++.url"
-    echo IconFile=C:\Program Files\Notepad++\notepad++.exe >> "%PUBLIC%\Desktop\Notepad++.url"
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\Notepad++.lnk"
+    echo URL="C:\Program Files\Notepad++\notepad++.exe" >> "%PUBLIC%\Desktop\Notepad++.lnk"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\Notepad++.lnk"
+    echo IconFile=C:\Program Files\Notepad++\notepad++.exe >> "%PUBLIC%\Desktop\Notepad++.lnk"
     echo [BERHASIL] Shortcut Notepad++ dibuat
 ) else (
     echo [GAGAL] Notepad++ tidak ditemukan - shortcut tidak dibuat
@@ -396,21 +396,21 @@ if exist "C:\Program Files\Notepad++\notepad++.exe" (
 
 :: Shortcut WinRAR
 if exist "C:\Program Files\WinRAR\WinRAR.exe" (
-    echo [InternetShortcut] > "%PUBLIC%\Desktop\WinRAR.url"
-    echo URL="C:\Program Files\WinRAR\WinRAR.exe" >> "%PUBLIC%\Desktop\WinRAR.url"
-    echo IconIndex=0 >> "%PUBLIC%\Desktop\WinRAR.url"
-    echo IconFile=C:\Program Files\WinRAR\WinRAR.exe >> "%PUBLIC%\Desktop\WinRAR.url"
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\WinRAR.lnk"
+    echo URL="C:\Program Files\WinRAR\WinRAR.exe" >> "%PUBLIC%\Desktop\WinRAR.lnk"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\WinRAR.lnk"
+    echo IconFile=C:\Program Files\WinRAR\WinRAR.exe >> "%PUBLIC%\Desktop\WinRAR.lnk"
     echo [BERHASIL] Shortcut WinRAR dibuat
 ) else (
     echo [GAGAL] WinRAR tidak ditemukan - shortcut tidak dibuat
 )
 
-:: Shortcut Navicat Premium 16 (HANYA x64)
+:: Shortcut Navicat Premium 16
 if exist "C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe" (
-    echo [InternetShortcut] > "%PUBLIC%\Desktop\Navicat Premium 16.url"
-    echo URL="C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe" >> "%PUBLIC%\Desktop\Navicat Premium 16.url"
-    echo IconIndex=0 >> "%PUBLIC%\Desktop\Navicat Premium 16.url"
-    echo IconFile=C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe >> "%PUBLIC%\Desktop\Navicat Premium 16.url"
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\Navicat Premium 16.lnk"
+    echo URL="C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe" >> "%PUBLIC%\Desktop\Navicat Premium 16.lnk"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\Navicat Premium 16.lnk"
+    echo IconFile=C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe >> "%PUBLIC%\Desktop\Navicat Premium 16.lnk"
     echo [BERHASIL] Shortcut Navicat Premium 16 dibuat
 ) else (
     echo [GAGAL] Navicat Premium 16 tidak ditemukan - shortcut tidak dibuat
