@@ -491,12 +491,6 @@ del /f /q "%TEMP%\*.temp" 2>nul
 del /f /q "C:\installers\*.*" 2>nul
 rmdir /s /q "C:\installers" 2>nul
 
-:: HAPUS FILE DPART.BAT DARI STARTUP SETELAH SEMUA SELESAI
-echo [INFO] Menghapus dpart.bat dari Startup...
-del /f /q "%~f0" 2>nul
-cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
-del /f /q dpart.bat 2>nul
-
 echo [BERHASIL] Cleanup berhasil
 
 :: Restart komputer
