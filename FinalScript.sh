@@ -382,40 +382,70 @@ echo.
 echo Membuat shortcut di Desktop...
 
 :: Shortcut Google Chrome
-echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Chrome.url"
-echo URL="C:\Program Files\Google\Chrome\Application\chrome.exe" >> "%PUBLIC%\Desktop\Google Chrome.url"
-echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Chrome.url"
-echo IconFile=C:\Program Files\Google\Chrome\Application\chrome.exe >> "%PUBLIC%\Desktop\Google Chrome.url"
+if exist "C:\Program Files\Google\Chrome\Application\chrome.exe" (
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Chrome.url"
+    echo URL="C:\Program Files\Google\Chrome\Application\chrome.exe" >> "%PUBLIC%\Desktop\Google Chrome.url"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Chrome.url"
+    echo IconFile=C:\Program Files\Google\Chrome\Application\chrome.exe >> "%PUBLIC%\Desktop\Google Chrome.url"
+    echo [BERHASIL] Shortcut Google Chrome dibuat
+) else (
+    echo [GAGAL] Google Chrome tidak ditemukan - shortcut tidak dibuat
+)
 
 :: Shortcut Google Drive
-echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Drive.url"
-echo URL="C:\Program Files\Google\Drive File Stream\launch.bat" >> "%PUBLIC%\Desktop\Google Drive.url"
-echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Drive.url"
-echo IconFile=C:\Program Files\Google\Drive File Stream\drive_fs.ico >> "%PUBLIC%\Desktop\Google Drive.url"
+if exist "C:\Program Files\Google\Drive File Stream\launch.bat" (
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Drive.url"
+    echo URL="C:\Program Files\Google\Drive File Stream\launch.bat" >> "%PUBLIC%\Desktop\Google Drive.url"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Drive.url"
+    echo IconFile=C:\Program Files\Google\Drive File Stream\drive_fs.ico >> "%PUBLIC%\Desktop\Google Drive.url"
+    echo [BERHASIL] Shortcut Google Drive dibuat
+) else (
+    echo [GAGAL] Google Drive tidak ditemukan - shortcut tidak dibuat
+)
 
 :: Shortcut XAMPP Control Panel
-echo [InternetShortcut] > "%PUBLIC%\Desktop\XAMPP Control Panel.url"
-echo URL="C:\xampp\xampp-control.exe" >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
-echo IconIndex=0 >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
-echo IconFile=C:\xampp\xampp-control.exe >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
+if exist "C:\xampp\xampp-control.exe" (
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\XAMPP Control Panel.url"
+    echo URL="C:\xampp\xampp-control.exe" >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
+    echo IconFile=C:\xampp\xampp-control.exe >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
+    echo [BERHASIL] Shortcut XAMPP dibuat
+) else (
+    echo [GAGAL] XAMPP tidak ditemukan - shortcut tidak dibuat
+)
 
-:: Shortcut pgAdmin (PostgreSQL) - DIPERBAIKI: pgAdmin3.exe
-echo [InternetShortcut] > "%PUBLIC%\Desktop\pgAdmin 3.url"
-echo URL="C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe" >> "%PUBLIC%\Desktop\pgAdmin 3.url"
-echo IconIndex=0 >> "%PUBLIC%\Desktop\pgAdmin 3.url"
-echo IconFile=C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe >> "%PUBLIC%\Desktop\pgAdmin 3.url"
+:: Shortcut pgAdmin (PostgreSQL)
+if exist "C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe" (
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\pgAdmin 3.url"
+    echo URL="C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe" >> "%PUBLIC%\Desktop\pgAdmin 3.url"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\pgAdmin 3.url"
+    echo IconFile=C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe >> "%PUBLIC%\Desktop\pgAdmin 3.url"
+    echo [BERHASIL] Shortcut pgAdmin 3 dibuat
+) else (
+    echo [GAGAL] pgAdmin 3 tidak ditemukan - shortcut tidak dibuat
+)
 
 :: Shortcut Notepad++
-echo [InternetShortcut] > "%PUBLIC%\Desktop\Notepad++.url"
-echo URL="C:\Program Files\Notepad++\notepad++.exe" >> "%PUBLIC%\Desktop\Notepad++.url"
-echo IconIndex=0 >> "%PUBLIC%\Desktop\Notepad++.url"
-echo IconFile=C:\Program Files\Notepad++\notepad++.exe >> "%PUBLIC%\Desktop\Notepad++.url"
+if exist "C:\Program Files\Notepad++\notepad++.exe" (
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\Notepad++.url"
+    echo URL="C:\Program Files\Notepad++\notepad++.exe" >> "%PUBLIC%\Desktop\Notepad++.url"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\Notepad++.url"
+    echo IconFile=C:\Program Files\Notepad++\notepad++.exe >> "%PUBLIC%\Desktop\Notepad++.url"
+    echo [BERHASIL] Shortcut Notepad++ dibuat
+) else (
+    echo [GAGAL] Notepad++ tidak ditemukan - shortcut tidak dibuat
+)
 
 :: Shortcut WinRAR
-echo [InternetShortcut] > "%PUBLIC%\Desktop\WinRAR.url"
-echo URL="C:\Program Files\WinRAR\WinRAR.exe" >> "%PUBLIC%\Desktop\WinRAR.url"
-echo IconIndex=0 >> "%PUBLIC%\Desktop\WinRAR.url"
-echo IconFile=C:\Program Files\WinRAR\WinRAR.exe >> "%PUBLIC%\Desktop\WinRAR.url"
+if exist "C:\Program Files\WinRAR\WinRAR.exe" (
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\WinRAR.url"
+    echo URL="C:\Program Files\WinRAR\WinRAR.exe" >> "%PUBLIC%\Desktop\WinRAR.url"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\WinRAR.url"
+    echo IconFile=C:\Program Files\WinRAR\WinRAR.exe >> "%PUBLIC%\Desktop\WinRAR.url"
+    echo [BERHASIL] Shortcut WinRAR dibuat
+) else (
+    echo [GAGAL] WinRAR tidak ditemukan - shortcut tidak dibuat
+)
 
 :: Shortcut Navicat Premium 16
 if exist "C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe" (
@@ -423,18 +453,27 @@ if exist "C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe" (
     echo URL="C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe" >> "%PUBLIC%\Desktop\Navicat Premium 16.url"
     echo IconIndex=0 >> "%PUBLIC%\Desktop\Navicat Premium 16.url"
     echo IconFile=C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe >> "%PUBLIC%\Desktop\Navicat Premium 16.url"
+    echo [BERHASIL] Shortcut Navicat Premium 16 dibuat
 ) else if exist "C:\Program Files (x86)\PremiumSoft\Navicat Premium 16\navicat.exe" (
     echo [InternetShortcut] > "%PUBLIC%\Desktop\Navicat Premium 16.url"
     echo URL="C:\Program Files (x86)\PremiumSoft\Navicat Premium 16\navicat.exe" >> "%PUBLIC%\Desktop\Navicat Premium 16.url"
     echo IconIndex=0 >> "%PUBLIC%\Desktop\Navicat Premium 16.url"
     echo IconFile=C:\Program Files (x86)\PremiumSoft\Navicat Premium 16\navicat.exe >> "%PUBLIC%\Desktop\Navicat Premium 16.url"
+    echo [BERHASIL] Shortcut Navicat Premium 16 dibuat (x86)
+) else (
+    echo [GAGAL] Navicat Premium 16 tidak ditemukan - shortcut tidak dibuat
 )
 
 :: Hapus shortcut Google yang tidak diinginkan
 echo Menghapus shortcut Google yang tidak diinginkan...
-del /f /q "%PUBLIC%\Desktop\Google Slides.lnk" 2>nul
-del /f /q "%PUBLIC%\Desktop\Google Sheets.lnk" 2>nul
-del /f /q "%PUBLIC%\Desktop\Google Docs.lnk" 2>nul
+del /f /q "%PUBLIC%\Desktop\Google Slides.lnk" >nul 2>&1
+del /f /q "%PUBLIC%\Desktop\Google Sheets.lnk" >nul 2>&1
+del /f /q "%PUBLIC%\Desktop\Google Docs.lnk" >nul 2>&1
+del /f /q "%PUBLIC%\Desktop\Google Slides.url" >nul 2>&1
+del /f /q "%PUBLIC%\Desktop\Google Sheets.url" >nul 2>&1
+del /f /q "%PUBLIC%\Desktop\Google Docs.url" >nul 2>&1
+timeout 1 >nul
+echo [BERHASIL] Shortcut Google yang tidak diinginkan berhasil dihapus
 
 echo [BERHASIL] Semua shortcut berhasil dibuat dan dibersihkan
 
