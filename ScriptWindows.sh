@@ -489,7 +489,7 @@ echo.
 echo ========================================
 echo INSTALASI SELESAI!
 echo ========================================
-echo Sistem akan direstart dalam 10 detik...
+echo Sistem akan direstart dalam 5 detik...
 echo Setelah restart, gunakan alamat berikut untuk RDP:
 echo %IP4%:5000
 echo Username: Administrator
@@ -499,14 +499,17 @@ echo ========================================
 :: Force restart dengan multiple methods untuk memastikan berhasil
 echo [INFO] Memulai proses restart...
 
-:: Method 1: Shutdown normal dengan force
+:: Method 1: Shutdown normal dengan force (5 detik)
 shutdown /r /t 5 /f /c "Instalasi selesai. Sistem akan restart otomatis."
 
-:: Method 2: Backup method jika shutdown gagal
-echo [INFO] Jika tidak restart otomatis, sistem akan restart dalam 15 detik...
-timeout 15 >nul
+:: Method 2: Backup ASYNC - jalan parallel tidak blocking
+echo [INFO] Backup restart diaktifkan...
+echo @ECHO OFF > "%TEMP%\restart_backup.bat"
+echo timeout 8 >> "%TEMP%\restart_backup.bat"
+echo shutdown /r /t 0 /f >> "%TEMP%\restart_backup.bat"
+start /min "" "%TEMP%\restart_backup.bat"
 
-:: Method 3: Final forced restart
+:: Method 3: Final forced restart (jalan langsung)
 shutdown /r /t 0 /f
 
 exit
