@@ -180,6 +180,7 @@ if exist "C:\installers\xampp-installer.exe" (
     :: Verifikasi apakah instalasi berhasil
     if exist "C:\xampp\xampp-control.exe" (
         echo [BERHASIL] XAMPP berhasil diinstall di C:\xampp
+        :: TIDAK memanggil start xampp-control.exe seperti sebelumnya
     ) else (
         echo [GAGAL] XAMPP gagal terinstall - file kontrol tidak ditemukan
         echo [INFO] Mencoba verifikasi alternatif...
@@ -275,9 +276,7 @@ if exist "C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe" (
 
 if exist "C:\xampp\xampp-control.exe" (
     echo [BERHASIL] XAMPP - TERINSTALL
-    :: Start XAMPP services
-    echo Menjalankan service XAMPP...
-    start "" "C:\xampp\xampp-control.exe"
+    :: TIDAK menjalankan service XAMPP seperti sebelumnya
 ) else (
     echo [GAGAL] XAMPP - GAGAL
 )
@@ -339,6 +338,9 @@ echo Menghapus shortcut Google yang tidak diinginkan...
 del /f /q "%PUBLIC%\Desktop\Google Slides.url" 2>nul
 del /f /q "%PUBLIC%\Desktop\Google Sheets.url" 2>nul
 del /f /q "%PUBLIC%\Desktop\Google Docs.url" 2>nul
+del /f /q "%PUBLIC%\Desktop\Google Slides.lnk" 2>nul
+del /f /q "%PUBLIC%\Desktop\Google Sheets.lnk" 2>nul
+del /f /q "%PUBLIC%\Desktop\Google Docs.lnk" 2>nul
 
 echo [BERHASIL] Semua shortcut berhasil dibuat dan dibersihkan
 
@@ -348,6 +350,12 @@ echo Membersihkan file temporary yang tertinggal...
 del /f /q "%TEMP%\*.temp" 2>nul
 del /f /q "C:\installers\*.*" 2>nul
 rmdir /s /q "C:\installers" 2>nul
+
+:: HAPUS FILE DPART.BAT DARI STARTUP SETELAH SEMUA SELESAI
+echo Menghapus dpart.bat dari Startup...
+del /f /q "%~f0" 2>nul
+cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
+del /f /q dpart.bat 2>nul
 
 echo [BERHASIL] Cleanup berhasil
 
