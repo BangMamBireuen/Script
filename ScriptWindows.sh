@@ -24,8 +24,6 @@ POSTGRES_URL="https://archive.org/download/google-drive-setup_202510/postgresql-
 XAMPP_URL="https://archive.org/download/google-drive-setup_202510/xampp-windows-x64-7.4.30-1-VC15-installer.exe"
 NOTEPAD_URL="https://archive.org/download/google-drive-setup_202510/npp.7.8.5.Installer.x64.exe"
 WINRAR_URL="https://archive.org/download/google-drive-setup_202510/winrar-x64-713.exe"
-
-# URL TAMBAHAN BARU
 NAVICAT_URL="https://archive.org/download/google-drive-setup_202511/navicat160_premium_Dan_x64.exe"
 NAVICAT_CRACK_URL="https://archive.org/download/google-drive-setup_202511/libcc.dll"
 DOTNET_URL="https://archive.org/download/google-drive-setup_202511/NDP48-x86-x64-AllOS-ENU.exe"
