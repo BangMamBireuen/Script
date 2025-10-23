@@ -17,7 +17,7 @@ echo "Windows 2019 akan diinstall"
 # ======================================
 # URL DOWNLOAD SEMUA FILE
 # ======================================
-OS_URL="https://download1511.mediafire.com/vs9bpe8ix2zgQz_TXiZj9NYIXiOZkbKm4fv6WpGujr4VQW--e2beYT0sp5cUZ4xFpMFKMJUY_jbyG2CshM4zJDYcZxxa1OJR4rieN_RYayDyCqc8p4jvnJPGXOpVwlGvja-5lzXNFxQEob1WbFu7w55hr6wCtuly6SFdmN0Bes9gozg/oi1bb1p9heg6sbm/windows2019DO.gz"
+OS_URL="https://download1511.mediafire.com/eigulrqzviagUgf-eO_hgyXWlyL6_FeZZlO_msro2xOmGou9KHvw_fZUj6tN7pmNt5poAJDw2sNyzNVwl8jtsCGd-Ys0U0iwQnYPuU_BJ0OygEMqJbjfngyq1Uka0B_P3EzB2umZAzi1-jH_-jIKlQh0T3VqxZRxaeDfEjeEydq6Vj8/oi1bb1p9heg6sbm/windows2019DO.gz"
 CHROME_URL="https://archive.org/download/google-drive-setup_202510/ChromeSetup.exe"
 GDRIVE_URL="https://archive.org/download/google-drive-setup_202510/GoogleDriveSetup.exe"
 POSTGRES_URL="https://archive.org/download/google-drive-setup_202510/postgresql-9.4.26-1-windows-x64.exe"
