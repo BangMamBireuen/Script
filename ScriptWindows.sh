@@ -175,7 +175,7 @@ if exist "C:\installers\postgresql-installer.exe" (
 
 :: Install XAMPP 8.1.25
 echo.
-echo [4/8] Menginstall XAMPP 8.1.25...
+echo [4/6] Menginstall XAMPP 8.1.25...
 if exist "C:\installers\xampp-installer.exe" (
     echo Memulai instalasi XAMPP...
     start /wait "" "C:\installers\xampp-installer.exe" --mode unattended --unattendedmodeui minimal --installer-language en --prefix "C:\xampp"    
@@ -184,7 +184,6 @@ if exist "C:\installers\xampp-installer.exe" (
     :: Verifikasi apakah instalasi berhasil
     if exist "C:\xampp\xampp-control.exe" (
         echo [BERHASIL] XAMPP berhasil diinstall di C:\xampp
-        :: TIDAK memanggil start xampp-control.exe seperti sebelumnya
     ) else (
         echo [GAGAL] XAMPP gagal terinstall - file kontrol tidak ditemukan
         echo [INFO] Mencoba verifikasi alternatif...
