@@ -169,53 +169,42 @@ if exist "C:\installers\postgresql-installer.exe" (
     echo [GAGAL] ERROR: PostgreSQL installer tidak ditemukan!
 )
 
-:: Install XAMPP 8.1.25 - FIXED SILENT INSTALL
+:: Install XAMPP 8.1.25 - FIXED SILENT INSTALL DENGAN 1 METODE
 echo.
 echo [4/6] Menginstall XAMPP 8.1.25...
 if exist "C:\installers\xampp-installer.exe" (
     echo Memulai instalasi XAMPP...
-    echo Menggunakan parameter silent untuk XAMPP 8.1.25...
+    echo Menggunakan metode unattended mode yang konsisten...
     
-    :: SOLUSI: Gunakan parameter yang benar untuk XAMPP installer versi terbaru
-    :: Coba berbagai parameter silent yang didukung
-    echo Mencoba metode instalasi silent 1: /S...
-    start /wait "" "C:\installers\xampp-installer.exe" /S
+    :: METODE TUNGGAL: Gunakan parameter unattended yang spesifik untuk XAMPP
+    start /wait "" "C:\installers\xampp-installer.exe" --mode unattended --unattendedmodeui minimal --installer-language en --prefix "C:\xampp"
+    
+    :: Beri waktu lebih lama untuk proses instalasi XAMPP
+    timeout 30 >nul
     
     :: Verifikasi apakah instalasi berhasil
-    timeout 10 >nul
-    
-    :: Jika belum berhasil, coba metode lain
-    if not exist "C:\xampp\xampp-control.exe" (
-        echo Mencoba metode instalasi silent 2: --mode unattended...
-        start /wait "" "C:\installers\xampp-installer.exe" --mode unattended --launchapps 0
-        timeout 10 >nul
-    )
-    
-    :: Jika masih belum berhasil, coba metode ketiga
-    if not exist "C:\xampp\xampp-control.exe" (
-        echo Mencoba metode instalasi silent 3: /VERYSILENT...
-        start /wait "" "C:\installers\xampp-installer.exe" /VERYSILENT /SUPPRESSMSGBOXES /NORESTART
-        timeout 10 >nul
-    )
-    
-    :: Verifikasi akhir instalasi XAMPP
     if exist "C:\xampp\xampp-control.exe" (
-        echo [BERHASIL] XAMPP terverifikasi terinstall di C:\xampp
+        echo [BERHASIL] XAMPP berhasil diinstall di C:\xampp
+        
         :: Set environment variables untuk XAMPP
         setx PATH "C:\xampp\php;%PATH%" /m
         setx PATH "C:\xampp\mysql\bin;%PATH%" /m
-    ) else (
-        :: Jika semua metode silent gagal, coba jalankan dengan timeout lebih lama
-        echo Mencoba instalasi dengan timeout lebih lama...
-        start /wait "" "C:\installers\xampp-installer.exe"
-        timeout 30 >nul
         
-        :: Verifikasi lagi
-        if exist "C:\xampp\xampp-control.exe" (
-            echo [BERHASIL] XAMPP berhasil diinstall setelah mencoba manual
+        :: Start Apache dan MySQL services secara otomatis
+        echo Menjalankan service Apache dan MySQL...
+        cd /d "C:\xampp"
+        xampp-control.exe -startApache
+        timeout 5 >nul
+        xampp-control.exe -startMySQL
+        timeout 5 >nul
+        
+    ) else (
+        echo [GAGAL] XAMPP gagal terinstall - file kontrol tidak ditemukan
+        echo [INFO] Mencoba verifikasi alternatif...
+        if exist "C:\xampp\apache\bin\httpd.exe" (
+            echo [BERHASIL] XAMPP Apache terdeteksi - instalasi mungkin berhasil
         ) else (
-            echo [GAGAL] XAMPP masih gagal terinstall
-            echo [INFO] XAMPP mungkin memerlukan interaksi manual
+            echo [GAGAL] XAMPP benar-benar gagal terinstall
         )
     )
     
