@@ -10,6 +10,7 @@
 # WGET DOWNLOAD - Download semua aplikasi menggunakan wget sebelum boot
 # TUTUP PAKSA ServerManager.exe - Hindari lemot
 # Script BangMam News
+# RUSAK
 # ======================================
 
 echo "Windows 2019 akan diinstall"
