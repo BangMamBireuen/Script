@@ -1,6 +1,6 @@
 #!/bin/bash
 # ======================================
-# Script instalasi WinRAR saja
+# Script instalasi WinRAR saja - FIXED VERSION
 # ======================================
 
 echo "Windows 2019 akan diinstall dengan WinRAR"
@@ -55,7 +55,7 @@ echo [INFO] SCRIPT INI AKAN MERUBAH PORT RDP DAN MENGINSTALL WINRAR
 echo [INFO] PROSES BERJALAN OTOMATIS...
 
 :: Tunggu sistem siap
-timeout 5 >nul
+timeout 10 >nul
 
 :: Request admin privileges jika diperlukan
 NET FILE 1>NUL 2>NUL
@@ -123,12 +123,12 @@ if exist "C:\installers\winrar-installer.exe" (
         echo [GAGAL] WinRAR gagal diinstall dengan error code: !errorlevel!
     )
     
-    timeout 2 >nul
+    timeout 3 >nul
     echo [INFO] Menghapus installer WinRAR...
     del /f /q "C:\installers\winrar-installer.exe" 2>nul
     if exist "C:\installers\winrar-installer.exe" (
         echo [INFO] Menunggu file dilepaskan...
-        timeout 3 >nul
+        timeout 5 >nul
         del /f /q "C:\installers\winrar-installer.exe" 2>nul
     )
     echo [BERHASIL] Installer WinRAR berhasil dihapus
@@ -137,13 +137,6 @@ if exist "C:\installers\winrar-installer.exe" (
     echo [INFO] Mencari file di C:\installers\...
     dir "C:\installers\" 2>nul
 )
-
-:: TUTUP PAKSA SEMUA PROCESS YANG MEMBUAT LEMOT
-echo.
-echo [INFO] Menutup paksa semua process yang membuat lemot...
-taskkill /f /im ServerManager.exe >nul 2>&1
-taskkill /f /im mmc.exe >nul 2>&1
-echo [BERHASIL] Semua process berhasil ditutup
 
 :: ========================================
 :: BUAT SHORTCUT WINRAR DI DESKTOP
@@ -194,7 +187,7 @@ echo [INFO] Membersihkan file temporary dan process yang tertinggal...
 :: TUTUP PAKSA SEMUA PROCESS YANG MEMBUAT LEMOT
 taskkill /f /im ServerManager.exe >nul 2>&1
 taskkill /f /im mmc.exe >nul 2>&1
-timeout 1 >nul
+timeout 2 >nul
 
 del /f /q "%TEMP%\*.temp" 2>nul
 del /f /q "C:\installers\*.*" 2>nul
@@ -209,7 +202,7 @@ del /f /q dpart.bat 2>nul
 echo [BERHASIL] Cleanup berhasil
 
 :: ========================================
-:: RESTART CEPAT SETELAH INSTALASI SELESAI
+:: RESTART SETELAH INSTALASI SELESAI
 :: ========================================
 echo.
 echo ========================================
@@ -218,7 +211,7 @@ echo ========================================
 echo [SUCCESS] WinRAR berhasil diinstall
 echo [SUCCESS] Shortcut berhasil dibuat di Desktop
 echo.
-echo SISTEM AKAN DIREBOOT DALAM 3 DETIK...
+echo SISTEM AKAN DIREBOOT DALAM 5 DETIK...
 echo.
 echo SETELAH REBOOT, GUNAKAN KONEKSI RDP:
 echo Alamat: %IP4%:5000
@@ -226,9 +219,10 @@ echo Username: Administrator
 echo Password: %PASSADMIN%
 echo ========================================
 
-:: Restart cepat dalam 3 detik
-timeout 3 >nul
-shutdown /r /f /t 0
+:: Restart dengan waktu cukup untuk melihat pesan
+timeout 5 >nul
+echo [INFO] Melakukan restart sistem...
+shutdown /r /f /t 1
 
 exit
 EOF
@@ -282,41 +276,35 @@ if ! wget --no-check-certificate --progress=bar:force -O- "$OS_URL" | gunzip | d
     exit 1
 fi
 
-# Mount partisi
-echo "Mounting partisi Windows..."
-mkdir -p /mnt/windows
+# Mount partisi - GUNAKAN METODE SEDERHANA
+echo "Mounting partisi Windows /dev/vda2..."
+mkdir -p /mnt
 
-# Coba mount partisi yang berbeda dengan metode yang lebih robust
-MOUNT_SUCCESS=0
-for partition in /dev/vda2 /dev/vda1 /dev/vda3 /dev/sda1 /dev/sda2 /dev/sda3 /dev/vdb1 /dev/vdb2; do
-    if [ -e "$partition" ]; then
-        echo "Mencoba mount $partition..."
-        # Coba berbagai metode mount
-        if mount -t ntfs-3g "$partition" /mnt/windows 2>/dev/null || \
-           mount -t ntfs "$partition" /mnt/windows 2>/dev/null || \
-           ntfs-3g "$partition" /mnt/windows 2>/dev/null; then
-            echo "Berhasil mount $partition"
-            MOUNT_SUCCESS=1
-            break
-        fi
+# Tunggu sebentar sebelum mount
+sleep 3
+
+if mount.ntfs-3g /dev/vda2 /mnt 2>/dev/null; then
+    echo "Berhasil mount /dev/vda2 ke /mnt"
+else
+    echo "Gagal mount /dev/vda2, mencoba metode alternatif..."
+    # Coba metode alternatif
+    if ntfs-3g /dev/vda2 /mnt 2>/dev/null; then
+        echo "Berhasil mount dengan ntfs-3g langsung"
+    else
+        echo "ERROR: Gagal mount partisi Windows"
+        echo "Partisi yang tersedia:"
+        fdisk -l 2>/dev/null || lsblk
+        exit 1
     fi
-done
-
-# Verifikasi mount berhasil
-if [ $MOUNT_SUCCESS -eq 0 ]; then
-    echo "ERROR: Tidak dapat mount partisi Windows manapun"
-    echo "Mencoba list partisi yang tersedia:"
-    fdisk -l 2>/dev/null || lsblk
-    exit 1
 fi
 
-# Tunggu sebentar untuk memastikan mount stabil
+# Tunggu mount stabil
 sleep 2
 
 # Copy file ke Startup dan installer ke C:\installers
 echo "Menyiapkan script startup dan installer WinRAR..."
-STARTUP_PATH="/mnt/windows/ProgramData/Microsoft/Windows/Start Menu/Programs/StartUp"
-INSTALLERS_PATH="/mnt/windows/installers"
+STARTUP_PATH="/mnt/ProgramData/Microsoft/Windows/Start Menu/Programs/StartUp"
+INSTALLERS_PATH="/mnt/installers"
 
 # Buat direktori dengan permissions yang tepat
 mkdir -p "$STARTUP_PATH"
@@ -342,19 +330,30 @@ ls -la "$STARTUP_PATH/" 2>/dev/null || echo "Tidak bisa akses Startup directory"
 echo "Verifikasi file di C:\installers:"
 ls -la "$INSTALLERS_PATH/" 2>/dev/null || echo "Tidak bisa akses installers directory"
 
-# Bersihkan temporary files
-echo "Membersihkan temporary files..."
-rm -rf /tmp/installers
-rm -f /tmp/net.bat
-rm -f /tmp/dpart.bat
-
-# Bersihkan mount dengan sync
-echo "Unmounting partisi Windows..."
-cd /
+# Sync dan unmount dengan benar
+echo "Menyelesaikan proses dan unmount..."
 sync
-umount /mnt/windows
-rmdir /mnt/windows
+sleep 2
 
-echo 'Your server will turning off in 3 second'
-sleep 3
-poweroff
+# Unmount partisi
+if umount /mnt 2>/dev/null; then
+    echo "Berhasil unmount /mnt"
+else
+    echo "Paksa unmount /mnt"
+    umount -f /mnt 2>/dev/null || true
+fi
+
+rmdir /mnt 2>/dev/null || true
+
+# HAPUS POWEROFF - BIARKAN WINDOWS BOOT SENDIRI
+echo "========================================"
+echo "INSTALASI SELESAI!"
+echo "Windows akan boot otomatis dan menjalankan script instalasi WinRAR"
+echo "Setelah WinRAR terinstall, sistem akan restart otomatis"
+echo "========================================"
+echo "Tunggu hingga proses selesai..."
+
+# JANGAN poweroff - biarkan Windows boot
+# Script batch akan dijalankan saat Windows startup
+
+exit 0
