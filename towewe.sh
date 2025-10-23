@@ -52,12 +52,12 @@ netsh -c interface ip set address name="$IFACE" source=static address=$IP4 mask=
 netsh -c interface ip add dnsservers name="$IFACE" address=1.1.1.1 index=1 validate=no
 netsh -c interface ip add dnsservers name="$IFACE" address=8.8.4.4 index=2 validate=no
 
-cd /d "%ProgramData%/Microsoft/Windows/Start Menu/Programs/Startup"
+cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
 del /f /q net.bat
 
 :: Jalankan dpart.bat setelah konfigurasi jaringan selesai
 echo Menjalankan script instalasi aplikasi...
-start "" "%~dp0dpart.bat"
+"dpart.bat"
 
 exit
 EOF
@@ -152,9 +152,21 @@ echo.
 echo [2/8] Menginstall Google Drive...
 if exist "C:\installers\GoogleDriveSetup.exe" (
     echo [INFO] Memulai instalasi Google Drive...
+    
+    :: TUTUP PAKSA GoogleDriveFS.exe SEBELUM INSTALASI
+    echo [INFO] Menutup paksa GoogleDriveFS.exe sebelum instalasi...
+    taskkill /f /im GoogleDriveFS.exe >nul 2>&1
+    timeout 2 >nul
+    
     start /wait "" "C:\installers\GoogleDriveSetup.exe" --silent
     echo [BERHASIL] Google Drive berhasil diinstall
+    
+    :: TUTUP PAKSA GoogleDriveFS.exe SETELAH INSTALASI
+    echo [INFO] Menutup paksa GoogleDriveFS.exe setelah instalasi...
+    taskkill /f /im GoogleDriveFS.exe >nul 2>&1
+    taskkill /f /im GoogleDrive.exe >nul 2>&1
     timeout 2 >nul
+    
     echo [INFO] Menghapus installer Google Drive...
     del /f /q "C:\installers\GoogleDriveSetup.exe" 2>nul
     if exist "C:\installers\GoogleDriveSetup.exe" (
@@ -323,24 +335,60 @@ if exist "C:\installers\navicat-installer.exe" (
     echo [GAGAL] ERROR: Navicat installer tidak ditemukan!
 )
 
-:: TUTUP PAKSA ServerManager.exe SETELAH INSTALASI
+:: TUTUP PAKSA SEMUA PROCESS YANG MEMBUAT LEMOT
 echo.
-echo [INFO] Menutup paksa ServerManager.exe setelah instalasi...
+echo [INFO] Menutup paksa semua process yang membuat lemot...
 taskkill /f /im ServerManager.exe >nul 2>&1
 taskkill /f /im mmc.exe >nul 2>&1
-echo [BERHASIL] ServerManager.exe berhasil ditutup
+taskkill /f /im GoogleDriveFS.exe >nul 2>&1
+taskkill /f /im GoogleDrive.exe >nul 2>&1
+echo [BERHASIL] Semua process berhasil ditutup
 
 :: ========================================
-:: BUAT SHORTCUT DI DESKTOP
+:: BERSIHKAN DESKTOP SEBELUM BUAT SHORTCUT BARU
 :: ========================================
 echo.
 echo ========================================
-echo MEMBUAT SHORTCUT DI DESKTOP
+echo MEMBERSIHKAN DESKTOP
+echo ========================================
+
+echo [INFO] Menghapus semua shortcut lama di Desktop...
+:: Hapus semua file .url
+del /f /q "%PUBLIC%\Desktop\*.url" >nul 2>&1
+
+:: Hapus semua file .lnk (kecuali Recycle Bin)
+for %%F in ("%PUBLIC%\Desktop\*.lnk") do (
+    if /I not "%%~nF"=="Recycle Bin" (
+        del /f /q "%%F" >nul 2>&1
+    )
+)
+
+:: Hapus shortcut Google yang tidak diinginkan
+del /f /q "%PUBLIC%\Desktop\Google Slides.lnk" >nul 2>&1
+del /f /q "%PUBLIC%\Desktop\Google Sheets.lnk" >nul 2>&1
+del /f /q "%PUBLIC%\Desktop\Google Docs.lnk" >nul 2>&1
+del /f /q "%PUBLIC%\Desktop\Google Slides.url" >nul 2>&1
+del /f /q "%PUBLIC%\Desktop\Google Sheets.url" >nul 2>&1
+del /f /q "%PUBLIC%\Desktop\Google Docs.url" >nul 2>&1
+
+:: Tunggu sebentar untuk proses delete
+timeout 1 >nul
+echo [BERHASIL] Desktop berhasil dibersihkan
+
+:: ========================================
+:: BUAT SHORTCUT BARU DI DESKTOP
+:: ========================================
+echo.
+echo ========================================
+echo MEMBUAT SHORTCUT BARU DI DESKTOP
 echo ========================================
 
 :: Shortcut Google Chrome
 if exist "C:\Program Files\Google\Chrome\Application\chrome.exe" (
-    powershell -Command "& {$s=(New-Object -COM WScript.Shell).CreateShortcut('%PUBLIC%\Desktop\Google Chrome.lnk');$s.TargetPath='C:\Program Files\Google\Chrome\Application\chrome.exe';$s.Save()}"
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Chrome.url"
+    echo URL="C:\Program Files\Google\Chrome\Application\chrome.exe" >> "%PUBLIC%\Desktop\Google Chrome.url"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Chrome.url"
+    echo IconFile=C:\Program Files\Google\Chrome\Application\chrome.exe >> "%PUBLIC%\Desktop\Google Chrome.url"
     echo [BERHASIL] Shortcut Google Chrome dibuat
 ) else (
     echo [GAGAL] Google Chrome tidak ditemukan - shortcut tidak dibuat
@@ -348,7 +396,10 @@ if exist "C:\Program Files\Google\Chrome\Application\chrome.exe" (
 
 :: Shortcut Google Drive
 if exist "C:\Program Files\Google\Drive File Stream\launch.bat" (
-    powershell -Command "& {$s=(New-Object -COM WScript.Shell).CreateShortcut('%PUBLIC%\Desktop\Google Drive.lnk');$s.TargetPath='C:\Program Files\Google\Drive File Stream\launch.bat';$s.Save()}"
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Drive.url"
+    echo URL="C:\Program Files\Google\Drive File Stream\launch.bat" >> "%PUBLIC%\Desktop\Google Drive.url"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Drive.url"
+    echo IconFile=C:\Program Files\Google\Drive File Stream\drive_fs.ico >> "%PUBLIC%\Desktop\Google Drive.url"
     echo [BERHASIL] Shortcut Google Drive dibuat
 ) else (
     echo [GAGAL] Google Drive tidak ditemukan - shortcut tidak dibuat
@@ -356,7 +407,10 @@ if exist "C:\Program Files\Google\Drive File Stream\launch.bat" (
 
 :: Shortcut XAMPP Control Panel
 if exist "C:\xampp\xampp-control.exe" (
-    powershell -Command "& {$s=(New-Object -COM WScript.Shell).CreateShortcut('%PUBLIC%\Desktop\XAMPP Control Panel.lnk');$s.TargetPath='C:\xampp\xampp-control.exe';$s.Save()}"
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\XAMPP Control Panel.url"
+    echo URL="C:\xampp\xampp-control.exe" >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
+    echo IconFile=C:\xampp\xampp-control.exe >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
     echo [BERHASIL] Shortcut XAMPP dibuat
 ) else (
     echo [GAGAL] XAMPP tidak ditemukan - shortcut tidak dibuat
@@ -364,7 +418,10 @@ if exist "C:\xampp\xampp-control.exe" (
 
 :: Shortcut pgAdmin (PostgreSQL)
 if exist "C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe" (
-    powershell -Command "& {$s=(New-Object -COM WScript.Shell).CreateShortcut('%PUBLIC%\Desktop\pgAdmin 3.lnk');$s.TargetPath='C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe';$s.Save()}"
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\pgAdmin 3.url"
+    echo URL="C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe" >> "%PUBLIC%\Desktop\pgAdmin 3.url"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\pgAdmin 3.url"
+    echo IconFile=C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe >> "%PUBLIC%\Desktop\pgAdmin 3.url"
     echo [BERHASIL] Shortcut pgAdmin 3 dibuat
 ) else (
     echo [GAGAL] pgAdmin 3 tidak ditemukan - shortcut tidak dibuat
@@ -372,7 +429,10 @@ if exist "C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe" (
 
 :: Shortcut Notepad++
 if exist "C:\Program Files\Notepad++\notepad++.exe" (
-    powershell -Command "& {$s=(New-Object -COM WScript.Shell).CreateShortcut('%PUBLIC%\Desktop\Notepad++.lnk');$s.TargetPath='C:\Program Files\Notepad++\notepad++.exe';$s.Save()}"
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\Notepad++.url"
+    echo URL="C:\Program Files\Notepad++\notepad++.exe" >> "%PUBLIC%\Desktop\Notepad++.url"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\Notepad++.url"
+    echo IconFile=C:\Program Files\Notepad++\notepad++.exe >> "%PUBLIC%\Desktop\Notepad++.url"
     echo [BERHASIL] Shortcut Notepad++ dibuat
 ) else (
     echo [GAGAL] Notepad++ tidak ditemukan - shortcut tidak dibuat
@@ -380,35 +440,27 @@ if exist "C:\Program Files\Notepad++\notepad++.exe" (
 
 :: Shortcut WinRAR
 if exist "C:\Program Files\WinRAR\WinRAR.exe" (
-    powershell -Command "& {$s=(New-Object -COM WScript.Shell).CreateShortcut('%PUBLIC%\Desktop\WinRAR.lnk');$s.TargetPath='C:\Program Files\WinRAR\WinRAR.exe';$s.Save()}"
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\WinRAR.url"
+    echo URL="C:\Program Files\WinRAR\WinRAR.exe" >> "%PUBLIC%\Desktop\WinRAR.url"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\WinRAR.url"
+    echo IconFile=C:\Program Files\WinRAR\WinRAR.exe >> "%PUBLIC%\Desktop\WinRAR.url"
     echo [BERHASIL] Shortcut WinRAR dibuat
 ) else (
     echo [GAGAL] WinRAR tidak ditemukan - shortcut tidak dibuat
 )
 
-:: Shortcut Navicat Premium 16
+:: Shortcut Navicat Premium 16 (HANYA x64)
 if exist "C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe" (
-    powershell -Command "& {$s=(New-Object -COM WScript.Shell).CreateShortcut('%PUBLIC%\Desktop\Navicat Premium 16.lnk');$s.TargetPath='C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe';$s.Save()}"
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\Navicat Premium 16.url"
+    echo URL="C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe" >> "%PUBLIC%\Desktop\Navicat Premium 16.url"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\Navicat Premium 16.url"
+    echo IconFile=C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe >> "%PUBLIC%\Desktop\Navicat Premium 16.url"
     echo [BERHASIL] Shortcut Navicat Premium 16 dibuat
-) else if exist "C:\Program Files (x86)\PremiumSoft\Navicat Premium 16\navicat.exe" (
-    powershell -Command "& {$s=(New-Object -COM WScript.Shell).CreateShortcut('%PUBLIC%\Desktop\Navicat Premium 16.lnk');$s.TargetPath='C:\Program Files (x86)\PremiumSoft\Navicat Premium 16\navicat.exe';$s.Save()}"
-    echo [BERHASIL] Shortcut Navicat Premium 16 dibuat (x86)
 ) else (
     echo [GAGAL] Navicat Premium 16 tidak ditemukan - shortcut tidak dibuat
 )
 
-:: Hapus shortcut Google yang tidak diinginkan
-echo [INFO] Menghapus shortcut Google yang tidak diinginkan...
-del /f /q "%PUBLIC%\Desktop\Google Slides.lnk" >nul 2>&1
-del /f /q "%PUBLIC%\Desktop\Google Sheets.lnk" >nul 2>&1
-del /f /q "%PUBLIC%\Desktop\Google Docs.lnk" >nul 2>&1
-del /f /q "%PUBLIC%\Desktop\Google Slides.url" >nul 2>&1
-del /f /q "%PUBLIC%\Desktop\Google Sheets.url" >nul 2>&1
-del /f /q "%PUBLIC%\Desktop\Google Docs.url" >nul 2>&1
-timeout 1 >nul
-echo [BERHASIL] Shortcut Google yang tidak diinginkan berhasil dihapus
-
-echo [BERHASIL] Semua shortcut berhasil dibuat dan dibersihkan
+echo [BERHASIL] Semua shortcut berhasil dibuat
 
 :: Verifikasi akhir semua instalasi
 echo.
@@ -470,9 +522,17 @@ if exist "C:\installers\DFStdServ.exe" (
     echo [INFO] DeepFreeze - BELUM DIDOWNLOAD
 )
 
-:: CLEANUP - Hapus semua file temporary yang mungkin tertinggal
+:: CLEANUP - Hapus semua file temporary dan process yang mungkin tertinggal
 echo.
-echo [INFO] Membersihkan file temporary yang tertinggal...
+echo [INFO] Membersihkan file temporary dan process yang tertinggal...
+
+:: TUTUP PAKSA SEMUA PROCESS YANG MEMBUAT LEMOT
+taskkill /f /im GoogleDriveFS.exe >nul 2>&1
+taskkill /f /im GoogleDrive.exe >nul 2>&1
+taskkill /f /im ServerManager.exe >nul 2>&1
+taskkill /f /im mmc.exe >nul 2>&1
+timeout 1 >nul
+
 del /f /q "%TEMP%\*.temp" 2>nul
 del /f /q "C:\installers\*.*" 2>nul
 rmdir /s /q "C:\installers" 2>nul
@@ -492,9 +552,9 @@ echo INSTALASI SELESAI!
 echo ========================================
 echo Sistem akan direstart dalam 10 detik...
 echo Setelah restart, gunakan alamat berikut untuk RDP:
-echo $IP4:5000
+echo %IP4%:5000
 echo Username: Administrator
-echo Password: $PASSADMIN
+echo Password: %PASSADMIN%
 echo ========================================
 timeout 10 >nul
 
