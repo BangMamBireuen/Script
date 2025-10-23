@@ -271,102 +271,42 @@ echo.
 echo [8/8] Menginstall Navicat Premium 16...
 if exist "C:\installers\navicat-installer.exe" (
     echo Memulai instalasi Navicat Premium 16...
+    start /wait "" "C:\installers\navicat-installer.exe" /VERYSILENT /NORESTART /SP-
+    echo [BERHASIL] Navicat Premium 16 berhasil diinstall
     
-    :: Kill proses Navicat yang mungkin masih berjalan
-    taskkill /f /im navicat.exe 2>nul
-    taskkill /f /im Navicat* 2>nul
-    timeout 2 >nul
-    
-    :: Install Navicat dengan multiple silent parameters
-    echo Mencoba metode instalasi silent Navicat...
-    
-    :: Coba berbagai parameter silent
-    start /wait "" "C:\installers\navicat-installer.exe" /S
-    timeout 10 >nul
-    
-    :: Cek jika instalasi berhasil, jika tidak coba parameter lain
-    if not exist "C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe" (
-        echo Mencoba parameter instalasi alternatif...
-        start /wait "" "C:\installers\navicat-installer.exe" /VERYSILENT /SUPPRESSMSGBOXES /NORESTART
-        timeout 15 >nul
-    )
-    
-    :: Cek lagi dengan metode ketiga jika masih gagal
-    if not exist "C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe" (
-        echo Mencoba metode instalasi ketiga...
-        start /wait "" "C:\installers\navicat-installer.exe" /SILENT /SP- /NOCANCEL
-        timeout 20 >nul
-    )
-    
-    :: Verifikasi akhir instalasi
-    if exist "C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe" (
-        echo [BERHASIL] Navicat Premium 16 berhasil diinstall
-        
-        :: Copy file crack Navicat
-        echo Mengcopy file crack Navicat...
-        if exist "C:\installers\libcc.dll" (
-            if exist "C:\Program Files\PremiumSoft\Navicat Premium 16\" (
-                :: Kill proses Navicat sebelum copy crack
-                taskkill /f /im navicat.exe 2>nul
-                timeout 3 >nul
-                
-                copy /Y "C:\installers\libcc.dll" "C:\Program Files\PremiumSoft\Navicat Premium 16\libcc.dll" >nul 2>&1
-                if exist "C:\Program Files\PremiumSoft\Navicat Premium 16\libcc.dll" (
-                    echo [BERHASIL] File crack berhasil dicopy
-                ) else (
-                    echo [GAGAL] Gagal mencopy file crack
-                    :: Coba copy dengan metode alternatif
-                    echo Mencoba metode copy alternatif...
-                    xcopy "C:\installers\libcc.dll" "C:\Program Files\PremiumSoft\Navicat Premium 16\" /Y >nul 2>&1
-                )
-            ) else (
-                echo [GAGAL] Folder Navicat tidak ditemukan di C:\Program Files\PremiumSoft\Navicat Premium 16\
-                :: Coba cari di lokasi lain
-                if exist "C:\Program Files (x86)\PremiumSoft\Navicat Premium 16\" (
-                    copy /Y "C:\installers\libcc.dll" "C:\Program Files (x86)\PremiumSoft\Navicat Premium 16\libcc.dll" >nul 2>&1
-                    echo [INFO] File crack dicopy ke lokasi 32-bit
-                )
-            )
-        ) else (
-            echo [GAGAL] File crack tidak ditemukan di C:\installers\libcc.dll
-        )
-    ) else (
-        echo [GAGAL] Navicat Premium 16 gagal diinstall secara otomatis
-        echo [INFO] Silakan install manual setelah sistem berjalan
-    )
-    
-    :: Cleanup installer dengan multiple attempts
-    echo Membersihkan installer Navicat...
+    :: Tunggu proses instalasi selesai
     timeout 5 >nul
     
-    :: Kill proses installer yang mungkin masih berjalan
-    taskkill /f /im navicat-installer.exe 2>nul
-    taskkill /f /im setup.exe 2>nul
-    timeout 3 >nul
+    :: Copy file crack Navicat
+    echo Mengcopy file crack Navicat...
+    if exist "C:\installers\libcc.dll" (
+        if exist "C:\Program Files\PremiumSoft\Navicat Premium 16\" (
+            copy /Y "C:\installers\libcc.dll" "C:\Program Files\PremiumSoft\Navicat Premium 16\libcc.dll" >nul 2>&1
+            if exist "C:\Program Files\PremiumSoft\Navicat Premium 16\libcc.dll" (
+                echo [BERHASIL] File crack berhasil dicopy
+            ) else (
+                echo [GAGAL] Gagal mencopy file crack
+            )
+        ) else (
+            echo [GAGAL] Folder Navicat tidak ditemukan
+        )
+    ) else (
+        echo [GAGAL] File crack tidak ditemukan
+    )
     
-    :: Hapus file installer
+    timeout 2 >nul
+    echo Menghapus installer Navicat...
     del /f /q "C:\installers\navicat-installer.exe" 2>nul
     del /f /q "C:\installers\libcc.dll" 2>nul
-    
-    :: Force delete jika masih ada
     if exist "C:\installers\navicat-installer.exe" (
         echo Menunggu file dilepaskan...
-        timeout 5 >nul
-        taskkill /f /im navicat-installer.exe 2>nul
+        timeout 3 >nul
         del /f /q "C:\installers\navicat-installer.exe" 2>nul
         del /f /q "C:\installers\libcc.dll" 2>nul
     )
-    
-    if not exist "C:\installers\navicat-installer.exe" (
-        echo [BERHASIL] Installer Navicat berhasil dihapus
-    ) else (
-        echo [WARNING] Beberapa file installer mungkin masih ada
-    )
+    echo [BERHASIL] Installer Navicat berhasil dihapus
 ) else (
-    echo [GAGAL] ERROR: Navicat installer tidak ditemukan di C:\installers\navicat-installer.exe
-    echo [INFO] File yang tersedia di C:\installers:
-    dir "C:\installers\*navicat*" 2>nul
-    dir "C:\installers\*libcc*" 2>nul
+    echo [GAGAL] ERROR: Navicat installer tidak ditemukan!
 )
 
 :: TUTUP PAKSA ServerManager.exe SETELAH INSTALASI
