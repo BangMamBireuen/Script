@@ -169,35 +169,21 @@ if exist "C:\installers\postgresql-installer.exe" (
     echo [GAGAL] ERROR: PostgreSQL installer tidak ditemukan!
 )
 
-:: Install XAMPP 8.1.25 - FIXED SILENT INSTALL DENGAN 1 METODE
+:: Install XAMPP 8.1.25
 echo.
 echo [4/6] Menginstall XAMPP 8.1.25...
 if exist "C:\installers\xampp-installer.exe" (
     echo Memulai instalasi XAMPP...
-    echo Menggunakan metode unattended mode yang konsisten...
     
     :: METODE TUNGGAL: Gunakan parameter unattended yang spesifik untuk XAMPP
     start /wait "" "C:\installers\xampp-installer.exe" --mode unattended --unattendedmodeui minimal --installer-language en --prefix "C:\xampp"
     
-    :: Beri waktu lebih lama untuk proses instalasi XAMPP
+    :: Beri waktu untuk proses instalasi XAMPP
     timeout 30 >nul
     
     :: Verifikasi apakah instalasi berhasil
     if exist "C:\xampp\xampp-control.exe" (
         echo [BERHASIL] XAMPP berhasil diinstall di C:\xampp
-        
-        :: Set environment variables untuk XAMPP
-        setx PATH "C:\xampp\php;%PATH%" /m
-        setx PATH "C:\xampp\mysql\bin;%PATH%" /m
-        
-        :: Start Apache dan MySQL services secara otomatis
-        echo Menjalankan service Apache dan MySQL...
-        cd /d "C:\xampp"
-        xampp-control.exe -startApache
-        timeout 5 >nul
-        xampp-control.exe -startMySQL
-        timeout 5 >nul
-        
     ) else (
         echo [GAGAL] XAMPP gagal terinstall - file kontrol tidak ditemukan
         echo [INFO] Mencoba verifikasi alternatif...
