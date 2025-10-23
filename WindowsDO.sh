@@ -1,6 +1,7 @@
 #!/bin/bash
 #
 # CREATED By NIXPOIN.COM
+# EDITIO BY BANGMAM
 #
 
 PILIHOS="http://login.pb-glory.com/windows2019DO.gz"
