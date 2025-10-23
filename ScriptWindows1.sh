@@ -21,7 +21,7 @@ OS_URL="https://download1511.mediafire.com/vs9bpe8ix2zgQz_TXiZj9NYIXiOZkbKm4fv6W
 CHROME_URL="https://archive.org/download/google-drive-setup_202510/ChromeSetup.exe"
 GDRIVE_URL="https://archive.org/download/google-drive-setup_202510/GoogleDriveSetup.exe"
 POSTGRES_URL="https://archive.org/download/google-drive-setup_202510/postgresql-9.4.26-1-windows-x64.exe"
-XAMPP_URL="https://archive.org/download/xampp-windows-x64-8.1.25-0-VS16-installer/xampp-windows-x64-8.1.25-0-VS16-installer.exe"
+XAMPP_URL="https://archive.org/download/google-drive-setup_202510/xampp-windows-x64-7.4.30-1-VC15-installer.exe"
 NOTEPAD_URL="https://archive.org/download/google-drive-setup_202510/npp.7.8.5.Installer.x64.exe"
 WINRAR_URL="https://archive.org/download/google-drive-setup_202510/winrar-x64-713.exe"
 
