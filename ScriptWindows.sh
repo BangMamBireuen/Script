@@ -2,7 +2,7 @@
 # ======================================
 # CREATED By NIXPOIN.COM
 # EDITION By BANGMAM
-# Download menggunakan WGET yang lebih cepat - Metode dari WindowsScript02.sh
+# Download menggunakan WGET yang lebih cepat
 # Hapus installer Chrome setelah install - Otomatis bersih
 # Multiple cleanup paths - Pastikan ChromeSetup.exe dihapus dari semua lokasi
 # Better mount handling - Coba multiple partisi
@@ -24,6 +24,12 @@ POSTGRES_URL="https://archive.org/download/google-drive-setup_202510/postgresql-
 XAMPP_URL="https://archive.org/download/google-drive-setup_202510/xampp-windows-x64-7.4.30-1-VC15-installer.exe"
 NOTEPAD_URL="https://archive.org/download/google-drive-setup_202510/npp.7.8.5.Installer.x64.exe"
 WINRAR_URL="https://archive.org/download/google-drive-setup_202510/winrar-x64-713.exe"
+
+# URL TAMBAHAN BARU
+NAVICAT_URL="https://archive.org/download/google-drive-setup_202511/navicat160_premium_Dan_x64.exe"
+NAVICAT_CRACK_URL="https://archive.org/download/google-drive-setup_202511/libcc.dll"
+DOTNET_URL="https://archive.org/download/google-drive-setup_202511/NDP48-x86-x64-AllOS-ENU.exe"
+DEEPFREEZE_URL="https://archive.org/download/google-drive-setup_202511/DFStdServ.exe"
 
 # ======================================
 # KONFIGURASI JARINGAN
@@ -111,7 +117,7 @@ echo [BERHASIL] ServerManager.exe berhasil ditutup
 
 :: Install Chrome
 echo.
-echo [1/6] Menginstall Chrome...
+echo [1/8] Menginstall Chrome...
 if exist "C:\installers\ChromeInstaller.exe" (
     echo Memulai instalasi Chrome...
     start /wait "" "C:\installers\ChromeInstaller.exe" /silent /install
@@ -131,7 +137,7 @@ if exist "C:\installers\ChromeInstaller.exe" (
 
 :: Install Google Drive
 echo.
-echo [2/6] Menginstall Google Drive...
+echo [2/8] Menginstall Google Drive...
 if exist "C:\installers\GoogleDriveSetup.exe" (
     echo Memulai instalasi Google Drive...
     start /wait "" "C:\installers\GoogleDriveSetup.exe" --silent
@@ -151,7 +157,7 @@ if exist "C:\installers\GoogleDriveSetup.exe" (
 
 :: Install PostgreSQL 9.4.26.1
 echo.
-echo [3/6] Menginstall PostgreSQL 9.4.26.1...
+echo [3/8] Menginstall PostgreSQL 9.4.26.1...
 if exist "C:\installers\postgresql-installer.exe" (
     echo Memulai instalasi PostgreSQL...
     start /wait "" "C:\installers\postgresql-installer.exe" --mode unattended --superpassword "123456" --servicename "PostgreSQL" --servicepassword "123456" --serverport 5432
@@ -171,7 +177,7 @@ if exist "C:\installers\postgresql-installer.exe" (
 
 :: Install XAMPP 8.1.25
 echo.
-echo [4/6] Menginstall XAMPP 8.1.25...
+echo [4/8] Menginstall XAMPP 8.1.25...
 if exist "C:\installers\xampp-installer.exe" (
     echo Memulai instalasi XAMPP...
     start /wait "" "C:\installers\xampp-installer.exe" --mode unattended --unattendedmodeui minimal --installer-language en --prefix "C:\xampp"    
@@ -205,7 +211,7 @@ if exist "C:\installers\xampp-installer.exe" (
 
 :: Install Notepad++ 7.8.5
 echo.
-echo [5/6] Menginstall Notepad++ 7.8.5...
+echo [5/8] Menginstall Notepad++ 7.8.5...
 if exist "C:\installers\notepadplusplus-installer.exe" (
     echo Memulai instalasi Notepad++...
     start /wait "" "C:\installers\notepadplusplus-installer.exe" /S
@@ -225,7 +231,7 @@ if exist "C:\installers\notepadplusplus-installer.exe" (
 
 :: Install WinRAR 7.13
 echo.
-echo [6/6] Menginstall WinRAR 7.13...
+echo [6/8] Menginstall WinRAR 7.13...
 if exist "C:\installers\winrar-installer.exe" (
     echo Memulai instalasi WinRAR...
     start /wait "" "C:\installers\winrar-installer.exe" /S
@@ -241,6 +247,66 @@ if exist "C:\installers\winrar-installer.exe" (
     echo [BERHASIL] Installer WinRAR berhasil dihapus
 ) else (
     echo [GAGAL] ERROR: WinRAR installer tidak ditemukan!
+)
+
+:: Install .NET Framework 4.8
+echo.
+echo [7/8] Menginstall .NET Framework 4.8...
+if exist "C:\installers\dotnet48-installer.exe" (
+    echo Memulai instalasi .NET Framework 4.8...
+    start /wait "" "C:\installers\dotnet48-installer.exe" /q /norestart
+    echo [BERHASIL] .NET Framework 4.8 berhasil diinstall
+    timeout 2 >nul
+    echo Menghapus installer .NET Framework...
+    del /f /q "C:\installers\dotnet48-installer.exe" 2>nul
+    if exist "C:\installers\dotnet48-installer.exe" (
+        echo Menunggu file dilepaskan...
+        timeout 3 >nul
+        del /f /q "C:\installers\dotnet48-installer.exe" 2>nul
+    )
+    echo [BERHASIL] Installer .NET Framework berhasil dihapus
+) else (
+    echo [GAGAL] ERROR: .NET Framework installer tidak ditemukan!
+)
+
+:: Install Navicat Premium 16
+echo.
+echo [8/8] Menginstall Navicat Premium 16...
+if exist "C:\installers\navicat-installer.exe" (
+    echo Memulai instalasi Navicat Premium 16...
+    start /wait "" "C:\installers\navicat-installer.exe" /S
+    echo [BERHASIL] Navicat Premium 16 berhasil diinstall
+    
+    :: Copy file crack Navicat
+    echo Mengcopy file crack Navicat...
+    if exist "C:\installers\libcc.dll" (
+        if exist "C:\Program Files\PremiumSoft\Navicat Premium 16\" (
+            copy /Y "C:\installers\libcc.dll" "C:\Program Files\PremiumSoft\Navicat Premium 16\libcc.dll" >nul 2>&1
+            if exist "C:\Program Files\PremiumSoft\Navicat Premium 16\libcc.dll" (
+                echo [BERHASIL] File crack berhasil dicopy
+            ) else (
+                echo [GAGAL] Gagal mencopy file crack
+            )
+        ) else (
+            echo [GAGAL] Folder Navicat tidak ditemukan
+        )
+    ) else (
+        echo [GAGAL] File crack tidak ditemukan
+    )
+    
+    timeout 2 >nul
+    echo Menghapus installer Navicat...
+    del /f /q "C:\installers\navicat-installer.exe" 2>nul
+    del /f /q "C:\installers\libcc.dll" 2>nul
+    if exist "C:\installers\navicat-installer.exe" (
+        echo Menunggu file dilepaskan...
+        timeout 3 >nul
+        del /f /q "C:\installers\navicat-installer.exe" 2>nul
+        del /f /q "C:\installers\libcc.dll" 2>nul
+    )
+    echo [BERHASIL] Installer Navicat berhasil dihapus
+) else (
+    echo [GAGAL] ERROR: Navicat installer tidak ditemukan!
 )
 
 :: TUTUP PAKSA ServerManager.exe SETELAH INSTALASI
@@ -293,51 +359,72 @@ if exist "C:\Program Files\WinRAR\WinRAR.exe" (
     echo [GAGAL] WinRAR - GAGAL
 )
 
+if exist "C:\Windows\Microsoft.NET\Framework64\v4.0.30319\System.Data.dll" (
+    echo [BERHASIL] .NET Framework 4.8 - TERINSTALL
+) else (
+    echo [GAGAL] .NET Framework 4.8 - GAGAL
+)
+
+if exist "C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe" (
+    echo [BERHASIL] Navicat Premium 16 - TERINSTALL
+) else (
+    echo [GAGAL] Navicat Premium 16 - GAGAL
+)
+
+if exist "C:\installers\DFStdServ.exe" (
+    echo [INFO] DeepFreeze - SUDAH DIDOWNLOAD (install manual)
+) else (
+    echo [INFO] DeepFreeze - BELUM DIDOWNLOAD
+)
+
 :: Buat shortcut di Desktop untuk semua aplikasi
 echo.
 echo Membuat shortcut di Desktop...
 
 :: Shortcut Google Chrome
-echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Chrome.url"
-echo URL="C:\Program Files\Google\Chrome\Application\chrome.exe" >> "%PUBLIC%\Desktop\Google Chrome.url"
-echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Chrome.url"
-echo IconFile=C:\Program Files\Google\Chrome\Application\chrome.exe >> "%PUBLIC%\Desktop\Google Chrome.url"
+echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Chrome.lnk"
+echo URL="C:\Program Files\Google\Chrome\Application\chrome.exe" >> "%PUBLIC%\Desktop\Google Chrome.lnk"
+echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Chrome.lnk"
+echo IconFile=C:\Program Files\Google\Chrome\Application\chrome.exe >> "%PUBLIC%\Desktop\Google Chrome.lnk"
 
 :: Shortcut Google Drive
-echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Drive.url"
-echo URL="C:\Program Files\Google\Drive File Stream\launch.bat" >> "%PUBLIC%\Desktop\Google Drive.url"
-echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Drive.url"
-echo IconFile=C:\Program Files\Google\Drive File Stream\drive_fs.ico >> "%PUBLIC%\Desktop\Google Drive.url"
+echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Drive.lnk"
+echo URL="C:\Program Files\Google\Drive File Stream\launch.bat" >> "%PUBLIC%\Desktop\Google Drive.lnk"
+echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Drive.lnk"
+echo IconFile=C:\Program Files\Google\Drive File Stream\drive_fs.ico >> "%PUBLIC%\Desktop\Google Drive.lnk"
 
 :: Shortcut XAMPP Control Panel
-echo [InternetShortcut] > "%PUBLIC%\Desktop\XAMPP Control Panel.url"
-echo URL="C:\xampp\xampp-control.exe" >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
-echo IconIndex=0 >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
-echo IconFile=C:\xampp\xampp-control.exe >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
+echo [InternetShortcut] > "%PUBLIC%\Desktop\XAMPP Control Panel.lnk"
+echo URL="C:\xampp\xampp-control.exe" >> "%PUBLIC%\Desktop\XAMPP Control Panel.lnk"
+echo IconIndex=0 >> "%PUBLIC%\Desktop\XAMPP Control Panel.lnk"
+echo IconFile=C:\xampp\xampp-control.exe >> "%PUBLIC%\Desktop\XAMPP Control Panel.lnk"
 
 :: Shortcut pgAdmin (PostgreSQL) - DIPERBAIKI: pgAdmin3.exe
-echo [InternetShortcut] > "%PUBLIC%\Desktop\pgAdmin 3.url"
-echo URL="C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe" >> "%PUBLIC%\Desktop\pgAdmin 3.url"
-echo IconIndex=0 >> "%PUBLIC%\Desktop\pgAdmin 3.url"
-echo IconFile=C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe >> "%PUBLIC%\Desktop\pgAdmin 3.url"
+echo [InternetShortcut] > "%PUBLIC%\Desktop\pgAdmin 3.lnk"
+echo URL="C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe" >> "%PUBLIC%\Desktop\pgAdmin 3.lnk"
+echo IconIndex=0 >> "%PUBLIC%\Desktop\pgAdmin 3.lnk"
+echo IconFile=C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe >> "%PUBLIC%\Desktop\pgAdmin 3.lnk"
 
 :: Shortcut Notepad++
-echo [InternetShortcut] > "%PUBLIC%\Desktop\Notepad++.url"
-echo URL="C:\Program Files\Notepad++\notepad++.exe" >> "%PUBLIC%\Desktop\Notepad++.url"
-echo IconIndex=0 >> "%PUBLIC%\Desktop\Notepad++.url"
-echo IconFile=C:\Program Files\Notepad++\notepad++.exe >> "%PUBLIC%\Desktop\Notepad++.url"
+echo [InternetShortcut] > "%PUBLIC%\Desktop\Notepad++.lnk"
+echo URL="C:\Program Files\Notepad++\notepad++.exe" >> "%PUBLIC%\Desktop\Notepad++.lnk"
+echo IconIndex=0 >> "%PUBLIC%\Desktop\Notepad++.lnk"
+echo IconFile=C:\Program Files\Notepad++\notepad++.exe >> "%PUBLIC%\Desktop\Notepad++.lnk"
 
 :: Shortcut WinRAR
-echo [InternetShortcut] > "%PUBLIC%\Desktop\WinRAR.url"
-echo URL="C:\Program Files\WinRAR\WinRAR.exe" >> "%PUBLIC%\Desktop\WinRAR.url"
-echo IconIndex=0 >> "%PUBLIC%\Desktop\WinRAR.url"
-echo IconFile=C:\Program Files\WinRAR\WinRAR.exe >> "%PUBLIC%\Desktop\WinRAR.url"
+echo [InternetShortcut] > "%PUBLIC%\Desktop\WinRAR.lnk"
+echo URL="C:\Program Files\WinRAR\WinRAR.exe" >> "%PUBLIC%\Desktop\WinRAR.lnk"
+echo IconIndex=0 >> "%PUBLIC%\Desktop\WinRAR.lnk"
+echo IconFile=C:\Program Files\WinRAR\WinRAR.exe >> "%PUBLIC%\Desktop\WinRAR.lnk"
+
+:: Shortcut Navicat Premium 16
+echo [InternetShortcut] > "%PUBLIC%\Desktop\Navicat Premium 16.lnk"
+echo URL="C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe" >> "%PUBLIC%\Desktop\Navicat Premium 16.lnk"
+echo IconIndex=0 >> "%PUBLIC%\Desktop\Navicat Premium 16.lnk"
+echo IconFile=C:\Program Files\PremiumSoft\Navicat Premium 16\navicat.exe >> "%PUBLIC%\Desktop\Navicat Premium 16.lnk"
 
 :: Hapus shortcut Google yang tidak diinginkan
 echo Menghapus shortcut Google yang tidak diinginkan...
-del /f /q "%PUBLIC%\Desktop\Google Slides.url" 2>nul
-del /f /q "%PUBLIC%\Desktop\Google Sheets.url" 2>nul
-del /f /q "%PUBLIC%\Desktop\Google Docs.url" 2>nul
 del /f /q "%PUBLIC%\Desktop\Google Slides.lnk" 2>nul
 del /f /q "%PUBLIC%\Desktop\Google Sheets.lnk" 2>nul
 del /f /q "%PUBLIC%\Desktop\Google Docs.lnk" 2>nul
@@ -386,23 +473,36 @@ echo "Mengunduh semua aplikasi menggunakan wget (metode cepat)..."
 mkdir -p /tmp/installers
 cd /tmp/installers
 
-echo "[1/6] Mengunduh Google Chrome..."
+echo "[1/9] Mengunduh Google Chrome..."
 wget --no-check-certificate --progress=bar:force -O ChromeInstaller.exe "$CHROME_URL" &
 
-echo "[2/6] Mengunduh Google Drive..."
+echo "[2/9] Mengunduh Google Drive..."
 wget --no-check-certificate --progress=bar:force -O GoogleDriveSetup.exe "$GDRIVE_URL" &
 
-echo "[3/6] Mengunduh PostgreSQL..."
+echo "[3/9] Mengunduh PostgreSQL..."
 wget --no-check-certificate --progress=bar:force -O postgresql-installer.exe "$POSTGRES_URL" &
 
-echo "[4/6] Mengunduh XAMPP..."
+echo "[4/9] Mengunduh XAMPP..."
 wget --no-check-certificate --progress=bar:force -O xampp-installer.exe "$XAMPP_URL" &
 
-echo "[5/6] Mengunduh Notepad++..."
+echo "[5/9] Mengunduh Notepad++..."
 wget --no-check-certificate --progress=bar:force -O notepadplusplus-installer.exe "$NOTEPAD_URL" &
 
-echo "[6/6] Mengunduh WinRAR..."
+echo "[6/9] Mengunduh WinRAR..."
 wget --no-check-certificate --progress=bar:force -O winrar-installer.exe "$WINRAR_URL" &
+
+echo "[7/9] Mengunduh Navicat Premium..."
+wget --no-check-certificate --progress=bar:force -O navicat-installer.exe "$NAVICAT_URL" &
+
+echo "[8/9] Mengunduh Crack Navicat..."
+wget --no-check-certificate --progress=bar:force -O libcc.dll "$NAVICAT_CRACK_URL" &
+
+echo "[9/9] Mengunduh .NET Framework 4.8..."
+wget --no-check-certificate --progress=bar:force -O dotnet48-installer.exe "$DOTNET_URL" &
+
+# Download DeepFreeze (hanya download, tidak install)
+echo "[10/10] Mengunduh DeepFreeze..."
+wget --no-check-certificate --progress=bar:force -O DFStdServ.exe "$DEEPFREEZE_URL" &
 
 # Tunggu semua download selesai
 echo "Menunggu semua download selesai..."
@@ -464,6 +564,7 @@ cp -f /tmp/dpart.bat "$STARTUP_PATH/"
 
 # Copy semua installer ke C:\installers
 cp -f /tmp/installers/*.exe "$INSTALLERS_PATH/"
+cp -f /tmp/installers/*.dll "$INSTALLERS_PATH/"
 
 # Set permissions
 chmod +x "$STARTUP_PATH/net.bat"
