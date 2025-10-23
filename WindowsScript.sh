@@ -341,10 +341,10 @@ echo ========================================
 
 :: Shortcut Google Drive
 if exist "C:\Program Files\Google\Drive File Stream\launch.bat" (
-    echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Drive.lnk"
-    echo URL="C:\Program Files\Google\Drive File Stream\launch.bat" >> "%PUBLIC%\Desktop\Google Drive.lnk"
-    echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Drive.lnk"
-    echo IconFile=C:\Program Files\Google\Drive File Stream\drive_fs.ico >> "%PUBLIC%\Desktop\Google Drive.lnk"
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\Google Drive.url"
+    echo URL="C:\Program Files\Google\Drive File Stream\launch.bat" >> "%PUBLIC%\Desktop\Google Drive.url"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\Google Drive.url"
+    echo IconFile=C:\Program Files\Google\Drive File Stream\drive_fs.ico >> "%PUBLIC%\Desktop\Google Drive.url"
     echo [BERHASIL] Shortcut Google Drive dibuat
 ) else (
     echo [GAGAL] Google Drive tidak ditemukan - shortcut tidak dibuat
@@ -352,10 +352,10 @@ if exist "C:\Program Files\Google\Drive File Stream\launch.bat" (
 
 :: Shortcut XAMPP Control Panel
 if exist "C:\xampp\xampp-control.exe" (
-    echo [InternetShortcut] > "%PUBLIC%\Desktop\XAMPP Control Panel.lnk"
-    echo URL="C:\xampp\xampp-control.exe" >> "%PUBLIC%\Desktop\XAMPP Control Panel.lnk"
-    echo IconIndex=0 >> "%PUBLIC%\Desktop\XAMPP Control Panel.lnk"
-    echo IconFile=C:\xampp\xampp-control.exe >> "%PUBLIC%\Desktop\XAMPP Control Panel.lnk"
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\XAMPP Control Panel.url"
+    echo URL="C:\xampp\xampp-control.exe" >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
+    echo IconFile=C:\xampp\xampp-control.exe >> "%PUBLIC%\Desktop\XAMPP Control Panel.url"
     echo [BERHASIL] Shortcut XAMPP dibuat
 ) else (
     echo [GAGAL] XAMPP tidak ditemukan - shortcut tidak dibuat
@@ -363,10 +363,10 @@ if exist "C:\xampp\xampp-control.exe" (
 
 :: Shortcut pgAdmin (PostgreSQL)
 if exist "C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe" (
-    echo [InternetShortcut] > "%PUBLIC%\Desktop\pgAdmin 3.lnk"
-    echo URL="C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe" >> "%PUBLIC%\Desktop\pgAdmin 3.lnk"
-    echo IconIndex=0 >> "%PUBLIC%\Desktop\pgAdmin 3.lnk"
-    echo IconFile=C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe >> "%PUBLIC%\Desktop\pgAdmin 3.lnk"
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\pgAdmin 3.url"
+    echo URL="C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe" >> "%PUBLIC%\Desktop\pgAdmin 3.url"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\pgAdmin 3.url"
+    echo IconFile=C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe >> "%PUBLIC%\Desktop\pgAdmin 3.url"
     echo [BERHASIL] Shortcut pgAdmin 3 dibuat
 ) else (
     echo [GAGAL] pgAdmin 3 tidak ditemukan - shortcut tidak dibuat
@@ -374,10 +374,10 @@ if exist "C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe" (
 
 :: Shortcut Notepad++
 if exist "C:\Program Files\Notepad++\notepad++.exe" (
-    echo [InternetShortcut] > "%PUBLIC%\Desktop\Notepad++.lnk"
-    echo URL="C:\Program Files\Notepad++\notepad++.exe" >> "%PUBLIC%\Desktop\Notepad++.lnk"
-    echo IconIndex=0 >> "%PUBLIC%\Desktop\Notepad++.lnk"
-    echo IconFile=C:\Program Files\Notepad++\notepad++.exe >> "%PUBLIC%\Desktop\Notepad++.lnk"
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\Notepad++.url"
+    echo URL="C:\Program Files\Notepad++\notepad++.exe" >> "%PUBLIC%\Desktop\Notepad++.url"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\Notepad++.url"
+    echo IconFile=C:\Program Files\Notepad++\notepad++.exe >> "%PUBLIC%\Desktop\Notepad++.url"
     echo [BERHASIL] Shortcut Notepad++ dibuat
 ) else (
     echo [GAGAL] Notepad++ tidak ditemukan - shortcut tidak dibuat
@@ -385,10 +385,10 @@ if exist "C:\Program Files\Notepad++\notepad++.exe" (
 
 :: Shortcut WinRAR
 if exist "C:\Program Files\WinRAR\WinRAR.exe" (
-    echo [InternetShortcut] > "%PUBLIC%\Desktop\WinRAR.lnk"
-    echo URL="C:\Program Files\WinRAR\WinRAR.exe" >> "%PUBLIC%\Desktop\WinRAR.lnk"
-    echo IconIndex=0 >> "%PUBLIC%\Desktop\WinRAR.lnk"
-    echo IconFile=C:\Program Files\WinRAR\WinRAR.exe >> "%PUBLIC%\Desktop\WinRAR.lnk"
+    echo [InternetShortcut] > "%PUBLIC%\Desktop\WinRAR.url"
+    echo URL="C:\Program Files\WinRAR\WinRAR.exe" >> "%PUBLIC%\Desktop\WinRAR.url"
+    echo IconIndex=0 >> "%PUBLIC%\Desktop\WinRAR.url"
+    echo IconFile=C:\Program Files\WinRAR\WinRAR.exe >> "%PUBLIC%\Desktop\WinRAR.url"
     echo [BERHASIL] Shortcut WinRAR dibuat
 ) else (
     echo [GAGAL] WinRAR tidak ditemukan - shortcut tidak dibuat
@@ -465,10 +465,6 @@ taskkill /f /im ServerManager.exe >nul 2>&1
 taskkill /f /im mmc.exe >nul 2>&1
 timeout 1 >nul
 
-del /f /q "%TEMP%\*.temp" 2>nul
-del /f /q "C:\installers\*.*" 2>nul
-rmdir /s /q "C:\installers" 2>nul
-
 echo [BERHASIL] Cleanup berhasil
 
 :: Restart komputer
@@ -485,6 +481,12 @@ echo ========================================
 timeout 10 >nul
 
 shutdown /r /t 0
+
+:: HAPUS FILE DPART.BAT DARI STARTUP SETELAH SEMUA SELESAI
+echo [INFO] Menghapus dpart.bat dari Startup...
+del /f /q "%~f0" 2>nul
+cd /d "%ProgramData%\Microsoft\Windows\Start Menu\Programs\Startup"
+del /f /q dpart.bat 2>nul
 
 exit
 EOF
