@@ -410,11 +410,6 @@ del /f /q "%PUBLIC%\Desktop\Google Slides.lnk" 2>nul
 del /f /q "%PUBLIC%\Desktop\Google Sheets.lnk" 2>nul
 del /f /q "%PUBLIC%\Desktop\Google Docs.lnk" 2>nul
 
-:: Hapus folder Patch
-rmdir /s /q "C:\Patch" 2>nul
-rmdir /s /q "C:\Users\Administrator\Desktop\Patch" 2>nul
-rmdir /s /q "%USERPROFILE%\Desktop\Patch" 2>nul
-
 echo [BERHASIL] Shortcut tidak diinginkan berhasil dihapus
 
 :: Verifikasi akhir semua instalasi
