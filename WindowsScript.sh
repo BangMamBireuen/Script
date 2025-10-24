@@ -372,17 +372,6 @@ if exist "C:\Program Files\PostgreSQL\9.4\bin\pgAdmin3.exe" (
     echo [GAGAL] pgAdmin 3 tidak ditemukan - shortcut tidak dibuat
 )
 
-:: Shortcut Notepad++
-if exist "C:\Program Files\Notepad++\notepad++.exe" (
-    echo [InternetShortcut] > "%PUBLIC%\Desktop\Notepad++.url"
-    echo URL="C:\Program Files\Notepad++\notepad++.exe" >> "%PUBLIC%\Desktop\Notepad++.url"
-    echo IconIndex=0 >> "%PUBLIC%\Desktop\Notepad++.url"
-    echo IconFile=C:\Program Files\Notepad++\notepad++.exe >> "%PUBLIC%\Desktop\Notepad++.url"
-    echo [BERHASIL] Shortcut Notepad++ dibuat
-) else (
-    echo [GAGAL] Notepad++ tidak ditemukan - shortcut tidak dibuat
-)
-
 :: Shortcut WinRAR
 if exist "C:\Program Files\WinRAR\WinRAR.exe" (
     echo [InternetShortcut] > "%PUBLIC%\Desktop\WinRAR.url"
