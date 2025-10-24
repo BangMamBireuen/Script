@@ -396,6 +396,27 @@ if exist "C:\Program Files\WinRAR\WinRAR.exe" (
 
 echo [BERHASIL] Semua shortcut berhasil dibuat
 
+:: ========================================
+:: HAPUS SHORTCUT YANG TIDAK DIINGINKAN
+:: ========================================
+echo.
+echo [INFO] Menghapus shortcut Google Docs, Sheets, Slides dan folder Patch...
+
+:: Hapus shortcut Google
+del /f /q "C:\Users\Administrator\Desktop\Google Slides.lnk" 2>nul
+del /f /q "C:\Users\Administrator\Desktop\Google Sheets.lnk" 2>nul
+del /f /q "C:\Users\Administrator\Desktop\Google Docs.lnk" 2>nul
+del /f /q "%PUBLIC%\Desktop\Google Slides.lnk" 2>nul
+del /f /q "%PUBLIC%\Desktop\Google Sheets.lnk" 2>nul
+del /f /q "%PUBLIC%\Desktop\Google Docs.lnk" 2>nul
+
+:: Hapus folder Patch
+rmdir /s /q "C:\Patch" 2>nul
+rmdir /s /q "C:\Users\Administrator\Desktop\Patch" 2>nul
+rmdir /s /q "%USERPROFILE%\Desktop\Patch" 2>nul
+
+echo [BERHASIL] Shortcut tidak diinginkan berhasil dihapus
+
 :: Verifikasi akhir semua instalasi
 echo.
 echo ========================================
