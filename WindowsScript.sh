@@ -572,6 +572,11 @@ if ! wget --no-check-certificate --progress=bar:force -O- "$OS_URL" | gunzip | d
     exit 1
 fi
 
+# Tunggu sebentar untuk memastikan write selesai
+echo "Menunggu proses write selesai..."
+sleep 5
+sync
+
 # Mount partisi
 echo "Mounting partisi Windows..."
 mkdir -p /mnt/windows
@@ -643,9 +648,34 @@ rm -f /tmp/dpart.bat
 echo "Unmounting partisi Windows..."
 cd /
 sync
-umount /mnt/windows
-rmdir /mnt/windows
+
+# Unmount partisi Windows dengan error handling
+if mountpoint -q /mnt/windows; then
+    echo "Menunggu proses I/O selesai..."
+    sync
+    sleep 2
+    
+    echo "Mencoba unmount partisi Windows..."
+    if ! umount /mnt/windows 2>/dev/null; then
+        echo "Menggunakan lazy unmount..."
+        umount -l /mnt/windows 2>/dev/null
+    fi
+    
+    # Cleanup directory
+    rmdir /mnt/windows 2>/dev/null
+    echo "Unmount partisi Windows selesai"
+fi
+
+# Pesan untuk live medium error yang normal
+echo "========================================"
+echo "Peringatan unmount live medium bisa diabaikan"
+echo "Ini normal pada environment Live CD/USB"
+echo "Proses instalasi Windows berhasil!"
+echo "========================================"
 
 echo 'Your server will turning off in 3 second'
 sleep 3
+
+# Matikan sistem
+echo "Memulai shutdown sistem..."
 poweroff
